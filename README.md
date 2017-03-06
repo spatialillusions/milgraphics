@@ -9,7 +9,9 @@ The main idea is to create the following, this might expand later on.
 
 ### Input
 
-GeoJSON with SIDC etc. stored as properties. (A specification for how to store geometries as GeoJSON will be created.)
+First data will be input in GeoJSON, at the moment the data will be defined with the same geometries as in 2525D.
+
+In the future NVG and maybe SitaWare SLF will be supported as input formats. (This may include several other formats as well.)
 
 ### Output
 
