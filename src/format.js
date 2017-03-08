@@ -1,7 +1,6 @@
 var format = {};
 
-format.GeoJSON = function (data) {
-	return data;
-}
+format.GeoJSON = require('./formats/geojson.js');
+format.SLF = require('./formats/slf.js');
 
 module.exports = format;

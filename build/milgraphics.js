@@ -5,6 +5,8 @@ var ms = require('milsymbol');
 
 ms.format = require('../src/format.js');
 
+ms.GraphicsLayer = require('../src/graphicslayer.js');
+
 /* ***************************************************************************************
 Export ms to the world
 *************************************************************************************** */
