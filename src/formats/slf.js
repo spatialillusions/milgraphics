@@ -67,7 +67,7 @@ function SLF(xml) {
     var locationType = location.getAttribute('xsi:type');
     switch (locationType) {
       case 'Area':
-        return {type: "Polygon", coordinates: parseArea(location) };
+        return {type: "Polygon", coordinates: [parseArea(location)] };
         break;
       case 'Line':
         return {type: "LineString", coordinates: parseLine(location) };
@@ -82,7 +82,7 @@ function SLF(xml) {
         return {type: "MultiPoint", coordinates: parseTwoPointLine(location) }; //I know this isn't a line but they are stored in the same way.
         break;
       default:
-        console.log('TODO parse item default: ' + locationType)
+        console.log('TODO parse location type: ' + locationType)
     }
   }
   
@@ -95,15 +95,17 @@ function SLF(xml) {
         var feature = {type: "Feature", properties: {} };
         
         if ( [
-          'Unit',
-          'GenericShape',
-          'TextArea',
-          'TacticalGraphic',
           'Aviation',
-          'BoundaryLine',
           'BattlePosition',
+          'BoundaryLine',
+          'Equipment',
+          'GenericShape',
+          'Incident',
+          'Installation',
           'Minefield',
-          'Installation'].indexOf(symbolType) != -1 ) {
+          'TacticalGraphic',
+          'TextArea',
+          'Unit'].indexOf(symbolType) != -1 ) {
           for (var j in symbol.childNodes){
             var nodeName = symbol.childNodes[j].nodeName
             if(typeof nodeName === 'undefined') continue;
@@ -124,7 +126,7 @@ function SLF(xml) {
             features.push(feature);
           }
         }else{
-          console.log('TODO parse item default: ' + symbolType)
+          console.log('TODO parse symbol type: ' + symbolType)
         }
       }
     }
