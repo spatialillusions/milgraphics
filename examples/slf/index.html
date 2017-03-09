@@ -3,7 +3,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <title></title>
   
-  <script src="../dist/milgraphics.js"></script>
+  <script src="../../dist/milgraphics.js"></script>
 </head>
 <body onload="document.getElementById('files').addEventListener('change', loadFileAsText, false)">
 Sitaware Layer File (SLF): <input type="file" id="files" name="files[]"><br>
@@ -47,11 +47,10 @@ function loadFileAsText (evt) {
 	fileReader.onload = function(fileLoadedEvent) {
 		var file = fileLoadedEvent.target.result;
 		var openLayersFeaturesWithStyle = new ms.GraphicsLayer( new ms.format.SLF(file) ).asOpenLayers();
-		var features = graphicsLayer.asOpenLayers();
 		//document.getElementById('slf_geojson').value = JSON.stringify( geoJSON, null, 4);	
 		vectorSource.clear();
-		vectorSource.addFeatures(features);
-    var extent = vectorSource.getExtent(features);
+		vectorSource.addFeatures(openLayersFeaturesWithStyle);
+    var extent = vectorSource.getExtent(openLayersFeaturesWithStyle);
 		map.getView().fit(extent, map.getSize());
 		
 	};
