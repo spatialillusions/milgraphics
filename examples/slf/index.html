@@ -15,26 +15,26 @@ Sitaware Layer File (SLF): <input type="file" id="files" name="files[]"><br>
 var vectorSource = new ol.source.Vector();
     
 var vectorLayer = new ol.layer.Vector({
-	source: vectorSource
+  source: vectorSource
 });
 
 var map = new ol.Map({
-	layers: [
-		new ol.layer.Tile({
-			source: new ol.source.OSM()
-		}),
-		vectorLayer
-	],
-	target: 'map',
-	controls: ol.control.defaults({
-		attributionOptions: ({
-			collapsible: false
-		})
-	}),
-	view: new ol.View({
-		center: [0, 0],
-		zoom: 2
-	})
+  layers: [
+    new ol.layer.Tile({
+      source: new ol.source.OSM()
+    }),
+    vectorLayer
+  ],
+  target: 'map',
+  controls: ol.control.defaults({
+    attributionOptions: ({
+      collapsible: false
+    })
+  }),
+  view: new ol.View({
+    center: [0, 0],
+    zoom: 2
+  })
 });
 </script>   
 
@@ -42,19 +42,19 @@ var map = new ol.Map({
 </textarea><br>-->
 <script>
 function loadFileAsText (evt) {
-	var fileToLoad = evt.target.files[0];
-	var fileReader = new FileReader();
-	fileReader.onload = function(fileLoadedEvent) {
-		var file = fileLoadedEvent.target.result;
-		var openLayersFeaturesWithStyle = new ms.GraphicsLayer( new ms.format.SLF(file) ).asOpenLayers();
-		//document.getElementById('slf_geojson').value = JSON.stringify( geoJSON, null, 4);	
-		vectorSource.clear();
-		vectorSource.addFeatures(openLayersFeaturesWithStyle);
+  var fileToLoad = evt.target.files[0];
+  var fileReader = new FileReader();
+  fileReader.onload = function(fileLoadedEvent) {
+    var file = fileLoadedEvent.target.result;
+    var openLayersFeaturesWithStyle = new ms.GraphicsLayer( new ms.format.SLF(file) ).asOpenLayers();
+    //document.getElementById('slf_geojson').value = JSON.stringify( geoJSON, null, 4);  
+    vectorSource.clear();
+    vectorSource.addFeatures(openLayersFeaturesWithStyle);
     var extent = vectorSource.getExtent(openLayersFeaturesWithStyle);
-		map.getView().fit(extent, map.getSize());
-		
-	};
-	fileReader.readAsText(fileToLoad, "UTF-8");
+    map.getView().fit(extent, map.getSize());
+    
+  };
+  fileReader.readAsText(fileToLoad, "UTF-8");
 }
 </script>
 </body>
