@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title></title>
+  
+  <script src="../dist/milgraphics.js"></script>
+</head>
+<body onload="document.getElementById('files').addEventListener('change', loadFileAsText, false)">
+<h1>SLF to GeoJSON</h1>
+This is a demo of reading SitaWare SLF fils and converting them to GeoJSON. Not all location types are supported yet, but the plan is to support all of them.<br>The output is raw GeoJSON without any styles, and the data will later be processed in the library <a href="https://github.com/spatialillusions/milgraphics">milgraphics</a> to covert the data into tactical graphics and provide styling for different mapping libraries. <br><br>
+Sitaware Layer File (SLF): <input type="file" id="files" name="files[]"><br>
+
+
+<div id="map" class="map" style="width: 960px; height: 500px;"></div>
+<link rel="stylesheet" href="http://openlayers.org/en/v3.17.1/css/ol.css" type="text/css">
+<script src="http://openlayers.org/en/v3.17.1/build/ol.js"></script>
+<script>
+var vectorSource = new ol.source.Vector();
+    
+var vectorLayer = new ol.layer.Vector({
+	source: vectorSource
+});
+
+var map = new ol.Map({
+	layers: [
+		new ol.layer.Tile({
+			source: new ol.source.OSM()
+		}),
+		vectorLayer
+	],
+	target: 'map',
+	controls: ol.control.defaults({
+		attributionOptions: ({
+			collapsible: false
+		})
+	}),
+	view: new ol.View({
+		center: [0, 0],
+		zoom: 2
+	})
+});
+</script>   
+
+<!--<textarea id="slf_geojson" style="width: 960px; height: 300px;">
+</textarea><br>-->
+<script>
+function loadFileAsText (evt) {
+	var fileToLoad = evt.target.files[0];
+	var fileReader = new FileReader();
+	fileReader.onload = function(fileLoadedEvent) {
+		var file = fileLoadedEvent.target.result;
+		var graphicsLayer = new ms.GraphicsLayer( new ms.format.SLF(file) );
+		var features = graphicsLayer.asOpenLayers();
+		//document.getElementById('slf_geojson').value = JSON.stringify( geoJSON, null, 4);	
+		vectorSource.clear();
+		vectorSource.addFeatures(features);
+    var extent = vectorSource.getExtent(features);
+		map.getView().fit(extent, map.getSize());
+		
+	};
+	fileReader.readAsText(fileToLoad, "UTF-8");
+}
+</script>
+</body>
+</html>

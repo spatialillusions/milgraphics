@@ -1,3 +1,4 @@
+var ms = require('milsymbol');
 
 function SLF(xml) {
   function parseSIDC(sidc) {
@@ -164,8 +165,12 @@ function SLF(xml) {
   } 
   
   var rawGeoJSON = {type: "FeatureCollection", features: features };
-
-	return rawGeoJSON;
+	return ms.format.GeoJSON(rawGeoJSON, {
+	  Aliases: 'commonIdentifier',
+	  Name: 'uniqueDesignation', 
+	  StaffComments: 'staffComments',
+	  SymbolCode:'SIDC', 
+	  Timestamp: 'dtg'});
 }
 
 if (typeof module !== 'undefined') {
