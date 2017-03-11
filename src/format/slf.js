@@ -24,6 +24,57 @@ function SLF(xml) {
     return coordinates;
   }
 
+  function parseArrow(arrow) {
+    var coordinates = [];
+    var arrowHead = [];
+    for (var i in arrow.childNodes){
+      if (arrow.childNodes[i].nodeName == 'Arrowhead'){
+        arrowHead = parsePoint(arrow.childNodes[i]);
+      }
+      if (arrow.childNodes[i].nodeName == 'Points'){
+        for (var j in arrow.childNodes[i].childNodes){
+          if (arrow.childNodes[i].childNodes[j].nodeName == 'Point'){
+            coordinates.push( parsePoint(arrow.childNodes[i].childNodes[j]) );
+          }
+        }
+      }
+    }
+    coordinates.push(arrowHead);//Add arrow head last in multipoint
+    return coordinates;
+  }
+    
+  function parseCircle(line) {
+    var coordinates = [0,0];
+    for (var i in line.childNodes){
+      if (line.childNodes[i].nodeName == 'CenterPoint'){
+        coordinates[0] = parsePoint(line.childNodes[i]);
+      }
+      if (line.childNodes[i].nodeName == 'PerimeterPoint'){
+        coordinates[1] = parsePoint(line.childNodes[i]);
+      }
+    }
+    return coordinates;
+  }
+
+  function parseCorridor(corridor) {
+    var coordinates = [];
+    var width = 0;
+    for (var i in corridor.childNodes){
+      if (corridor.childNodes[i].nodeName == 'Width'){
+        width = corridor.childNodes[i].textContent;
+      }
+      if (corridor.childNodes[i].nodeName == 'Points'){
+        for (var j in corridor.childNodes[i].childNodes){
+          if (corridor.childNodes[i].childNodes[j].nodeName == 'Point'){
+            coordinates.push( parsePoint(corridor.childNodes[i].childNodes[j]) );
+          }
+        }
+      }
+    }
+    coordinates.push(width);//Add width last in array, we fix this later
+    return coordinates;
+  }
+  
   function parseLine(line) {
     var coordinates = [];
     for (var i in line.childNodes){
@@ -38,6 +89,22 @@ function SLF(xml) {
     return coordinates;
   }
 
+  function parseTwoPointCorridor(line) {
+    var coordinates = [0,0,0];
+    for (var i in line.childNodes){
+      if (line.childNodes[i].nodeName == 'StartPoint'){
+        coordinates[0] = parsePoint(line.childNodes[i]);
+      }
+      if (line.childNodes[i].nodeName == 'EndPoint'){
+        coordinates[1] = parsePoint(line.childNodes[i]);
+      }
+      if (line.childNodes[i].nodeName == 'Width'){
+        coordinates[2] = line.childNodes[i].textContent;
+      }
+    }
+    return coordinates;
+  }
+  
   function parseTwoPointLine(line) {
     var coordinates = [0,0];
     for (var i in line.childNodes){
@@ -70,6 +137,15 @@ function SLF(xml) {
       case 'Area':
         return {type: "Polygon", coordinates: [parseArea(location)] };
         break;
+      case 'Arrow':
+        return {type: "MultiPoint", coordinates: parseArrow(location) };
+        break;
+      case 'Circle':
+        return {type: "Circle", coordinates: parseCircle(location) }; // We will fix circles later
+        break;
+      case 'Corridor':
+        return {type: "Corridor", coordinates: parseArrow(location) }; // We fix Corridors later
+        break;
       case 'Line':
         return {type: "LineString", coordinates: parseLine(location) };
         break;
@@ -79,11 +155,17 @@ function SLF(xml) {
       case 'PolyPoint':
         return {type: "MultiPoint", coordinates: parseLine(location) }; //I know this isn't a line but they are stored in the same way.
         break;
+      case 'Rectangle':
+        return {type: "TwoPointCorridor", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
+        break;
+      case 'TwoPointCorridor':
+        return {type: "TwoPointCorridor", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
+        break;
       case 'TwoPointLine':
         return {type: "MultiPoint", coordinates: parseTwoPointLine(location) }; //I know this isn't a line but they are stored in the same way.
         break;
       default:
-        console.log('TODO parse location type: ' + locationType)
+        console.log('SitaWare Layer File: TODO parse location type ' + locationType)
     }
   }
   
@@ -113,6 +195,22 @@ function SLF(xml) {
             switch (nodeName) {
               case 'Location':
                 feature.geometry = parseLocation( symbol.childNodes[j] );
+                if(feature.geometry && feature.geometry.type == 'Circle'){
+                  var points = feature.geometry.coordinates;
+                  feature.properties.distance = ms.geometry.distanceBetween(points[0],points[1]);
+                  feature.geometry = {type: "MultiPoint", coordinates: [points[0]] };
+                }
+                if(feature.geometry && feature.geometry.type == 'Corridor'){
+                  var points = feature.geometry.coordinates;
+                  feature.properties.distance = points[points.length];
+                  points.pop();
+                  feature.geometry = {type: "MultiPoint", coordinates: points };
+                }
+                if(feature.geometry && feature.geometry.type == 'TwoPointCorridor'){
+                  var points = feature.geometry.coordinates;
+                  feature.properties.distance = points[2];
+                  feature.geometry = {type: "MultiPoint", coordinates: [points[0],points[1]] };
+                }
                 break;
               case 'SymbolCode':
                 feature.properties.SymbolCode = parseSIDC( symbol.childNodes[j] );
@@ -127,7 +225,7 @@ function SLF(xml) {
             features.push(feature);
           }
         }else{
-          console.log('TODO parse symbol type: ' + symbolType)
+          console.log('SitaWare Layer File: TODO parse symbol type ' + symbolType)
         }
       }
     }

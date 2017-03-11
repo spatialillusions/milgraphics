@@ -33,3 +33,11 @@ Reads GeoJSON, clones it and maps properties according to the mapping object.
 
 Reads a SitaWare SLF file and parses it to GeoJSON with attributes mapped to the values milgraphics expects.
 
+### Known limitations
+
+The following location types are not supported at the moment:
+
+- Ellipse
+- FreehandDrawing
+- Sector
+
