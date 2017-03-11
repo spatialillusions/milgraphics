@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -144,6 +144,7 @@ module.exports = geometry;
 var geometryConverter = {};
 
 geometryConverter.circle = __webpack_require__(15);
+geometryConverter.corridor = __webpack_require__(16);
 
 module.exports = geometryConverter;
 
@@ -175,7 +176,7 @@ var Graphic = function (feature){
 	  var graphics = ms._graphicCache['letter-' + this.properties.numberSIDC];
 	  var genericSIDC = this.SIDC.substr(0,1)+'-'+this.SIDC.substr(2,1)+'-'+this.SIDC.substr(4,6);
     if(graphics[genericSIDC]){
-      console.log(genericSIDC)
+      console.log('Converting: ' + this.SIDC)
       this.geometry = graphics[genericSIDC].call(this, feature);
     }else{
       //TODO check if we need to clone here;
@@ -209,7 +210,7 @@ function GraphicsLayer (data) {
       }
     }
     if (feature.geometry.type == 'MultiPoint') {
-    console.log('multipoint')
+    //console.log('multipoint')
     console.log(feature.properties.SIDC)
       feature.graphic = new ms.Graphic(feature);
       //console.log('woo we got something special')
@@ -223,7 +224,7 @@ function GraphicsLayer (data) {
   }
 };
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(16);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(17);
 
 module.exports = GraphicsLayer;
 
@@ -249,9 +250,14 @@ module.exports = function(sidc,STD2525){
 // SIDC parts for tactical points in 2525C
 module.exports = function tacticalPoints(sidc,std2525){
 	// Tactical Point Symbols =========================================================================
+
+	sidc['G-F-ACFC--'] = ms.geometryConverter.circle; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
+
+
 	// Systematic SitaWare compatibility
+	sidc['X---C-----'] = ms.geometryConverter.corridor;
 	sidc['X---I-----'] = ms.geometryConverter.circle;
-	
+
 	//2525B compatibility
 	sidc['G-F-AZIC--'] = ms.geometryConverter.circle;
 
@@ -672,6 +678,45 @@ module.exports = circle;
 /* 16 */
 /***/ (function(module, exports) {
 
+// Draws a corridor with a widht in meters
+function corridor(feature){
+  var direction;
+  var points = feature.geometry.coordinates;
+  var width = feature.properties.distance;
+  var geometry = {"type": "Polygon"};
+  geometry.coordinates = [[]];
+  direction = (ms.geometry.bearingBetween(points[0],points[1]) +360) % 360;
+  geometry.coordinates[0].push(ms.geometry.toDistanceBearing(points[0], width/2, direction-90));
+  for (var j = 1; j < points.length-1; j++){
+    var direction1 = (ms.geometry.bearingBetween(points[j], points[j-1]) +360) % 360;
+    var direction2 = (ms.geometry.bearingBetween(points[j], points[j+1]) +360) % 360;
+    var factor = 1/Math.sin(((direction2-direction1)/2)*(Math.PI/180));
+    geometry.coordinates[0].push(ms.geometry.toDistanceBearing(points[j], (width/2)*factor, ((direction1+direction2)/2)));
+  }
+  
+  direction = (ms.geometry.bearingBetween(points[points.length-1],points[points.length-2]) + 180) % 360;
+  geometry.coordinates[0].push(ms.geometry.toDistanceBearing(points[points.length-1], width/2, direction-90));
+  geometry.coordinates[0].push(ms.geometry.toDistanceBearing(points[points.length-1], width/2, direction+90));
+
+  for (var j = points.length-2; j > 0; j--){
+    var direction1 = (ms.geometry.bearingBetween(points[j], points[j-1]) +360) % 360;
+    var direction2 = (ms.geometry.bearingBetween(points[j], points[j+1]) +360) % 360;
+    var factor = 1/Math.sin(((direction2-direction1)/2)*(Math.PI/180));
+    geometry.coordinates[0].push(ms.geometry.toDistanceBearing(points[j], -(width/2)*factor, ((direction1+direction2)/2)));
+  }
+  
+  direction = (ms.geometry.bearingBetween(points[0],points[1]) +360) % 360;
+  geometry.coordinates[0].push(ms.geometry.toDistanceBearing(points[0], width/2, direction+90));
+  geometry.coordinates[0].push(ms.geometry.toDistanceBearing(points[0], width/2, direction-90));//Close line
+  return geometry;
+}
+
+module.exports = corridor;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
 
 function asOpenLayers(crs) {
   var crs = crs || 'EPSG:3857';
@@ -726,7 +771,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************
