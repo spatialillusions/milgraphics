@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -119,9 +119,9 @@ var R=new function(){this._colorModes={},this._dashArrays={pending:"4,4",anticip
 
 var format = {};
 
-format.GeoJSON = __webpack_require__(4);
-format.NVG = __webpack_require__(5);
-format.SLF = __webpack_require__(6);
+format.GeoJSON = __webpack_require__(9);
+format.NVG = __webpack_require__(10);
+format.SLF = __webpack_require__(11);
 
 module.exports = format;
 
@@ -131,7 +131,9 @@ module.exports = format;
 
 var geometry = {};
 
-geometry.distanceBetween = __webpack_require__(7);
+geometry.bearingBetween = __webpack_require__(12);
+geometry.distanceBetween = __webpack_require__(13);
+geometry.toDistanceBearing = __webpack_require__(14);
 
 module.exports = geometry;
 
@@ -139,70 +141,177 @@ module.exports = geometry;
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var geometryConverter = {};
+
+geometryConverter.circle = __webpack_require__(15);
+
+module.exports = geometryConverter;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
+var Graphic = function (feature){
+  //=======================================================================================
+  // The SIDC for the symbol.
+  this.SIDC = feature.properties.SIDC;
+
+  this.properties = {numberSIDC: false}; // TODO Properties of the current marker
+
+  // If we don't have a graphics cache, create one
+  if (typeof ms._graphicCache === 'undefined'){
+    ms._graphicCache = {};
+  }
+
+  //Letter based SIDCs.
+	if(!this.properties.numberSIDC){
+	  if (!ms._graphicCache.hasOwnProperty('letter-' + this.properties.numberSIDC)){
+	    var sidc = {};
+	    ms._getLetterSIDCgraphic(sidc,this.properties.numberSIDC);
+	    ms._graphicCache['letter-' + this.properties.numberSIDC] = sidc;
+	  }
+	  var graphics = ms._graphicCache['letter-' + this.properties.numberSIDC];
+	  var genericSIDC = this.SIDC.substr(0,1)+'-'+this.SIDC.substr(2,1)+'-'+this.SIDC.substr(4,6);
+    if(graphics[genericSIDC]){
+      console.log(genericSIDC)
+      this.geometry = graphics[genericSIDC].call(this, feature);
+    }else{
+      //TODO check if we need to clone here;
+      this.geometry = feature.geometry;
+    }
+	}else{
+	  console.log('TODO number sidc stuff')
+	
+	}
+};
+
+module.exports = Graphic;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
 //var ms = require('./ms.js');
 
 function GraphicsLayer (data) {
   this.data = data;
+  //console.log(data)
+  for (var i = 0; i< this.data.features.length; i++) {
+    var feature = this.data.features[i];
+
+    if (feature.geometry.type == 'Point') {
+      var properties = feature.properties;
+      properties.size = properties.size || 30; //TODO set default size value from setting
+      if (properties.SIDC.charAt(0) != 'X') { //Skip SitaWare custom graphics for now
+        feature.symbol = new ms.Symbol('', properties);
+      }
+    }
+    if (feature.geometry.type == 'MultiPoint') {
+    console.log('multipoint')
+    console.log(feature.properties.SIDC)
+      feature.graphic = new ms.Graphic(feature);
+      //console.log('woo we got something special')
+      feature.geometry = feature.graphic.geometry;
+      //feature.geometry = feature.graphic.geometry;//quick override of geometry
+/*      	var style = new ol.style.Style({
+          stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2})
+        });
+        feature.setStyle(style);*/
+    }
+  }
 };
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(8);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(16);
 
 module.exports = GraphicsLayer;
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-
-function GeoJSON(data, mapping) {
-  //if (typeof mapping === 'undefined') return data;
-  var feature_copy = [];
-  for (var i = 0; i < data.features.length; i++) {
-    feature = data.features[i];
-    var f = {type: "Feature", properties: {} }
-    f.geometry = {type: feature.geometry.type, coordinates: feature.geometry.coordinates };
-    for (key in feature.properties) {
-      if (mapping.hasOwnProperty(key)){
-        f.properties[mapping[key]] = feature.properties[key];
-      }else{
-        f.properties[key] = feature.properties[key];
-      }
-    }
-    feature_copy.push(f);
-  }
-	return {type: "FeatureCollection", features: feature_copy };
-}
-
-module.exports = GeoJSON;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-
-function GeoJSON(data, mapping) {
-  //if (typeof mapping === 'undefined') return data;
-  var feature_copy = [];
-  for (var i = 0; i < data.features.length; i++) {
-    feature = data.features[i];
-    var f = {type: "Feature", properties: {} }
-    f.geometry = {type: feature.geometry.type, coordinates: feature.geometry.coordinates };
-    for (key in feature.properties) {
-      if (mapping.hasOwnProperty(key)){
-        f.properties[mapping[key]] = feature.properties[key];
-      }else{
-        f.properties[key] = feature.properties[key];
-      }
-    }
-    feature_copy.push(f);
-  }
-	return {type: "FeatureCollection", features: feature_copy };
-}
-
-module.exports = GeoJSON;
-
-/***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
+module.exports = function(sidc,STD2525){
+	// We modify sidc directly in the called functions so we don't need to return anything.
+  // Might change this later since it adds complexity to understand the code.
+	for (var i in ms._letterSIDCgraphics){
+		if (!ms._letterSIDCgraphics.hasOwnProperty(i)) continue;
+		ms._letterSIDCgraphics[i].call(this,sidc,STD2525);
+	}
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+// SIDC parts for tactical points in 2525C
+module.exports = function tacticalPoints(sidc,std2525){
+	// Tactical Point Symbols =========================================================================
+	// Systematic SitaWare compatibility
+	sidc['X---I-----'] = ms.geometryConverter.circle;
+	
+	//2525B compatibility
+	sidc['G-F-AZIC--'] = ms.geometryConverter.circle;
+
+}
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+var addSIDCgraphics = function(parts, type){
+  if (typeof parts === 'function') {
+    if (typeof this['_' + type + 'SIDCgraphics'] === 'undefined'){
+      this['_' + type + 'SIDCgraphics'] = [];
+    }
+    this['_' + type + 'SIDCgraphics'] = this['_' + type + 'SIDCgraphics'].concat(parts);
+  }
+  return this;
+};
+
+module.exports = addSIDCgraphics;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+
+function GeoJSON(data, mapping) {
+  //if (typeof mapping === 'undefined') return data;
+  var feature_copy = [];
+  for (var i = 0; i < data.features.length; i++) {
+    feature = data.features[i];
+    var f = {type: "Feature", properties: {} }
+    f.geometry = {type: feature.geometry.type, coordinates: feature.geometry.coordinates };
+    for (key in feature.properties) {
+      if (mapping.hasOwnProperty(key)){
+        f.properties[mapping[key]] = feature.properties[key];
+      }else{
+        f.properties[key] = feature.properties[key];
+      }
+    }
+    feature_copy.push(f);
+  }
+	return {type: "FeatureCollection", features: feature_copy };
+}
+
+module.exports = GeoJSON;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports) {
+
+
+function NVG(data) {
+//TODO
+}
+
+module.exports = NVG;
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -351,7 +460,7 @@ function SLF(xml) {
         return {type: "Circle", coordinates: parseCircle(location) }; // We will fix circles later
         break;
       case 'Corridor':
-        return {type: "Corridor", coordinates: parseArrow(location) }; // We fix Corridors later
+        return {type: "Corridor", coordinates: parseCorridor(location) }; // We fix Corridors later
         break;
       case 'Line':
         return {type: "LineString", coordinates: parseLine(location) };
@@ -409,7 +518,7 @@ function SLF(xml) {
                 }
                 if(feature.geometry && feature.geometry.type == 'Corridor'){
                   var points = feature.geometry.coordinates;
-                  feature.properties.distance = points[points.length];
+                  feature.properties.distance = points[points.length-1];
                   points.pop();
                   feature.geometry = {type: "MultiPoint", coordinates: points };
                 }
@@ -483,7 +592,24 @@ if (true) {
 }
 
 /***/ }),
-/* 7 */
+/* 12 */
+/***/ (function(module, exports) {
+
+// Calculates the bearing between two points in meter
+function bearingBetween(p1,p2){
+  var l1 = p1[0] * (Math.PI/180);
+  var l2 = p2[0] * (Math.PI/180);
+  var f1 = p1[1] * (Math.PI/180);
+  var f2 = p2[1] * (Math.PI/180);
+  var y = Math.sin(l2-l1)*Math.cos(f2);
+  var x = Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(l2-l1);
+  return Math.atan2(y,x)/(Math.PI/180);
+}
+
+module.exports = bearingBetween;
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports) {
 
 // Calculates the great circle distance between two points in meter
@@ -506,7 +632,44 @@ function distanceBetween(p1, p2 ) {
 module.exports = distanceBetween;
 
 /***/ }),
-/* 8 */
+/* 14 */
+/***/ (function(module, exports) {
+
+// Calculates the bearing between two points in meter
+function toDistanceBearing(point, dist, bearing){
+  var angularDist = dist/6371e3;
+  var bearing = bearing * (Math.PI/180);
+  var lng = point[0] * (Math.PI/180);
+  var lat = point[1] * (Math.PI/180);
+  var lat2 = Math.asin(Math.sin(lat)*Math.cos(angularDist)+Math.cos(lat)*Math.sin(angularDist)*Math.cos(bearing));
+  var lng2 = (lng+Math.atan2(Math.sin(bearing)*Math.sin(angularDist)*Math.cos(lat),Math.cos(angularDist)-Math.sin(lat)*Math.sin(lat2)));
+  lat2 = lat2/(Math.PI/180);
+  lng2 = ((lng2/(Math.PI/180))+540)%360-180;
+  return [lng2,lat2];
+}
+
+module.exports = toDistanceBearing;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+// Draws a circle withe a radius in meters
+function circle(feature){
+  var p = feature.geometry.coordinates[0];
+  var r = feature.properties.distance;
+  var geometry = {"type": "Polygon"};
+  geometry.coordinates = [[]];
+  for (var direction = 360; direction >= 0; direction-=5){
+    geometry.coordinates[0].push( ms.geometry.toDistanceBearing(p, r, direction));
+  }
+  return geometry;
+}
+
+module.exports = circle;
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports) {
 
 
@@ -563,7 +726,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 9 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************
@@ -571,10 +734,25 @@ Creating the base of milgraphics by importing milsymbol
 *************************************************************************************** */
 var ms = __webpack_require__(0);
 
+ms.addSIDCgraphics = __webpack_require__(8);
+
 ms.format = __webpack_require__(1);
 ms.geometry = __webpack_require__(2);
+ms.geometryConverter = __webpack_require__(3);
 
-ms.GraphicsLayer = __webpack_require__(3);
+ms.Graphic = __webpack_require__(4);
+
+ms.GraphicsLayer = __webpack_require__(5);
+
+/* ***************************************************************************************
+Letter based SIDC
+*************************************************************************************** */
+ms._getLetterSIDCgraphic = __webpack_require__(6);
+ms.addSIDCgraphics(__webpack_require__(7), 'letter');
+
+/* ***************************************************************************************
+Number based SIDC
+*************************************************************************************** */
 
 /* ***************************************************************************************
 Export ms to the world

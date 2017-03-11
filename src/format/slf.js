@@ -144,7 +144,7 @@ function SLF(xml) {
         return {type: "Circle", coordinates: parseCircle(location) }; // We will fix circles later
         break;
       case 'Corridor':
-        return {type: "Corridor", coordinates: parseArrow(location) }; // We fix Corridors later
+        return {type: "Corridor", coordinates: parseCorridor(location) }; // We fix Corridors later
         break;
       case 'Line':
         return {type: "LineString", coordinates: parseLine(location) };
@@ -202,7 +202,7 @@ function SLF(xml) {
                 }
                 if(feature.geometry && feature.geometry.type == 'Corridor'){
                   var points = feature.geometry.coordinates;
-                  feature.properties.distance = points[points.length];
+                  feature.properties.distance = points[points.length-1];
                   points.pop();
                   feature.geometry = {type: "MultiPoint", coordinates: points };
                 }
