@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -146,6 +146,7 @@ var geometryConverter = {};
 geometryConverter.circle = __webpack_require__(15);
 geometryConverter.corridor = __webpack_require__(16);
 geometryConverter.mainAttack = __webpack_require__(17);
+geometryConverter.supportingAttack = __webpack_require__(18);
 
 module.exports = geometryConverter;
 
@@ -225,7 +226,7 @@ function GraphicsLayer (data) {
   }
 };
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(18);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(19);
 
 module.exports = GraphicsLayer;
 
@@ -254,7 +255,7 @@ module.exports = function tacticalPoints(sidc,std2525){
 
 	sidc['G-F-ACFC--'] = ms.geometryConverter.circle; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
 	sidc['G-G-OLAGM-'] = ms.geometryConverter.mainAttack; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.MANATK
-
+	sidc['G-G-OLAGS-'] = ms.geometryConverter.supportingAttack; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.MANATK
 
 	// Systematic SitaWare compatibility
 	sidc['X---C-----'] = ms.geometryConverter.corridor;
@@ -784,6 +785,65 @@ module.exports = mainAttack;
 /* 18 */
 /***/ (function(module, exports) {
 
+// Draws a corridor with a widht in meters
+function supportingAttack(feature){
+  var direction, width;
+  var points = feature.geometry.coordinates;
+  var arrowHead = points.pop();
+  var widthHeadRatio = 0.7;
+  
+  var geometry = {"type": "LineString"};
+  geometry.coordinates = [];
+  
+  var geometry1 = [];
+  
+  // Width of the arrow
+  direction = ms.geometry.bearingBetween(points[0],points[1]);
+  var deltaDirection = direction - ms.geometry.bearingBetween(points[0],arrowHead);
+  //console.log(deltaDirection)
+  var distance = ms.geometry.distanceBetween(points[0],arrowHead);
+  var arrowHead2 = ms.geometry.toDistanceBearing(points[0], distance, direction+deltaDirection);
+  width = ms.geometry.distanceBetween(arrowHead,arrowHead2)/2;
+
+  direction = (ms.geometry.bearingBetween(points[points.length-1],points[points.length-2]) +360) % 360;
+  geometry1.push(ms.geometry.toDistanceBearing(points[points.length-1], width*widthHeadRatio, direction-90));
+
+  for (var j = points.length-2; j > 0; j--){
+    var direction1 = (ms.geometry.bearingBetween(points[j], points[j+1]) +360) % 360;
+    var direction2 = (ms.geometry.bearingBetween(points[j], points[j-1]) +360) % 360;
+    var factor = 1/Math.sin(((direction2-direction1)/2)*(Math.PI/180));
+    geometry1.push(ms.geometry.toDistanceBearing(points[j], (width*widthHeadRatio)*factor , ((direction1+direction2)/2)));
+  }
+  
+  // Arrowhead  
+  direction = (ms.geometry.bearingBetween(points[0],points[1])+180) % 360;
+  geometry1.push(ms.geometry.toDistanceBearing(arrowHead, width*(1-widthHeadRatio), direction+90))
+  geometry1.push(arrowHead);
+  geometry1.push(points[0]);
+  geometry1.push(arrowHead2);
+  geometry1.push(ms.geometry.toDistanceBearing(arrowHead2, width*(1-widthHeadRatio), direction-90)) 
+  
+  for (var j = 1; j < points.length-1; j++){
+    var direction1 = (ms.geometry.bearingBetween(points[j], points[j+1]) +360) % 360;
+    var direction2 = (ms.geometry.bearingBetween(points[j], points[j-1]) +360) % 360;
+    var factor = 1/Math.sin(((direction2-direction1)/2)*(Math.PI/180));
+    geometry1.push(ms.geometry.toDistanceBearing(points[j], -(width*widthHeadRatio)*factor, ((direction1+direction2)/2)));
+  }
+ 
+  direction = (ms.geometry.bearingBetween(points[points.length-1],points[points.length-2]) +360) % 360;
+  geometry1.push(ms.geometry.toDistanceBearing(points[points.length-1], width*widthHeadRatio, direction+90));
+  
+  geometry.coordinates = geometry1;
+  return geometry
+}
+
+
+module.exports = supportingAttack;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
 
 function asOpenLayers(crs) {
   var crs = crs || 'EPSG:3857';
@@ -844,7 +904,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************

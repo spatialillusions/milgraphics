@@ -4,7 +4,7 @@ module.exports = function tacticalPoints(sidc,std2525){
 
 	sidc['G-F-ACFC--'] = ms.geometryConverter.circle; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
 	sidc['G-G-OLAGM-'] = ms.geometryConverter.mainAttack; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.MANATK
-
+	sidc['G-G-OLAGS-'] = ms.geometryConverter.supportingAttack; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.MANATK
 
 	// Systematic SitaWare compatibility
 	sidc['X---C-----'] = ms.geometryConverter.corridor;
