@@ -34,7 +34,7 @@ function SLF(xml) {
       if (arrow.childNodes[i].nodeName == 'Points'){
         for (var j in arrow.childNodes[i].childNodes){
           if (arrow.childNodes[i].childNodes[j].nodeName == 'Point'){
-            coordinates.push( parsePoint(arrow.childNodes[i].childNodes[j]) );
+            coordinates.unshift( parsePoint(arrow.childNodes[i].childNodes[j]) );
           }
         }
       }

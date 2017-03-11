@@ -37,6 +37,12 @@ function asOpenLayers(crs) {
         });
         feature.setStyle(style);
     }
+    if (feature.getGeometry().getType() == 'MultiLineString') {
+      	var style = new ol.style.Style({
+          stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2})
+        });
+        feature.setStyle(style);
+    }
     if (feature.getGeometry().getType() == 'Polygon') {
       	var style = new ol.style.Style({
           stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2}),
