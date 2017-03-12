@@ -15,7 +15,7 @@ function GraphicsLayer (data) {
     }
     if (feature.geometry.type == 'MultiPoint') {
     //console.log('multipoint')
-    console.log(feature.properties.SIDC)
+    //console.log(feature.properties.SIDC)
       feature.graphic = new ms.Graphic(feature);
       //console.log('woo we got something special')
       feature.geometry = feature.graphic.geometry;

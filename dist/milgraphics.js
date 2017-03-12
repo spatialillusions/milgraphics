@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 23);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -147,9 +147,10 @@ var geometryConverter = {};
 geometryConverter.block = __webpack_require__(16);
 geometryConverter.circle = __webpack_require__(17);
 geometryConverter.corridor = __webpack_require__(18);
-geometryConverter.fix = __webpack_require__(19);
-geometryConverter.mainAttack = __webpack_require__(20);
-geometryConverter.supportingAttack = __webpack_require__(21);
+geometryConverter.delay = __webpack_require__(19);
+geometryConverter.fix = __webpack_require__(20);
+geometryConverter.mainAttack = __webpack_require__(21);
+geometryConverter.supportingAttack = __webpack_require__(22);
 
 module.exports = geometryConverter;
 
@@ -181,10 +182,10 @@ var Graphic = function (feature){
 	  var graphics = ms._graphicCache['letter-' + this.properties.numberSIDC];
 	  var genericSIDC = this.SIDC.substr(0,1)+'-'+this.SIDC.substr(2,1)+'-'+this.SIDC.substr(4,6);
     if(graphics[genericSIDC]){
-      console.log('Converting: ' + this.SIDC)
       this.geometry = graphics[genericSIDC].call(this, feature);
     }else{
       //TODO check if we need to clone here;
+      console.log('Failed to convert: ' + this.SIDC);
       this.geometry = feature.geometry;
     }
 	}else{
@@ -216,7 +217,7 @@ function GraphicsLayer (data) {
     }
     if (feature.geometry.type == 'MultiPoint') {
     //console.log('multipoint')
-    console.log(feature.properties.SIDC)
+    //console.log(feature.properties.SIDC)
       feature.graphic = new ms.Graphic(feature);
       //console.log('woo we got something special')
       feature.geometry = feature.graphic.geometry;
@@ -229,7 +230,7 @@ function GraphicsLayer (data) {
   }
 };
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(22);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(23);
 
 module.exports = GraphicsLayer;
 
@@ -257,6 +258,7 @@ module.exports = function tacticalPoints(sidc,std2525){
 	// Tactical Point Symbols =========================================================================
 	sidc['G-T-B-----'] = ms.geometryConverter.block; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
 	sidc['G-T-F-----'] = ms.geometryConverter.fix; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
+	sidc['G-T-L-----'] = ms.geometryConverter.delay; //
 
 	sidc['G-F-ACFC--'] = ms.geometryConverter.circle; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
 	sidc['G-G-OLAGM-'] = ms.geometryConverter.mainAttack; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.MANATK
@@ -796,6 +798,49 @@ module.exports = corridor;
 /***/ (function(module, exports) {
 
 // 
+function delay(feature){
+  var direction, width;
+  var points = feature.geometry.coordinates;
+  
+  var width = ms.geometry.distanceBetween(points[1],points[2]);
+  var bearing = ms.geometry.bearingBetween(points[0],points[1]);
+  
+  var geometry = {"type": "MultiLineString"};
+
+  geometry.coordinates = [];
+  
+  var geometry1 = [];
+  geometry1.push(points[0]);
+  geometry1.push(points[1]);
+//console.log('arrow bearing ' + bearing)
+//console.log('fjomp bearing ' + ms.geometry.bearingBetween(points[1],points[2]))
+  
+  var midpoint = ms.geometry.pointBetween(points[1],points[2],0.5);
+  var curveBearing = ms.geometry.bearingBetween(points[1],points[2]);
+  var directionFactor = (Math.abs(curveBearing)/curveBearing)*(Math.abs(bearing)/bearing);
+
+  for (var i = 10; i<180; i+=10){
+      geometry1.push(ms.geometry.toDistanceBearing(midpoint,width/2,curveBearing+(i*directionFactor)+180));
+  }
+
+  geometry1.push(points[2]);
+    
+  var geometry2 = [];
+  geometry2.push(ms.geometry.toDistanceBearing(points[0],width*0.4,bearing+45));
+  geometry2.push(points[0]);
+  geometry2.push(ms.geometry.toDistanceBearing(points[0],width*0.4,bearing-45));
+  
+  geometry.coordinates = [geometry1,geometry2];
+  return geometry
+}
+
+module.exports = delay;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+// 
 function fix(feature){
   var direction, width;
   var points = feature.geometry.coordinates;
@@ -842,7 +887,7 @@ function fix(feature){
 module.exports = fix;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -907,7 +952,7 @@ function mainAttack(feature){
 module.exports = mainAttack;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -966,7 +1011,7 @@ function supportingAttack(feature){
 module.exports = supportingAttack;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 
@@ -1029,7 +1074,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************
