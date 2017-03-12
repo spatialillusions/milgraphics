@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 20);
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -133,7 +133,8 @@ var geometry = {};
 
 geometry.bearingBetween = __webpack_require__(12);
 geometry.distanceBetween = __webpack_require__(13);
-geometry.toDistanceBearing = __webpack_require__(14);
+geometry.pointBetween = __webpack_require__(14);
+geometry.toDistanceBearing = __webpack_require__(15);
 
 module.exports = geometry;
 
@@ -143,10 +144,12 @@ module.exports = geometry;
 
 var geometryConverter = {};
 
-geometryConverter.circle = __webpack_require__(15);
-geometryConverter.corridor = __webpack_require__(16);
-geometryConverter.mainAttack = __webpack_require__(17);
-geometryConverter.supportingAttack = __webpack_require__(18);
+geometryConverter.block = __webpack_require__(16);
+geometryConverter.circle = __webpack_require__(17);
+geometryConverter.corridor = __webpack_require__(18);
+geometryConverter.fix = __webpack_require__(19);
+geometryConverter.mainAttack = __webpack_require__(20);
+geometryConverter.supportingAttack = __webpack_require__(21);
 
 module.exports = geometryConverter;
 
@@ -226,7 +229,7 @@ function GraphicsLayer (data) {
   }
 };
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(19);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(22);
 
 module.exports = GraphicsLayer;
 
@@ -252,6 +255,8 @@ module.exports = function(sidc,STD2525){
 // SIDC parts for tactical points in 2525C
 module.exports = function tacticalPoints(sidc,std2525){
 	// Tactical Point Symbols =========================================================================
+	sidc['G-T-B-----'] = ms.geometryConverter.block; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
+	sidc['G-T-F-----'] = ms.geometryConverter.fix; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
 
 	sidc['G-F-ACFC--'] = ms.geometryConverter.circle; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
 	sidc['G-G-OLAGM-'] = ms.geometryConverter.mainAttack; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.MANATK
@@ -260,6 +265,7 @@ module.exports = function tacticalPoints(sidc,std2525){
 	// Systematic SitaWare compatibility
 	sidc['X---C-----'] = ms.geometryConverter.corridor;
 	sidc['X---I-----'] = ms.geometryConverter.circle;
+	sidc['X---A-----'] = ms.geometryConverter.supportingAttack;
 
 	//2525B compatibility
 	sidc['G-F-AZIC--'] = ms.geometryConverter.circle;
@@ -434,10 +440,11 @@ function SLF(xml) {
     var coordinates = [0,0];
     for (var i in line.childNodes){
       if (line.childNodes[i].nodeName == 'StartPoint'){
-        coordinates[0] = parsePoint(line.childNodes[i]);
+        //we reverse them because MIR vs 2525
+        coordinates[1] = parsePoint(line.childNodes[i]);
       }
       if (line.childNodes[i].nodeName == 'EndPoint'){
-        coordinates[1] = parsePoint(line.childNodes[i]);
+        coordinates[0] = parsePoint(line.childNodes[i]);
       }
     }
     return coordinates;
@@ -487,7 +494,7 @@ function SLF(xml) {
         return {type: "TwoPointCorridor", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
         break;
       case 'TwoPointLine':
-        return {type: "MultiPoint", coordinates: parseTwoPointLine(location) }; //I know this isn't a line but they are stored in the same way.
+        return {type: "MultiPoint", coordinates: parseTwoPointLine(location) }; 
         break;
       default:
         console.log('SitaWare Layer File: TODO parse location type ' + locationType)
@@ -532,9 +539,15 @@ function SLF(xml) {
                   feature.geometry = {type: "MultiPoint", coordinates: points };
                 }
                 if(feature.geometry && feature.geometry.type == 'TwoPointCorridor'){
+                //TODO make sure that we are drawing this in the right direction
                   var points = feature.geometry.coordinates;
-                  feature.properties.distance = points[2];
-                  feature.geometry = {type: "MultiPoint", coordinates: [points[0],points[1]] };
+                  var coordinates = [];
+                  var width = points[2];
+                  var bearing = ms.geometry.bearingBetween(points[1],points[0]);
+                  coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing+90));
+                  coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing-90));
+                  coordinates.push(points[0]);
+                  feature.geometry = {type: "MultiPoint", coordinates: coordinates };
                 }
                 break;
               case 'SymbolCode':
@@ -644,6 +657,42 @@ module.exports = distanceBetween;
 /* 14 */
 /***/ (function(module, exports) {
 
+// Calculates a point between two other points at any fractional distance f between them
+function pointBetween(p1, p2, f){
+  var lng1 = p1[0];
+  var lng2 = p2[0];
+  var lat1 = p1[1];
+  var lat2 = p2[1];
+
+  var lngRad1 = lng1 * (Math.PI/180);
+  var lngRad2 = lng2 * (Math.PI/180);
+  var latRad1 = lat1 * (Math.PI/180);
+  var latRad2 = lat2 * (Math.PI/180);
+
+  var deltaLat = (lat2-lat1) * (Math.PI/180) ;
+  var delataLng = (lng2-lng1) * (Math.PI/180) ;
+  var a = Math.sin(deltaLat/2) * Math.sin(deltaLat/2) + Math.cos(latRad1) * Math.cos(latRad2) * Math.sin(delataLng/2) * Math.sin(delataLng/2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); // Angular distance
+
+  var A = Math.sin((1-f)*c) / Math.sin(c);
+  var B = Math.sin(f*c) / Math.sin(c);
+
+  var x = A * Math.cos(latRad1) * Math.cos(lngRad1) + B * Math.cos(latRad2) * Math.cos(lngRad2);
+  var y = A * Math.cos(latRad1) * Math.sin(lngRad1) + B * Math.cos(latRad2) * Math.sin(lngRad2);
+  var z = A * Math.sin(latRad1) + B * Math.sin(latRad2);
+    
+  lng3 = Math.atan2(y, x) / (Math.PI/180);
+  lat3 = (((Math.atan2(z, Math.sqrt(x*x + y*y)) / (Math.PI/180)) + 540)%360 - 180);
+    
+  return [lng3,lat3];
+}
+
+module.exports = pointBetween;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
 // Calculates the bearing between two points in meter
 function toDistanceBearing(point, dist, bearing){
   var angularDist = dist/6371e3;
@@ -660,7 +709,33 @@ function toDistanceBearing(point, dist, bearing){
 module.exports = toDistanceBearing;
 
 /***/ }),
-/* 15 */
+/* 16 */
+/***/ (function(module, exports) {
+
+// 
+function block(feature){
+  var direction, width;
+  var points = feature.geometry.coordinates;
+  
+  var geometry = {"type": "MultiLineString"};
+
+  geometry.coordinates = [];
+  
+  var geometry1 = [];
+  geometry1.push(points[0],points[1]);
+  
+  var geometry2 = [];
+  var midpoint = ms.geometry.pointBetween(points[0],points[1],0.5);
+  geometry2.push(points[2],midpoint);
+  
+  geometry.coordinates = [geometry1,geometry2];
+  return geometry
+}
+
+module.exports = block;
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -678,7 +753,7 @@ function circle(feature){
 module.exports = circle;
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -717,7 +792,57 @@ function corridor(feature){
 module.exports = corridor;
 
 /***/ }),
-/* 17 */
+/* 19 */
+/***/ (function(module, exports) {
+
+// 
+function fix(feature){
+  var direction, width;
+  var points = feature.geometry.coordinates;
+  
+  var length = ms.geometry.distanceBetween(points[0],points[1]);
+  var bearing = ms.geometry.bearingBetween(points[0],points[1]);
+  var widht = length * 0.10;
+  
+  var geometry = {"type": "MultiLineString"};
+
+  geometry.coordinates = [];
+  
+  var geometry1 = [];
+  
+  geometry1.push(points[0]);
+  
+  geometry1.push(ms.geometry.pointBetween(points[0],points[1],0.2));
+
+  geometry1.push(ms.geometry.toDistanceBearing(ms.geometry.pointBetween(points[0],points[1],0.25),widht,bearing+90));
+  geometry1.push(ms.geometry.toDistanceBearing(ms.geometry.pointBetween(points[0],points[1],0.3),widht,bearing-90));
+  geometry1.push(ms.geometry.toDistanceBearing(ms.geometry.pointBetween(points[0],points[1],0.35),widht,bearing+90));
+  geometry1.push(ms.geometry.toDistanceBearing(ms.geometry.pointBetween(points[0],points[1],0.4),widht,bearing-90));
+  geometry1.push(ms.geometry.toDistanceBearing(ms.geometry.pointBetween(points[0],points[1],0.45),widht,bearing+90));
+  geometry1.push(ms.geometry.toDistanceBearing(ms.geometry.pointBetween(points[0],points[1],0.5),widht,bearing-90));
+  geometry1.push(ms.geometry.toDistanceBearing(ms.geometry.pointBetween(points[0],points[1],0.55),widht,bearing+90));
+  geometry1.push(ms.geometry.toDistanceBearing(ms.geometry.pointBetween(points[0],points[1],0.6),widht,bearing-90));
+  geometry1.push(ms.geometry.toDistanceBearing(ms.geometry.pointBetween(points[0],points[1],0.65),widht,bearing+90));
+  geometry1.push(ms.geometry.toDistanceBearing(ms.geometry.pointBetween(points[0],points[1],0.7),widht,bearing-90));
+  geometry1.push(ms.geometry.toDistanceBearing(ms.geometry.pointBetween(points[0],points[1],0.75),widht,bearing+90));
+
+  geometry1.push(ms.geometry.pointBetween(points[0],points[1],0.8));
+    
+  geometry1.push(points[1]);
+  
+  var geometry2 = [];
+  geometry2.push(ms.geometry.toDistanceBearing(points[0],widht*1.5,bearing+45));
+  geometry2.push(points[0]);
+  geometry2.push(ms.geometry.toDistanceBearing(points[0],widht*1.5,bearing-45));
+  
+  geometry.coordinates = [geometry1,geometry2];
+  return geometry
+}
+
+module.exports = fix;
+
+/***/ }),
+/* 20 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -782,7 +907,7 @@ function mainAttack(feature){
 module.exports = mainAttack;
 
 /***/ }),
-/* 18 */
+/* 21 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -841,7 +966,7 @@ function supportingAttack(feature){
 module.exports = supportingAttack;
 
 /***/ }),
-/* 19 */
+/* 22 */
 /***/ (function(module, exports) {
 
 
@@ -904,7 +1029,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 20 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************

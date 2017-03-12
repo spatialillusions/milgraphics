@@ -109,10 +109,11 @@ function SLF(xml) {
     var coordinates = [0,0];
     for (var i in line.childNodes){
       if (line.childNodes[i].nodeName == 'StartPoint'){
-        coordinates[0] = parsePoint(line.childNodes[i]);
+        //we reverse them because MIR vs 2525
+        coordinates[1] = parsePoint(line.childNodes[i]);
       }
       if (line.childNodes[i].nodeName == 'EndPoint'){
-        coordinates[1] = parsePoint(line.childNodes[i]);
+        coordinates[0] = parsePoint(line.childNodes[i]);
       }
     }
     return coordinates;
@@ -162,7 +163,7 @@ function SLF(xml) {
         return {type: "TwoPointCorridor", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
         break;
       case 'TwoPointLine':
-        return {type: "MultiPoint", coordinates: parseTwoPointLine(location) }; //I know this isn't a line but they are stored in the same way.
+        return {type: "MultiPoint", coordinates: parseTwoPointLine(location) }; 
         break;
       default:
         console.log('SitaWare Layer File: TODO parse location type ' + locationType)
@@ -207,9 +208,15 @@ function SLF(xml) {
                   feature.geometry = {type: "MultiPoint", coordinates: points };
                 }
                 if(feature.geometry && feature.geometry.type == 'TwoPointCorridor'){
+                //TODO make sure that we are drawing this in the right direction
                   var points = feature.geometry.coordinates;
-                  feature.properties.distance = points[2];
-                  feature.geometry = {type: "MultiPoint", coordinates: [points[0],points[1]] };
+                  var coordinates = [];
+                  var width = points[2];
+                  var bearing = ms.geometry.bearingBetween(points[1],points[0]);
+                  coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing+90));
+                  coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing-90));
+                  coordinates.push(points[0]);
+                  feature.geometry = {type: "MultiPoint", coordinates: coordinates };
                 }
                 break;
               case 'SymbolCode':
