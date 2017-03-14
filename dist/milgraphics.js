@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 26);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -119,9 +119,9 @@ var R=new function(){this._colorModes={},this._dashArrays={pending:"4,4",anticip
 
 var format = {};
 
-format.GeoJSON = __webpack_require__(9);
-format.NVG = __webpack_require__(10);
-format.SLF = __webpack_require__(11);
+format.GeoJSON = __webpack_require__(11);
+format.NVG = __webpack_require__(12);
+format.SLF = __webpack_require__(13);
 
 module.exports = format;
 
@@ -131,10 +131,10 @@ module.exports = format;
 
 var geometry = {};
 
-geometry.bearingBetween = __webpack_require__(12);
-geometry.distanceBetween = __webpack_require__(13);
-geometry.pointBetween = __webpack_require__(14);
-geometry.toDistanceBearing = __webpack_require__(15);
+geometry.bearingBetween = __webpack_require__(14);
+geometry.distanceBetween = __webpack_require__(15);
+geometry.pointBetween = __webpack_require__(16);
+geometry.toDistanceBearing = __webpack_require__(17);
 
 module.exports = geometry;
 
@@ -144,13 +144,13 @@ module.exports = geometry;
 
 var geometryConverter = {};
 
-geometryConverter.block = __webpack_require__(16);
-geometryConverter.circle = __webpack_require__(17);
-geometryConverter.corridor = __webpack_require__(18);
-geometryConverter.delay = __webpack_require__(19);
-geometryConverter.fix = __webpack_require__(20);
-geometryConverter.mainAttack = __webpack_require__(21);
-geometryConverter.supportingAttack = __webpack_require__(22);
+geometryConverter.block = __webpack_require__(18);
+geometryConverter.circle = __webpack_require__(19);
+geometryConverter.corridor = __webpack_require__(20);
+geometryConverter.delay = __webpack_require__(21);
+geometryConverter.fix = __webpack_require__(22);
+geometryConverter.mainAttack = __webpack_require__(23);
+geometryConverter.supportingAttack = __webpack_require__(24);
 
 module.exports = geometryConverter;
 
@@ -230,7 +230,7 @@ function GraphicsLayer (data) {
   }
 };
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(23);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(25);
 
 module.exports = GraphicsLayer;
 
@@ -253,16 +253,325 @@ module.exports = function(sidc,STD2525){
 /* 7 */
 /***/ (function(module, exports) {
 
-// SIDC parts for tactical points in 2525C
+// Tactical graphics in 2525C + some extra
 module.exports = function tacticalPoints(sidc,std2525){
-	// Tactical Point Symbols =========================================================================
-	sidc['G-T-B-----'] = ms.geometryConverter.block; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
-	sidc['G-T-F-----'] = ms.geometryConverter.fix; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
-	sidc['G-T-L-----'] = ms.geometryConverter.delay; //
-
-	sidc['G-F-ACFC--'] = ms.geometryConverter.circle; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
-	sidc['G-G-OLAGM-'] = ms.geometryConverter.mainAttack; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.MANATK
-	sidc['G-G-OLAGS-'] = ms.geometryConverter.supportingAttack; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.MANATK
+  sidc['G-T-B-----'] = ms.geometryConverter.block;//TACGRP.TSK.BLK
+  //sidc['G-T-H-----'] = [];//TACGRP.TSK.BRH
+  //sidc['G-T-Y-----'] = [];//TACGRP.TSK.BYS
+  //sidc['G-T-C-----'] = [];//TACGRP.TSK.CNZ
+  //sidc['G-T-X-----'] = [];//TACGRP.TSK.CLR
+  //sidc['G-T-J-----'] = [];//TACGRP.TSK.CNT
+  //sidc['G-T-K-----'] = [];//TACGRP.TSK.CATK
+  //sidc['G-T-KF----'] = [];//TACGRP.TSK.CATK.CATKF
+  sidc['G-T-L-----'] = ms.geometryConverter.delay;//TACGRP.TSK.DLY
+  //sidc['G-T-T-----'] = [];//TACGRP.TSK.DRT
+  sidc['G-T-F-----'] = ms.geometryConverter.fix;//TACGRP.TSK.FIX
+  //sidc['G-T-A-----'] = [];//TACGRP.TSK.FLWASS
+  //sidc['G-T-AS----'] = [];//TACGRP.TSK.FLWASS.FLWSUP
+  //sidc['G-T-E-----'] = [];//TACGRP.TSK.ISL
+  //sidc['G-T-O-----'] = [];//TACGRP.TSK.OCC
+  //sidc['G-T-P-----'] = [];//TACGRP.TSK.PNE
+  //sidc['G-T-R-----'] = [];//TACGRP.TSK.RIP
+  //sidc['G-T-Q-----'] = [];//TACGRP.TSK.RTN
+  //sidc['G-T-M-----'] = [];//TACGRP.TSK.RTM
+  //sidc['G-T-S-----'] = [];//TACGRP.TSK.SCE
+  //sidc['G-T-U-----'] = [];//TACGRP.TSK.SEC
+  //sidc['G-T-US----'] = [];//TACGRP.TSK.SEC.SCN
+  //sidc['G-T-UG----'] = [];//TACGRP.TSK.SEC.GUD
+  //sidc['G-T-UC----'] = [];//TACGRP.TSK.SEC.COV
+  //sidc['G-T-Z-----'] = [];//TACGRP.TSK.SZE
+  //sidc['G-T-W-----'] = [];//TACGRP.TSK.WDR
+  //sidc['G-T-WP----'] = [];//TACGRP.TSK.WDR.WDRUP
+  //sidc['G-G-------'] = [];//TACGRP.C2GM
+  //sidc['G-G-G-----'] = [];//TACGRP.C2GM.GNL
+  //sidc['G-G-GP----'] = [];//TACGRP.C2GM.GNL.PNT
+  //sidc['G-G-GPU---'] = [];//TACGRP.C2GM.GNL.PNT.USW
+  //sidc['G-G-GPUU--'] = [];//TACGRP.C2GM.GNL.PNT.USW.UH2
+  //sidc['G-G-GPW---'] = [];//TACGRP.C2GM.GNL.PNT.WPN
+  //sidc['G-G-GL----'] = [];//TACGRP.C2GM.GNL.LNE
+  //sidc['G-G-GLB---'] = [];//TACGRP.C2GM.GNL.LNE.BNDS
+  //sidc['G-G-GLF---'] = [];//TACGRP.C2GM.GNL.LNE.FLOT
+  //sidc['G-G-GLC---'] = [];//TACGRP.C2GM.GNL.LNE.LOC
+  //sidc['G-G-GLP---'] = [];//TACGRP.C2GM.GNL.LNE.PHELNE
+  //sidc['G-G-GLL---'] = [];//TACGRP.C2GM.GNL.LNE.LITLNE
+  //sidc['G-G-GA----'] = [];//TACGRP.C2GM.GNL.ARS
+  //sidc['G-G-GAG---'] = [];//TACGRP.C2GM.GNL.ARS.GENARA
+  //sidc['G-G-GAA---'] = [];//TACGRP.C2GM.GNL.ARS.ABYARA
+  //sidc['G-G-GAE---'] = [];//TACGRP.C2GM.GNL.ARS.EMTARA
+  //sidc['G-G-GAF---'] = [];//TACGRP.C2GM.GNL.ARS.FTFDAR
+  //sidc['G-G-GAD---'] = [];//TACGRP.C2GM.GNL.ARS.DRPZ
+  //sidc['G-G-GAX---'] = [];//TACGRP.C2GM.GNL.ARS.EZ
+  //sidc['G-G-GAL---'] = [];//TACGRP.C2GM.GNL.ARS.LZ
+  //sidc['G-G-GAP---'] = [];//TACGRP.C2GM.GNL.ARS.PZ
+  //sidc['G-G-GAS---'] = [];//TACGRP.C2GM.GNL.ARS.SRHARA
+  //sidc['G-G-GAY---'] = [];//TACGRP.C2GM.GNL.ARS.LAARA
+  //sidc['G-G-GAZ---'] = [];//TACGRP.C2GM.GNL.ARS.AIRFZ
+  //sidc['G-G-A-----'] = [];//TACGRP.C2GM.AVN
+  //sidc['G-G-AP----'] = [];//TACGRP.C2GM.AVN.PNT
+  //sidc['G-G-AL----'] = [];//TACGRP.C2GM.AVN.LNE
+  //sidc['G-G-ALC---'] = [];//TACGRP.C2GM.AVN.LNE.ACDR
+  //sidc['G-G-ALM---'] = [];//TACGRP.C2GM.AVN.LNE.MRR
+  //sidc['G-G-ALS---'] = [];//TACGRP.C2GM.AVN.LNE.SAAFR
+  //sidc['G-G-ALU---'] = [];//TACGRP.C2GM.AVN.LNE.UAR
+  //sidc['G-G-ALL---'] = [];//TACGRP.C2GM.AVN.LNE.LLTR
+  //sidc['G-G-AA----'] = [];//TACGRP.C2GM.AVN.ARS
+  //sidc['G-G-AAR---'] = [];//TACGRP.C2GM.AVN.ARS.ROZ
+  //sidc['G-G-AAF---'] = [];//TACGRP.C2GM.AVN.ARS.SHRDEZ
+  //sidc['G-G-AAH---'] = [];//TACGRP.C2GM.AVN.ARS.HIDACZ
+  //sidc['G-G-AAM---'] = [];//TACGRP.C2GM.AVN.ARS.MEZ
+  //sidc['G-G-AAML--'] = [];//TACGRP.C2GM.AVN.ARS.MEZ.LAMEZ
+  //sidc['G-G-AAMH--'] = [];//TACGRP.C2GM.AVN.ARS.MEZ.HAMEZ
+  //sidc['G-G-AAW---'] = [];//TACGRP.C2GM.AVN.ARS.WFZ
+  //sidc['G-G-P-----'] = [];//TACGRP.C2GM.DCPN
+  //sidc['G-G-PD----'] = [];//TACGRP.C2GM.DCPN.DMY
+  //sidc['G-G-PA----'] = [];//TACGRP.C2GM.DCPN.AAFF
+  //sidc['G-G-PF----'] = [];//TACGRP.C2GM.DCPN.DAFF
+  //sidc['G-G-PM----'] = [];//TACGRP.C2GM.DCPN.DMA
+  //sidc['G-G-PY----'] = [];//TACGRP.C2GM.DCPN.DMAF
+  //sidc['G-G-PC----'] = [];//ACGRP.C2GM.DCPN.DMYMD
+  //sidc['G-G-D-----'] = [];//TACGRP.C2GM.DEF
+  //sidc['G-G-DP----'] = [];//TACGRP.C2GM.DEF.PNT
+  //sidc['G-G-DL----'] = [];//TACGRP.C2GM.DEF.LNE
+  //sidc['G-G-DLF---'] = [];//TACGRP.C2GM.DEF.LNE.FEBA
+  //sidc['G-G-DLP---'] = [];//TACGRP.C2GM.DEF.LNE.PDF
+  //sidc['G-G-DA----'] = [];//TACGRP.C2GM.DEF.ARS
+  //sidc['G-G-DAB---'] = [];//TACGRP.C2GM.DEF.ARS.BTLPSN
+  //sidc['G-G-DABP--'] = [];//TACGRP.C2GM.DEF.ARS.BTLPSN.PBNO
+  //sidc['G-G-DAE---'] = [];//TACGRP.C2GM.DEF.ARS.EMTARA
+  //sidc['G-G-O-----'] = [];//TACGRP.C2GM.OFF
+  //sidc['G-G-OP----'] = [];//TACGRP.C2GM.OFF.PNT
+  //sidc['G-G-OL----'] = [];//TACGRP.C2GM.OFF.LNE
+  //sidc['G-G-OLA---'] = [];//TACGRP.C2GM.OFF.LNE.AXSADV
+  //sidc['G-G-OLAV--'] = [];//TACGRP.C2GM.OFF.LNE.AXSADV.AVN
+  //sidc['G-G-OLAA--'] = [];//TACGRP.C2GM.OFF.LNE.AXSADV.ABN
+  //sidc['G-G-OLAR--'] = [];//TACGRP.C2GM.OFF.LNE.AXSADV.ATK
+  //sidc['G-G-OLAG--'] = [];//TACGRP.C2GM.OFF.LNE.AXSADV.GRD
+  sidc['G-G-OLAGM-'] = ms.geometryConverter.mainAttack;//TACGRP.C2GM.OFF.LNE.AXSADV.GRD.MANATK
+  sidc['G-G-OLAGS-'] = ms.geometryConverter.supportingAttack;//TACGRP.C2GM.OFF.LNE.AXSADV.GRD.SUPATK
+  //sidc['G-G-OLK---'] = [];//TACGRP.C2GM.OFF.LNE.DIRATK
+  //sidc['G-G-OLKA--'] = [];//TACGRP.C2GM.OFF.LNE.DIRATK.AVN
+  //sidc['G-G-OLKG--'] = [];//TACGRP.C2GM.OFF.LNE.DIRATK.GRD
+  //sidc['G-G-OLKGM-'] = [];//TACGRP.C2GM.OFF.LNE.DIRATK.GRD.MANATK
+  //sidc['G-G-OLKGS-'] = [];//TACGRP.C2GM.OFF.LNE.DIRATK.GRD.SUPATK
+  //sidc['G-G-OLF---'] = [];//TACGRP.C2GM.OFF.LNE.FCL
+  //sidc['G-G-OLI---'] = [];//TACGRP.C2GM.OFF.LNE.INFNLE
+  //sidc['G-G-OLL---'] = [];//TACGRP.C2GM.OFF.LNE.LMTADV
+  //sidc['G-G-OLT---'] = [];//TACGRP.C2GM.OFF.LNE.LD
+  //sidc['G-G-OLC---'] = [];//TACGRP.C2GM.OFF.LNE.LDLC
+  //sidc['G-G-OLP---'] = [];//TACGRP.C2GM.OFF.LNE.PLD
+  //sidc['G-G-OA----'] = [];//TACGRP.C2GM.OFF.ARS
+  //sidc['G-G-OAA---'] = [];//TACGRP.C2GM.OFF.ARS.ASTPSN
+  //sidc['G-G-OAK---'] = [];//TACGRP.C2GM.OFF.ARS.ATKPSN
+  //sidc['G-G-OAF---'] = [];//TACGRP.C2GM.OFF.ARS.AFP
+  //sidc['G-G-OAS---'] = [];//TACGRP.C2GM.OFF.ARS.SFP
+  //sidc['G-G-OAO---'] = [];//TACGRP.C2GM.OFF.ARS.OBJ
+  //sidc['G-G-OAP---'] = [];//TACGRP.C2GM.OFF.ARS.PBX
+  //sidc['G-G-S-----'] = [];//TACGRP.C2GM.SPL
+  //sidc['G-G-SL----'] = [];//TACGRP.C2GM.SPL.LNE
+  //sidc['G-G-SLA---'] = [];//TACGRP.C2GM.SPL.LNE.AMB
+  //sidc['G-G-SLH---'] = [];//TACGRP.C2GM.SPL.LNE.HGL
+  //sidc['G-G-SLR---'] = [];//TACGRP.C2GM.SPL.LNE.REL
+  //sidc['G-G-SLB---'] = [];//TACGRP.C2GM.SPL.LNE.BRGH
+  //sidc['G-G-SA----'] = [];//TACGRP.C2GM.SPL.ARA
+  //sidc['G-G-SAO---'] = [];//TACGRP.C2GM.SPL.ARA.AOO
+  //sidc['G-G-SAA---'] = [];//TACGRP.C2GM.SPL.ARA.AHD
+  //sidc['G-G-SAE---'] = [];//TACGRP.C2GM.SPL.ARA.ENCMT
+  //sidc['G-G-SAN---'] = [];//TACGRP.C2GM.SPL.ARA.NAI
+  //sidc['G-G-SAT---'] = [];//TACGRP.C2GM.SPL.ARA.TAIS
+  //sidc['G-M-------'] = [];//TACGRP.MOBSU
+  //sidc['G-M-O-----'] = [];//TACGRP.MOBSU.OBST
+  //sidc['G-M-OG----'] = [];//TACGRP.MOBSU.OBST.GNL
+  //sidc['G-M-OGB---'] = [];//TACGRP.MOBSU.OBST.GNL.BLT
+  //sidc['G-M-OGL---'] = [];//TACGRP.MOBSU.OBST.GNL.LNE
+  //sidc['G-M-OGZ---'] = [];//TACGRP.MOBSU.OBST.GNL.Z
+  //sidc['G-M-OGF---'] = [];//TACGRP.MOBSU.OBST.GNL.OFA
+  //sidc['G-M-OGR---'] = [];//TACGRP.MOBSU.OBST.GNL.ORA
+  //sidc['G-M-OS----'] = [];//TACGRP.MOBSU.OBST.ABS
+  //sidc['G-M-OA----'] = [];//TACGRP.MOBSU.OBST.ATO
+  //sidc['G-M-OAD---'] = [];//TACGRP.MOBSU.OBST.ATO.ATD
+  //sidc['G-M-OADU--'] = [];//TACGRP.MOBSU.OBST.ATO.ATD.ATDUC
+  //sidc['G-M-OADC--'] = [];//TACGRP.MOBSU.OBST.ATO.ATD.ATDC
+  //sidc['G-M-OAR---'] = [];//TACGRP.MOBSU.OBST.ATO.ATDATM
+  //sidc['G-M-OAO---'] = [];//TACGRP.MOBSU.OBST.ATO.TDTSM
+  //sidc['G-M-OAW---'] = [];//TACGRP.MOBSU.OBST.ATO.ATW
+  //sidc['G-M-OM----'] = [];//TACGRP.MOBSU.OBST.MNE
+  //sidc['G-M-OMC---'] = [];//TACGRP.MOBSU.OBST.MNE.MCLST
+  //sidc['G-M-OF----'] = [];//TACGRP.MOBSU.OBST.MNEFLD
+  //sidc['G-M-OFD---'] = [];//TACGRP.MOBSU.OBST.MNEFLD.DYN
+  //sidc['G-M-OFG---'] = [];//TACGRP.MOBSU.OBST.MNEFLD.GAP
+  //sidc['G-M-OFA---'] = [];//TACGRP.MOBSU.OBST.MNEFLD.MNDARA
+  //sidc['G-M-OE----'] = [];//TACGRP.MOBSU.OBST.OBSEFT
+  //sidc['G-M-OEB---'] = [];//TACGRP.MOBSU.OBST.OBSEFT.BLK
+  //sidc['G-M-OEF---'] = [];//TACGRP.MOBSU.OBST.OBSEFT.FIX
+  //sidc['G-M-OET---'] = [];//TACGRP.MOBSU.OBST.OBSEFT.TUR
+  //sidc['G-M-OED---'] = [];//TACGRP.MOBSU.OBST.OBSEFT.DRT
+  //sidc['G-M-OU----'] = [];//TACGRP.MOBSU.OBST.UXO
+  //sidc['G-M-OR----'] = [];//TACGRP.MOBSU.OBST.RCBB
+  //sidc['G-M-ORP---'] = [];//TACGRP.MOBSU.OBST.RCBB.PLND
+  //sidc['G-M-ORS---'] = [];//TACGRP.MOBSU.OBST.RCBB.SAFE
+  //sidc['G-M-ORA---'] = [];//TACGRP.MOBSU.OBST.RCBB.ABP
+  //sidc['G-M-ORC---'] = [];//TACGRP.MOBSU.OBST.RCBB.EXCD
+  //sidc['G-M-OT----'] = [];//TACGRP.MOBSU.OBST.TRIPWR
+  //sidc['G-M-OW----'] = [];//TACGRP.MOBSU.OBST.WREOBS
+  //sidc['G-M-OWU---'] = [];//TACGRP.MOBSU.OBST.WREOBS.USP
+  //sidc['G-M-OWS---'] = [];//TACGRP.MOBSU.OBST.WREOBS.SNGFNC
+  //sidc['G-M-OWD---'] = [];//TACGRP.MOBSU.OBST.WREOBS.DBLFNC
+  //sidc['G-M-OWA---'] = [];//TACGRP.MOBSU.OBST.WREOBS.DAFNC
+  //sidc['G-M-OWL---'] = [];//TACGRP.MOBSU.OBST.WREOBS.LWFNC
+  //sidc['G-M-OWH---'] = [];//TACGRP.MOBSU.OBST.WREOBS.HWFNC
+  //sidc['G-M-OWC---'] = [];//TACGRP.MOBSU.OBST.WREOBS.CCTA
+  //sidc['G-M-OWCS--'] = [];//TACGRP.MOBSU.OBST.WREOBS.CCTA.SNG
+  //sidc['G-M-OWCD--'] = [];//TACGRP.MOBSU.OBST.WREOBS.CCTA.DBLSTD
+  //sidc['G-M-OWCT--'] = [];//TACGRP.MOBSU.OBST.WREOBS.CCTA.TRISTD
+  //sidc['G-M-OH----'] = [];//TACGRP.MOBSU.OBST.AVN
+  //sidc['G-M-OHT---'] = [];//TACGRP.MOBSU.OBST.AVN.TWR
+  //sidc['G-M-OHO---'] = [];//TACGRP.MOBSU.OBST.AVN.OHWIRE
+  //sidc['G-M-B-----'] = [];//TACGRP.MOBSU.OBSTBP
+  //sidc['G-M-BD----'] = [];//TACGRP.MOBSU.OBSTBP.DFTY
+  //sidc['G-M-BDE---'] = [];//TACGRP.MOBSU.OBSTBP.DFTY.ESY
+  //sidc['G-M-BDD---'] = [];//TACGRP.MOBSU.OBSTBP.DFTY.DFT
+  //sidc['G-M-BDI---'] = [];//TACGRP.MOBSU.OBSTBP.DFTY.IMP
+  //sidc['G-M-BC----'] = [];//TACGRP.MOBSU.OBSTBP.CSGSTE
+  //sidc['G-M-BCA---'] = [];//TACGRP.MOBSU.OBSTBP.CSGSTE.ASTCA
+  //sidc['G-M-BCB---'] = [];//TACGRP.MOBSU.OBSTBP.CSGSTE.BRG
+  //sidc['G-M-BCF---'] = [];//TACGRP.MOBSU.OBSTBP.CSGSTE.FRY
+  //sidc['G-M-BCE---'] = [];//TACGRP.MOBSU.OBSTBP.CSGSTE.FRDESY
+  //sidc['G-M-BCD---'] = [];//TACGRP.MOBSU.OBSTBP.CSGSTE.FRDDFT
+  //sidc['G-M-BCL---'] = [];//TACGRP.MOBSU.OBSTBP.CSGSTE.LANE
+  //sidc['G-M-BCR---'] = [];//TACGRP.MOBSU.OBSTBP.CSGSTE.RFT
+  //sidc['G-M-S-----'] = [];//TACGRP.MOBSU.SU
+  //sidc['G-M-SL----'] = [];//TACGRP.MOBSU.SU.FTFDLN
+  //sidc['G-M-SW----'] = [];//TACGRP.MOBSU.SU.FEWS
+  //sidc['G-M-SP----'] = [];//TACGRP.MOBSU.SU.STRGPT
+  //sidc['G-M-N-----'] = [];//TACGRP.MOBSU.CBRN
+  //sidc['G-M-NM----'] = [];//TACGRP.MOBSU.CBRN.MSDZ
+  //sidc['G-M-NR----'] = [];//TACGRP.MOBSU.CBRN.RADA
+  //sidc['G-M-NB----'] = [];//TACGRP.MOBSU.CBRN.BIOCA
+  //sidc['G-M-NC----'] = [];//TACGRP.MOBSU.CBRN.CMLCA
+  //sidc['G-M-NE----'] = [];//TACGRP.MOBSU.CBRN.REEVNT
+  //sidc['G-M-ND----'] = [];//TACGRP.MOBSU.CBRN.DECONP
+  //sidc['G-M-NL----'] = [];//TACGRP.MOBSU.CBRN.DRCL
+  //sidc['G-F-------'] = [];//TACGRP.FSUPP
+  //sidc['G-F-P-----'] = [];//TACGRP.FSUPP.PNT
+  //sidc['G-F-PT----'] = [];//TACGRP.FSUPP.PNT.TGT
+  //sidc['G-F-PC----'] = [];//TACGRP.FSUPP.PNT.C2PNT
+  //sidc['G-F-L-----'] = [];//TACGRP.FSUPP.LNE
+  //sidc['G-F-LT----'] = [];//TACGRP.FSUPP.LNE.LNRTGT
+  //sidc['G-F-LTS---'] = [];//TACGRP.FSUPP.LNE.LNRTGT.LSTGT
+  //sidc['G-F-LTF---'] = [];//TACGRP.FSUPP.LNE.LNRTGT.FPF
+  //sidc['G-F-LC----'] = [];//TACGRP.FSUPP.LNE.C2LNE
+  //sidc['G-F-LCF---'] = [];//TACGRP.FSUPP.LNE.C2LNE.FSCL
+  //sidc['G-F-LCC---'] = [];//TACGRP.FSUPP.LNE.C2LNE.CFL
+  //sidc['G-F-LCN---'] = [];//TACGRP.FSUPP.LNE.C2LNE.NFL
+  //sidc['G-F-LCR---'] = [];//TACGRP.FSUPP.LNE.C2LNE.RFL
+  //sidc['G-F-LCM---'] = [];//TACGRP.FSUPP.LNE.C2LNE.MFP
+  //sidc['G-F-A-----'] = [];//TACGRP.FSUPP.ARS
+  //sidc['G-F-AT----'] = [];//TACGRP.FSUPP.ARS.ARATGT
+  //sidc['G-F-ATG---'] = [];//TACGRP.FSUPP.ARS.ARATGT.SGTGT
+  //sidc['G-F-ATS---'] = [];//TACGRP.FSUPP.ARS.ARATGT.SMK
+  //sidc['G-F-ATB---'] = [];//TACGRP.FSUPP.ARS.ARATGT.BMARA
+  //sidc['G-F-AC----'] = [];//TACGRP.FSUPP.ARS.C2ARS
+  //sidc['G-F-ACS---'] = [];//TACGRP.FSUPP.ARS.C2ARS.FSA
+  //sidc['G-F-ACSI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.FSA.IRR
+  //sidc['G-F-ACSR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.FSA.RTG
+  sidc['G-F-ACSC--'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.FSA.CIRCLR
+  //sidc['G-F-ACA---'] = [];//TACGRP.FSUPP.ARS.C2ARS.ACA
+  //sidc['G-F-ACAI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.ACA.IRR
+  //sidc['G-F-ACAR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.ACA.RTG
+  sidc['G-F-ACAC--'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.ACA.CIRCLR
+  //sidc['G-F-ACF---'] = [];//TACGRP.FSUPP.ARS.C2ARS.FFA
+  //sidc['G-F-ACFI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.FFA.IRR
+  //sidc['G-F-ACFR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.FFA.RTG
+  sidc['G-F-ACFC--'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
+  //sidc['G-F-ACN---'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA
+  //sidc['G-F-ACNI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA.IRR
+  //sidc['G-F-ACNR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA.RTG
+  sidc['G-F-ACNC--'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.NFA.CIRCLR
+  //sidc['G-F-ACR---'] = [];//TACGRP.FSUPP.ARS.C2ARS.RFA
+  //sidc['G-F-ACRI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.RFA.IRR
+  //sidc['G-F-ACRR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.RFA.RTG
+  sidc['G-F-ACRC--'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.RFA.CIRCLR
+  //sidc['G-F-ACP---'] = [];//TACGRP.FSUPP.ARS.C2ARS.PAA
+  //sidc['G-F-ACPR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.PAA.RTG
+  sidc['G-F-ACPC--'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.PAA.CIRCLR
+  //sidc['G-F-ACE---'] = [];//TACGRP.FSUPP.ARS.C2ARS.SNSZ
+  //sidc['G-F-ACEI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.SNSZ.IRR
+  //sidc['G-F-ACER--'] = [];//TACGRP.FSUPP.ARS.C2ARS.SNSZ.RTG
+  sidc['G-F-ACEC--'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.SNSZ.CIRCLR
+  //sidc['G-F-ACD---'] = [];//TACGRP.FSUPP.ARS.C2ARS.DA
+  //sidc['G-F-ACDI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.DA.IRR
+  //sidc['G-F-ACDR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.DA.RTG
+  sidc['G-F-ACDC--'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.DA.CIRCLR
+  //sidc['G-F-ACZ---'] = [];//TACGRP.FSUPP.ARS.C2ARS.ZOR
+  //sidc['G-F-ACZI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.ZOR.IRR
+  //sidc['G-F-ACZR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.ZOR.RTG
+  sidc['G-F-ACZC--'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.ZOR.CIRCLR
+  //sidc['G-F-ACB---'] = [];//TACGRP.FSUPP.ARS.C2ARS.TBA
+  //sidc['G-F-ACBI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.TBA.IRR
+  //sidc['G-F-ACBR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.TBA.RTG
+  sidc['G-F-ACBC--'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.TBA.CIRCLR
+  //sidc['G-F-ACV---'] = [];//TACGRP.FSUPP.ARS.C2ARS.TVAR
+  //sidc['G-F-ACVI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.TVAR.IRR
+  //sidc['G-F-ACVR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.TVAR.RTG
+  sidc['G-F-ACVC--'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.TVAR.CIRCLR
+  //sidc['G-F-ACT---'] = [];//TACGRP.FSUPP.ARS.C2ARS.TGMF
+  //sidc['G-F-AZ----'] = [];//TACGRP.FSUPP.ARS.TGTAQZ
+  //sidc['G-F-AZI---'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.ATIZ
+  //sidc['G-F-AZII--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.ATIZ.IRR
+  //sidc['G-F-AZIR--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.ATIZ.RTG
+  //sidc['G-F-AZX---'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFFZ
+  //sidc['G-F-AZXI--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFFZ.IRR
+  //sidc['G-F-AZXR--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFFZ.RTG
+  //sidc['G-F-AZC---'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CNS
+  //sidc['G-F-AZCI--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CNS.IRR
+  //sidc['G-F-AZCR--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CNS.RTG
+  //sidc['G-F-AZF---'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFZ
+  //sidc['G-F-AZFI--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFZ.IRR
+  //sidc['G-F-AZFR--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFZ.RTG
+  //sidc['G-F-AX----'] = [];//TACGRP.FSUPP.ARS.WPNRF
+  sidc['G-F-AXC---'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.WPNRF.CIRCLR
+  //sidc['G-F-AXS---'] = [];//TACGRP.FSUPP.ARS.WPNRF.SCR
+  //sidc['G-F-AK----'] = [];//TACGRP.FSUPP.ARS.KLBOX
+  //sidc['G-F-AKB---'] = [];//TACGRP.FSUPP.ARS.KLBOX.BLUE
+  sidc['G-F-AKBC--'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.KLBOX.BLUE.CIRCLR
+  //sidc['G-F-AKBI--'] = [];//TACGRP.FSUPP.ARS.KLBOX.BLUE.IRR
+  //sidc['G-F-AKBR--'] = [];//TACGRP.FSUPP.ARS.KLBOX.BLUE.RTG
+  //sidc['G-F-AKP---'] = [];//TACGRP.FSUPP.ARS.KLBOX.PURPLE
+  sidc['G-F-AKPC--'] = ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.KLBOX.PURPLE.CIRCLR
+  //sidc['G-F-AKPI--'] = [];//TACGRP.FSUPP.ARS.KLBOX.PURPLE.IRR
+  //sidc['G-F-AKPR--'] = [];//TACGRP.FSUPP.ARS.KLBOX.PURPLE.RTG
+  //sidc['G-S-------'] = [];//TACGRP.CSS
+  //sidc['G-S-P-----'] = [];//TACGRP.CSS.PNT
+  //sidc['G-S-L-----'] = [];//TACGRP.CSS.LNE
+  //sidc['G-S-LC----'] = [];//TACGRP.CSS.LNE.CNY
+  //sidc['G-S-LCM---'] = [];//TACGRP.CSS.LNE.CNY.MCNY
+  //sidc['G-S-LCH---'] = [];//TACGRP.CSS.LNE.CNY.HCNY
+  //sidc['G-S-LR----'] = [];//TACGRP.CSS.LNE.SLPRUT
+  //sidc['G-S-LRM---'] = [];//TACGRP.CSS.LNE.SLPRUT.MSRUT
+  //sidc['G-S-LRA---'] = [];//TACGRP.CSS.LNE.SLPRUT.ASRUT
+  //sidc['G-S-LRO---'] = [];//TACGRP.CSS.LNE.SLPRUT.1WTRFF
+  //sidc['G-S-LRT---'] = [];//TACGRP.CSS.LNE.SLPRUT.ATRFF
+  //sidc['G-S-LRW---'] = [];//TACGRP.CSS.LNE.SLPRUT.2WTRFF
+  //sidc['G-S-A-----'] = [];//TACGRP.CSS.ARA
+  //sidc['G-S-AD----'] = [];//TACGRP.CSS.ARA.DHA
+  //sidc['G-S-AE----'] = [];//TACGRP.CSS.ARA.EPWHA
+  //sidc['G-S-AR----'] = [];//TACGRP.CSS.ARA.FARP
+  //sidc['G-S-AH----'] = [];//TACGRP.CSS.ARA.RHA
+  //sidc['G-S-AS----'] = [];//TACGRP.CSS.ARA.SUPARS
+  //sidc['G-S-ASB---'] = [];//TACGRP.CSS.ARA.SUPARS.BSA
+  //sidc['G-S-ASD---'] = [];//TACGRP.CSS.ARA.SUPARS.DSA
+  //sidc['G-S-ASR---'] = [];//TACGRP.CSS.ARA.SUPARS.RSA
+  //sidc['G-O-------'] = [];//TACGRP.OTH
+  //sidc['G-O-E-----'] = [];//TACGRP.OTH.ER
+  //sidc['G-O-H-----'] = [];//TACGRP.OTH.HAZ
+  //sidc['G-O-HN----'] = [];//TACGRP.OTH.HAZ.NVGL
+  //sidc['G-O-S-----'] = [];//TACGRP.OTH.SSUBSR
+  //sidc['G-O-B-----'] = [];//TACGRP.OTH.BERLNE
+  //sidc['G-O-BE----'] = [];//TACGRP.OTH.BERLNE.ELC
+  //sidc['G-O-BA----'] = [];//TACGRP.OTH.BERLNE.ACU
+  //sidc['G-O-BT----'] = [];//TACGRP.OTH.BERLNE.TPD
+  //sidc['G-O-BO----'] = [];//TACGRP.OTH.BERLNE.EOPI
+  //sidc['G-O-F-----'] = [];//TACGRP.OTH.FIX
 
 	// Systematic SitaWare compatibility
 	sidc['X---C-----'] = ms.geometryConverter.corridor;
@@ -276,6 +585,324 @@ module.exports = function tacticalPoints(sidc,std2525){
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(module) {// Tactical graphics in APP6-B
+module.exportS= function tacticalPoints(sidc,std2525){
+  //sidc['G---------'] = [];//2.X
+  //sidc['G-T-------'] = [];//2.X.1
+  //sidc['G-T-G-----'] = [];//2.X.1.1
+  //sidc['G-T-GB----'] = [];//2.X.1.1.1
+  //sidc['G-T-GH----'] = [];//2.X.1.1.2
+  //sidc['G-T-GY----'] = [];//2.X.1.1.3
+  //sidc['G-T-GC----'] = [];//2.X.1.1.4
+  //sidc['G-T-GX----'] = [];//2.X.1.1.5
+  //sidc['G-T-GJ----'] = [];//2.X.1.1.6
+  //sidc['G-T-GK----'] = [];//2.X.1.1.7
+  //sidc['G-T-GKF---'] = [];//2.X.1.1.7.1
+  //sidc['G-T-GL----'] = [];//2.X.1.1.8
+  //sidc['G-T-GLT---'] = [];//2.X.1.1.8.1
+  //sidc['G-T-GT----'] = [];//2.X.1.1.10
+  //sidc['G-T-GF----'] = [];//2.X.1.1.11
+  //sidc['G-T-GA----'] = [];//2.X.1.1.12
+  //sidc['G-T-GAS---'] = [];//2.X.1.1.12.1
+  //sidc['G-T-GE----'] = [];//2.X.1.1.14
+  //sidc['G-T-GO----'] = [];//2.X.1.1.16
+  //sidc['G-T-GP----'] = [];//2.X.1.1.17
+  //sidc['G-T-GR----'] = [];//2.X.1.1.18
+  //sidc['G-T-GQ----'] = [];//2.X.1.1.19
+  //sidc['G-T-GM----'] = [];//2.X.1.1.20
+  //sidc['G-T-GS----'] = [];//2.X.1.1.21
+  //sidc['G-T-GSS---'] = [];//2.X.1.1.21.1
+  //sidc['G-T-GSG---'] = [];//2.X.1.1.21.2
+  //sidc['G-T-GSC---'] = [];//2.X.1.1.21.3
+  //sidc['G-T-GZ----'] = [];//2.X.1.1.22
+  //sidc['G-T-GW----'] = [];//2.X.1.1.23
+  //sidc['G-T-GWP---'] = [];//2.X.1.1.23.1
+  //sidc['G-C-------'] = [];//2.X.2
+  //sidc['G-C-M-----'] = [];//2.X.2.1
+  //sidc['G-C-MG----'] = [];//2.X.2.1.1
+  //sidc['G-C-MGP---'] = [];//2.X.2.1.1.1
+  //sidc['G-C-MGPF--'] = [];//2.X.2.1.1.1.1
+  //sidc['G-C-MGL---'] = [];//2.X.2.1.1.2
+  //sidc['G-C-MGLB--'] = [];//2.X.2.1.1.2.1
+  //sidc['G-C-MGLBG-'] = [];//2.X.2.1.1.2.1.1
+  //sidc['G-C-MGLBGF'] = [];//2.X.2.1.1.2.1.1.1
+  //sidc['G-C-MGLBGO'] = [];//2.X.2.1.1.2.1.1.2
+  //sidc['G-C-MGLBGK'] = [];//2.X.2.1.1.2.1.1.3
+  //sidc['G-C-MGLBGS'] = [];//2.X.2.1.1.2.1.1.4
+  //sidc['G-C-MGLBL-'] = [];//2.X.2.1.1.2.1.2
+  //sidc['G-C-MGLBF-'] = [];//2.X.2.1.1.2.1.3
+  //sidc['G-C-MGLBR-'] = [];//2.X.2.1.1.2.1.4
+  //sidc['G-C-MGLF--'] = [];//2.X.2.1.1.2.2
+  //sidc['G-C-MGLL--'] = [];//2.X.2.1.1.2.3
+  //sidc['G-C-MGLP--'] = [];//2.X.2.1.1.2.4
+  //sidc['G-C-MGLE--'] = [];//2.X.2.1.1.2.5
+  //sidc['G-C-MGLEE-'] = [];//2.X.2.1.1.2.5.1
+  //sidc['G-C-MGLEA-'] = [];//2.X.2.1.1.2.5.2
+  //sidc['G-C-MGLET-'] = [];//2.X.2.1.1.2.5.3
+  //sidc['G-C-MGLEO-'] = [];//2.X.2.1.1.2.5.4
+  //sidc['G-C-MGA---'] = [];//2.X.2.1.1.3
+  //sidc['G-C-MGAU--'] = [];//2.X.2.1.1.3.1
+  //sidc['G-C-MGAUA-'] = [];//2.X.2.1.1.3.1.1
+  //sidc['G-C-MGAUAF'] = [];//2.X.2.1.1.3.1.1.1
+  //sidc['G-C-MGAUAP'] = [];//2.X.2.1.1.3.1.1.2
+  //sidc['G-C-MGAUAE'] = [];//2.X.2.1.1.3.1.1.3
+  //sidc['G-C-MGAUAS'] = [];//2.X.2.1.1.3.1.1.4
+  //sidc['G-C-MGAUB-'] = [];//2.X.2.1.1.3.1.2
+  //sidc['G-C-MGAUBO'] = [];//2.X.2.1.1.3.1.2.1
+  //sidc['G-C-MGAUBM'] = [];//2.X.2.1.1.3.1.2.2
+  //sidc['G-C-MGAUBR'] = [];//2.X.2.1.1.3.1.2.3
+  //sidc['G-C-MGAS--'] = [];//2.X.2.1.1.3.2
+  //sidc['G-C-MGASD-'] = [];//2.X.2.1.1.3.2.1
+  //sidc['G-C-MGASE-'] = [];//2.X.2.1.1.3.2.2
+  //sidc['G-C-MGASL-'] = [];//2.X.2.1.1.3.2.3
+  //sidc['G-C-MGASP-'] = [];//2.X.2.1.1.3.2.4
+  //sidc['G-C-MGASS-'] = [];//2.X.2.1.1.3.2.5
+  //sidc['G-C-MGASM-'] = [];//2.X.2.1.1.3.2.6
+  //sidc['G-C-MGASG-'] = [];//2.X.2.1.1.3.2.7
+  //sidc['G-C-MGASF-'] = [];//2.X.2.1.1.3.2.8
+  //sidc['G-C-MGAST-'] = [];//2.X.2.1.1.3.2.9
+  //sidc['G-C-MA----'] = [];//2.X.2.1.2
+  //sidc['G-C-MAA---'] = [];//2.X.2.1.2.1
+  //sidc['G-C-MAL---'] = [];//2.X.2.1.2.2
+  //sidc['G-C-MALC--'] = [];//2.X.2.1.2.2.1
+  //sidc['G-C-MALM--'] = [];//2.X.2.1.2.2.2
+  //sidc['G-C-MALS--'] = [];//2.X.2.1.2.2.3
+  //sidc['G-C-MALU--'] = [];//2.X.2.1.2.2.4
+  //sidc['G-C-MALL--'] = [];//2.X.2.1.2.2.5
+  //sidc['G-C-MALIN-'] = [];//2.X.2.1.2.2.6
+  //sidc['G-C-MALIF-'] = [];//2.X.2.1.2.2.7
+  //sidc['G-C-MAV---'] = [];//2.X.2.1.2.3
+  //sidc['G-C-MAVR--'] = [];//2.X.2.1.2.3.1
+  //sidc['G-C-MAVF--'] = [];//2.X.2.1.2.3.2
+  //sidc['G-C-MAVH--'] = [];//2.X.2.1.2.3.3
+  //sidc['G-C-MAVM--'] = [];//2.X.2.1.2.3.4
+  //sidc['G-C-MAVML-'] = [];//2.X.2.1.2.3.4.1
+  //sidc['G-C-MAVMH-'] = [];//2.X.2.1.2.3.4.2
+  //sidc['G-C-MAVW--'] = [];//2.X.2.1.2.3.5
+  //sidc['G-C-MD----'] = [];//2.X.2.1.3
+  //sidc['G-C-MDD---'] = [];//2.X.2.1.3.1
+  //sidc['G-C-MDA---'] = [];//2.X.2.1.3.2
+  //sidc['G-C-MDF---'] = [];//2.X.2.1.3.3
+  //sidc['G-C-MDM---'] = [];//2.X.2.1.3.4
+  //sidc['G-C-MDY---'] = [];//2.X.2.1.3.5
+  //sidc['G-C-MM----'] = [];//2.X.2.1.4
+  //sidc['G-C-MMP---'] = [];//2.X.2.1.4.1
+  //sidc['G-C-MMPB--'] = [];//2.X.2.1.4.1.2
+  //sidc['G-C-MMPBO-'] = [];//2.X.2.1.4.1.2.1
+  //sidc['G-C-MMPBP-'] = [];//2.X.2.1.4.1.2.2
+  //sidc['G-C-MMPBL-'] = [];//2.X.2.1.4.1.2.3
+  //sidc['G-C-*'] = [];//2.X.2.1.4.1.3
+  //sidc['G-C-MMPSF-'] = [];//2.X.2.1.4.1.3.1
+  //sidc['G-C-MMPSE-'] = [];//2.X.2.1.4.1.3.2
+  //sidc['G-C-MMD---'] = [];//2.X.2.1.4.2
+  //sidc['G-C-MMDF--'] = [];//2.X.2.1.4.2.1
+  //sidc['G-C-MMDFA-'] = [];//2.X.2.1.4.2.1.1
+  //sidc['G-C-MMDFP-'] = [];//2.X.2.1.4.2.1.2
+  //sidc['G-C-MMDP--'] = [];//2.X.2.1.4.2.2
+  //sidc['G-C-MMA---'] = [];//2.X.2.1.4.3
+  //sidc['G-C-MMAE--'] = [];//2.X.2.1.4.3.1
+  //sidc['G-C-MO----'] = [];//2.X.2.1.5
+  //sidc['G-C-MOP---'] = [];//2.X.2.1.5.1
+  //sidc['G-C-MOL---'] = [];//2.X.2.1.5.2
+  //sidc['G-C-MOLA--'] = [];//2.X.2.1.5.2.1
+  //sidc['G-C-MOLAF-'] = [];//2.X.2.1.5.2.1.1
+  //sidc['G-C-MOLAA-'] = [];//2.X.2.1.5.2.1.2
+  //sidc['G-C-MOLAH-'] = [];//2.X.2.1.5.2.1.3
+  //sidc['G-C-MOLAS-'] = [];//2.X.2.1.5.2.1.4
+  //sidc['G-C-MOLAM-'] = [];//2.X.2.1.5.2.1.5
+  //sidc['G-C-MOLAO-'] = [];//2.X.2.1.5.2.1.6
+  //sidc['G-C-MOLAE-'] = [];//2.X.2.1.5.2.1.7
+  //sidc['G-C-MOLAT-'] = [];//2.X.2.1.5.2.1.8
+  //sidc['G-C-MOLD--'] = [];//2.X.2.1.5.2.2
+  //sidc['G-C-MOLDF-'] = [];//2.X.2.1.5.2.2.1
+  //sidc['G-C-MOLDY-'] = [];//2.X.2.1.5.2.2.2
+  //sidc['G-C-MOLDE-'] = [];//2.X.2.1.5.2.2.3
+  //sidc['G-C-MOLDT-'] = [];//2.X.2.1.5.2.2.4
+  //sidc['G-C-MOLDG-'] = [];//2.X.2.1.5.2.2.5
+  //sidc['G-C-MOLDR-'] = [];//2.X.2.1.5.2.2.6
+  //sidc['G-C-MOLDS-'] = [];//2.X.2.1.5.2.2.7
+  //sidc['G-C-MOLDM-'] = [];//2.X.2.1.5.2.2.8
+  //sidc['G-C-MOLDO-'] = [];//2.X.2.1.5.2.2.9
+  //sidc['G-C-MOLF--'] = [];//2.X.2.1.5.2.3
+  //sidc['G-C-MOLI--'] = [];//2.X.2.1.5.2.4
+  //sidc['G-C-MOLL--'] = [];//2.X.2.1.5.2.5
+  //sidc['G-C-MOLT--'] = [];//2.X.2.1.5.2.6
+  //sidc['G-C-MOLC--'] = [];//2.X.2.1.5.2.7
+  //sidc['G-C-MOLP--'] = [];//2.X.2.1.5.2.8
+  //sidc['G-C-MOLR--'] = [];//2.X.2.1.5.2.9
+  //sidc['G-C-MOO---'] = [];//2.X.2.1.5.3
+  //sidc['G-C-MOOA--'] = [];//2.X.2.1.5.3.1
+  //sidc['G-C-MOOT--'] = [];//2.X.2.1.5.3.2
+  //sidc['G-C-MOOTF-'] = [];//2.X.2.1.5.3.2.1
+  //sidc['G-C-MOOTC-'] = [];//2.X.2.1.5.3.2.2
+  //sidc['G-C-MOOTP-'] = [];//2.X.2.1.5.3.2.3
+  //sidc['G-C-MOOP--'] = [];//2.X.2.1.5.3.3
+  //sidc['G-C-MOOS--'] = [];//2.X.2.1.5.3.4
+  //sidc['G-C-MOOJ--'] = [];//2.X.2.1.5.3.5
+  //sidc['G-C-MOOX--'] = [];//2.X.2.1.5.3.6
+  //sidc['G-C-MOOR--'] = [];//2.X.2.1.5.3.7
+  //sidc['G-C-MS----'] = [];//2.X.2.1.6
+  //sidc['G-C-MSG---'] = [];//2.X.2.1.6.1
+  //sidc['G-C-MSGE--'] = [];//2.X.2.1.6.1.1
+  //sidc['G-C-MSGEF-'] = [];//2.X.2.1.6.1.1.1
+  //sidc['G-C-MSGEY-'] = [];//2.X.2.1.6.1.1.2
+  //sidc['G-C-MSGA--'] = [];//2.X.2.1.6.1.2
+  //sidc['G-C-MSL---'] = [];//2.X.2.1.6.2
+  //sidc['G-C-MSLA--'] = [];//2.X.2.1.6.2.1
+  //sidc['G-C-MSLB--'] = [];//2.X.2.1.6.2.2
+  //sidc['G-C-MSLH--'] = [];//2.X.2.1.6.2.3
+  //sidc['G-C-MSLR--'] = [];//2.X.2.1.6.2.4
+  //sidc['G-C-MSA---'] = [];//2.X.2.1.6.3
+  //sidc['G-C-MSAO--'] = [];//2.X.2.1.6.3.1
+  //sidc['G-C-MSAN--'] = [];//2.X.2.1.6.3.2
+  //sidc['G-C-MSAT--'] = [];//2.X.2.1.6.3.3
+  //sidc['G-C-B-----'] = [];//2.X.2.2
+  //sidc['G-C-BO----'] = [];//2.X.2.2.1
+  //sidc['G-C-BOG---'] = [];//2.X.2.2.1.1
+  //sidc['G-C-BOGB--'] = [];//2.X.2.2.1.1.1
+  //sidc['G-C-BOGL--'] = [];//2.X.2.2.1.1.2
+  //sidc['G-C-BOGZ--'] = [];//2.X.2.2.1.1.3
+  //sidc['G-C-BOA---'] = [];//2.X.2.2.1.2
+  //sidc['G-C-BOAT--'] = [];//2.X.2.2.1.3
+  //sidc['G-C-BOATO-'] = [];//2.X.2.2.1.3.1
+  //sidc['G-C-BOATM-'] = [];//2.X.2.2.1.3.2
+  //sidc['G-C-BOATW-'] = [];//2.X.2.2.1.3.4
+  //sidc['G-C-BOAM--'] = [];//2.X.2.2.1.5
+  //sidc['G-C-BOAMW-'] = [];//2.X.2.2.1.5.7
+  //sidc['G-C-BOAI--'] = [];//2.X.2.2.1.6
+  //sidc['G-C-BOAIL-'] = [];//2.X.2.2.1.6.3
+  //sidc['G-C-BOAIG-'] = [];//2.X.2.2.1.6.4
+  //sidc['G-C-BOAIM-'] = [];//2.X.2.2.1.6.9
+  //sidc['G-C-BOAV--'] = [];//2.X.2.2.1.7
+  //sidc['G-C-BOAE--'] = [];//2.X.2.2.1.8
+  //sidc['G-C-BOAEB-'] = [];//2.X.2.2.1.8.1
+  //sidc['G-C-BOAEF-'] = [];//2.X.2.2.1.8.2
+  //sidc['G-C-BOAET-'] = [];//2.X.2.2.1.8.3
+  //sidc['G-C-BOAED-'] = [];//2.X.2.2.1.8.4
+  //sidc['G-C-BOAF--'] = [];//2.X.2.2.1.9
+  //sidc['G-C-BOAFR-'] = [];//2.X.2.2.1.9.1
+  //sidc['G-C-BOAU--'] = [];//2.X.2.2.1.10
+  //sidc['G-C-BOAR--'] = [];//2.X.2.2.1.11
+  //sidc['G-C-BOARP-'] = [];//2.X.2.2.1.11.1
+  //sidc['G-C-BOARE-'] = [];//2.X.2.2.1.11.2
+  //sidc['G-C-BOARS-'] = [];//2.X.2.2.1.11.3
+  //sidc['G-C-BOARC-'] = [];//2.X.2.2.1.11.4
+  //sidc['G-C-BOAP--'] = [];//2.X.2.2.1.12
+  //sidc['G-C-BOAW--'] = [];//2.X.2.2.1.13
+  //sidc['G-C-BOAWU-'] = [];//2.X.2.2.1.13.1
+  //sidc['G-C-BOAWS-'] = [];//2.X.2.2.1.13.2
+  //sidc['G-C-BOAWD-'] = [];//2.X.2.2.1.13.3
+  //sidc['G-C-BOAWA-'] = [];//2.X.2.2.1.13.4
+  //sidc['G-C-BOAWL-'] = [];//2.X.2.2.1.13.5
+  //sidc['G-C-BOAWH-'] = [];//2.X.2.2.1.13.6
+  //sidc['G-C-BOAWC-'] = [];//2.X.2.2.1.13.7
+  //sidc['G-C-BOAWB-'] = [];//2.X.2.2.1.13.8
+  //sidc['G-C-BOAWR-'] = [];//2.X.2.2.1.13.9
+  //sidc['G-C-BY----'] = [];//2.X.2.2.2
+  //sidc['G-C-BYO---'] = [];//2.X.2.2.2.1
+  //sidc['G-C-BYOE--'] = [];//2.X.2.2.2.1.1
+  //sidc['G-C-BYOD--'] = [];//2.X.2.2.2.1.2
+  //sidc['G-C-BYOI--'] = [];//2.X.2.2.2.1.3
+  //sidc['G-C-BYC---'] = [];//2.X.2.2.2.2
+  //sidc['G-C-BYCA--'] = [];//2.X.2.2.2.2.1
+  //sidc['G-C-BYCB--'] = [];//2.X.2.2.2.2.2
+  //sidc['G-C-BYCF--'] = [];//2.X.2.2.2.2.3
+  //sidc['G-C-BYCE--'] = [];//2.X.2.2.2.2.4
+  //sidc['G-C-BYCD--'] = [];//2.X.2.2.2.2.5
+  //sidc['G-C-BYCL--'] = [];//2.X.2.2.2.2.6
+  //sidc['G-C-BYCR--'] = [];//2.X.2.2.2.2.7
+  //sidc['G-C-BS----'] = [];//2.X.2.2.3
+  //sidc['G-C-BSL---'] = [];//2.X.2.2.3.3
+  //sidc['G-C-BSW---'] = [];//2.X.2.2.3.4
+  //sidc['G-C-BSP---'] = [];//2.X.2.2.3.5
+  //sidc['G-C-BW----'] = [];//2.X.2.2.4
+  //sidc['G-C-BWM---'] = [];//2.X.2.2.4.1
+  //sidc['G-C-BWA---'] = [];//2.X.2.2.4.7
+  //sidc['G-C-BWC---'] = [];//2.X.2.2.4.8
+  //sidc['G-C-BWH---'] = [];//2.X.2.2.4.9
+  //sidc['G-C-BWK---'] = [];//2.X.2.2.4.10
+  //sidc['G-C-BWD---'] = [];//2.X.2.2.4.11
+  //sidc['G-C-BWR---'] = [];//2.X.2.2.4.12
+  //sidc['G-C-F-----'] = [];//2.X.2.3
+  //sidc['G-C-FS----'] = [];//2.X.2.3.1
+  //sidc['G-C-FST---'] = [];//2.X.2.3.1.1
+  //sidc['G-C-FSTC--'] = [];//2.X.2.3.1.1.2
+  //sidc['G-C-FL----'] = [];//2.X.2.3.2
+  //sidc['G-C-FLC---'] = [];//2.X.2.3.2.1
+  //sidc['G-C-FLF---'] = [];//2.X.2.3.2.2
+  //sidc['G-C-FLT---'] = [];//2.X.2.3.2.3
+  //sidc['G-C-FLTP--'] = [];//2.X.2.3.2.3.1
+  //sidc['G-C-FLK---'] = [];//2.X.2.3.2.4
+  //sidc['G-C-FLKP--'] = [];//2.X.2.3.2.4.1
+  //sidc['G-C-FLKS--'] = [];//2.X.2.3.2.4.2
+  //sidc['G-C-FLKT--'] = [];//2.X.2.3.2.4.3
+  //sidc['G-C-FLN---'] = [];//2.X.2.3.2.5
+  //sidc['G-C-FLR---'] = [];//2.X.2.3.2.6
+  //sidc['G-C-FA----'] = [];//2.X.2.3.3
+  //sidc['G-C-FAS---'] = [];//2.X.2.3.3.1
+  //sidc['G-C-FAC---'] = [];//2.X.2.3.3.2
+  //sidc['G-C-FAT---'] = [];//2.X.2.3.3.3
+  //sidc['G-C-FAR---'] = [];//2.X.2.3.3.4
+  //sidc['G-C-FARS--'] = [];//2.X.2.3.3.4.1
+  //sidc['G-C-FARU--'] = [];//2.X.2.3.3.4.2
+  //sidc['G-C-FAB---'] = [];//2.X.2.3.3.5
+  //sidc['G-C-FAI---'] = [];//2.X.2.3.3.6
+  //sidc['G-C-FAZ---'] = [];//2.X.2.3.3.7
+  //sidc['G-C-FAZT--'] = [];//2.X.2.3.3.7.1
+  //sidc['G-C-FAZU--'] = [];//2.X.2.3.3.7.2
+  //sidc['G-C-FAN---'] = [];//2.X.2.3.3.8
+  //sidc['G-C-FAD---'] = [];//2.X.2.3.3.10
+  //sidc['G-C-FAP---'] = [];//2.X.2.3.3.11
+  //sidc['G-C-FATA--'] = [];//2.X.2.3.3.12
+  //sidc['*-*-*'] = [];//G
+  //sidc['G-C-SP----'] = [];//2.X.2.4.1
+  //sidc['G-C-SPQ---'] = [];//2.X.2.4.1.14
+  //sidc['G-C-SPM---'] = [];//2.X.2.4.1.15
+  //sidc['G-C-SL----'] = [];//2.X.2.4.2
+  //sidc['G-C-SLC---'] = [];//2.X.2.4.2.1
+  //sidc['G-C-SLCM--'] = [];//2.X.2.4.2.1.1
+  //sidc['G-C-SLCH--'] = [];//2.X.2.4.2.1.2
+  //sidc['G-C-SLR---'] = [];//2.X.2.4.2.2
+  //sidc['G-C-SLRM--'] = [];//2.X.2.4.2.2.1
+  //sidc['G-C-SLRA--'] = [];//2.X.2.4.2.2.2
+  //sidc['G-C-SLRO--'] = [];//2.X.2.4.2.2.3
+  //sidc['G-C-SLRT--'] = [];//2.X.2.4.2.2.4
+  //sidc['G-C-SLRW--'] = [];//2.X.2.4.2.2.5
+  //sidc['G-C-SA----'] = [];//2.X.2.4.3
+  //sidc['G-C-SAD---'] = [];//2.X.2.4.3.1
+  //sidc['G-C-SAP---'] = [];//2.X.2.4.3.2
+  //sidc['G-C-SAR---'] = [];//2.X.2.4.3.3
+  //sidc['G-C-SAH---'] = [];//2.X.2.4.3.4
+  //sidc['G-C-SAT---'] = [];//2.X.2.4.3.5
+  //sidc['G-C-SATB--'] = [];//2.X.2.4.3.5.1
+  //sidc['G-C-SATD--'] = [];//2.X.2.4.3.5.2
+  //sidc['G-C-SATR--'] = [];//2.X.2.4.3.5.3
+  //sidc['G-C-SARR--'] = [];//2.X.2.4.3.6
+  //sidc['G-C-O-----'] = [];//2.X.2.5
+  //sidc['G-C-OXE---'] = [];//2.X.2.5.1.1
+  //sidc['G-C-OXU---'] = [];//2.X.2.5.1.2
+  //sidc['G-C-OXW---'] = [];//2.X.2.5.1.3
+  //sidc['G-C-OXST--'] = [];//2.X.2.5.1.8
+  //sidc['G-C-OXA---'] = [];//2.X.2.5.1.10
+  //sidc['G-C-OL----'] = [];//2.X.2.5.3
+  //sidc['*-*-*'] = [];//G
+  //sidc['*-*-*'] = [];//G
+  //sidc['*-*-*'] = [];//G
+  //sidc['*-*-*'] = [];//G
+  //sidc['G-O-------'] = [];//2.X.3
+  //sidc['G-O-V-----'] = [];//2.X.3.1
+  //sidc['G-O-L-----'] = [];//2.X.3.2
+  //sidc['G-O-P-----'] = [];//2.X.3.3
+  //sidc['G-O-PJ----'] = [];//2.X.3.3.13
+  //sidc['G-O-I-----'] = [];//2.X.3.4
+
+}
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)(module)))
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports) {
 
 var addSIDCgraphics = function(parts, type){
@@ -291,7 +918,35 @@ var addSIDCgraphics = function(parts, type){
 module.exports = addSIDCgraphics;
 
 /***/ }),
-/* 9 */
+/* 10 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 11 */
 /***/ (function(module, exports) {
 
 
@@ -317,7 +972,7 @@ function GeoJSON(data, mapping) {
 module.exports = GeoJSON;
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports) {
 
 
@@ -328,7 +983,7 @@ function NVG(data) {
 module.exports = NVG;
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -490,7 +1145,7 @@ function SLF(xml) {
         return {type: "MultiPoint", coordinates: parseLine(location) }; //I know this isn't a line but they are stored in the same way.
         break;
       case 'Rectangle':
-        return {type: "TwoPointCorridor", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
+        return {type: "Rectangle", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
         break;
       case 'TwoPointCorridor':
         return {type: "TwoPointCorridor", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
@@ -535,6 +1190,12 @@ function SLF(xml) {
                   feature.geometry = {type: "MultiPoint", coordinates: [points[0]] };
                 }
                 if(feature.geometry && feature.geometry.type == 'Corridor'){
+                  var points = feature.geometry.coordinates;
+                  feature.properties.distance = points[points.length-1];
+                  points.pop();
+                  feature.geometry = {type: "MultiPoint", coordinates: points };
+                }
+                if(feature.geometry && feature.geometry.type == 'Rectangle'){
                   var points = feature.geometry.coordinates;
                   feature.properties.distance = points[points.length-1];
                   points.pop();
@@ -616,7 +1277,7 @@ if (true) {
 }
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports) {
 
 // Calculates the bearing between two points in meter
@@ -633,7 +1294,7 @@ function bearingBetween(p1,p2){
 module.exports = bearingBetween;
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports) {
 
 // Calculates the great circle distance between two points in meter
@@ -656,7 +1317,7 @@ function distanceBetween(p1, p2 ) {
 module.exports = distanceBetween;
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports) {
 
 // Calculates a point between two other points at any fractional distance f between them
@@ -692,7 +1353,7 @@ function pointBetween(p1, p2, f){
 module.exports = pointBetween;
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports) {
 
 // Calculates the bearing between two points in meter
@@ -711,7 +1372,7 @@ function toDistanceBearing(point, dist, bearing){
 module.exports = toDistanceBearing;
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports) {
 
 // 
@@ -737,7 +1398,7 @@ function block(feature){
 module.exports = block;
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -755,7 +1416,7 @@ function circle(feature){
 module.exports = circle;
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -794,7 +1455,7 @@ function corridor(feature){
 module.exports = corridor;
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports) {
 
 // 
@@ -837,7 +1498,7 @@ function delay(feature){
 module.exports = delay;
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports) {
 
 // 
@@ -887,7 +1548,7 @@ function fix(feature){
 module.exports = fix;
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -952,7 +1613,7 @@ function mainAttack(feature){
 module.exports = mainAttack;
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -1011,7 +1672,7 @@ function supportingAttack(feature){
 module.exports = supportingAttack;
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports) {
 
 
@@ -1074,7 +1735,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************
@@ -1082,7 +1743,7 @@ Creating the base of milgraphics by importing milsymbol
 *************************************************************************************** */
 var ms = __webpack_require__(0);
 
-ms.addSIDCgraphics = __webpack_require__(8);
+ms.addSIDCgraphics = __webpack_require__(9);
 
 ms.format = __webpack_require__(1);
 ms.geometry = __webpack_require__(2);
@@ -1097,7 +1758,7 @@ Letter based SIDC
 *************************************************************************************** */
 ms._getLetterSIDCgraphic = __webpack_require__(6);
 ms.addSIDCgraphics(__webpack_require__(7), 'letter');
-
+ms.addSIDCgraphics(__webpack_require__(8), 'letter');
 /* ***************************************************************************************
 Number based SIDC
 *************************************************************************************** */

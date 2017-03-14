@@ -18,7 +18,7 @@ Letter based SIDC
 *************************************************************************************** */
 ms._getLetterSIDCgraphic = require('../src/letter-sidc/getgraphic.js');
 ms.addSIDCgraphics(require('../src/letter-sidc/tactical-2525.js'), 'letter');
-
+ms.addSIDCgraphics(require('../src/letter-sidc/tactical-app6.js'), 'letter');
 /* ***************************************************************************************
 Number based SIDC
 *************************************************************************************** */

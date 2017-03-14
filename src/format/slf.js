@@ -157,7 +157,7 @@ function SLF(xml) {
         return {type: "MultiPoint", coordinates: parseLine(location) }; //I know this isn't a line but they are stored in the same way.
         break;
       case 'Rectangle':
-        return {type: "TwoPointCorridor", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
+        return {type: "Rectangle", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
         break;
       case 'TwoPointCorridor':
         return {type: "TwoPointCorridor", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
@@ -202,6 +202,12 @@ function SLF(xml) {
                   feature.geometry = {type: "MultiPoint", coordinates: [points[0]] };
                 }
                 if(feature.geometry && feature.geometry.type == 'Corridor'){
+                  var points = feature.geometry.coordinates;
+                  feature.properties.distance = points[points.length-1];
+                  points.pop();
+                  feature.geometry = {type: "MultiPoint", coordinates: points };
+                }
+                if(feature.geometry && feature.geometry.type == 'Rectangle'){
                   var points = feature.geometry.coordinates;
                   feature.properties.distance = points[points.length-1];
                   points.pop();
