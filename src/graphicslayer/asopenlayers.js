@@ -4,7 +4,6 @@ function asOpenLayers(crs) {
   var features = (new ol.format.GeoJSON()).readFeatures(this.data,{featureProjection:ol.proj.get(crs)});
   //var ua = window.navigator.userAgent;
 	//var isIE = ( ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/')  > 0) ? true : false;
-        
   for (var i = 0; i< features.length; i++) {
     var feature = features[i];
 

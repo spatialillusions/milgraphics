@@ -14,13 +14,13 @@
   }
   </style>
 
-  <link rel="stylesheet" href="http://openlayers.org/en/v3.19.1/css/ol.css" type="text/css">
-  <script src="http://openlayers.org/en/v3.19.1/build/ol.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.0.1/ol.css" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.0.1/ol.js" type="text/javascript"></script>
 
   <script src="../../dist/milgraphics.js"></script>
 </head>
 <body onload="document.getElementById('files').addEventListener('change', loadFileAsText, false)">
-Sitaware Layer File (SLF): <input type="file" id="files" name="files[]"><br>
+Sitaware Layer File (SLF): <input type="file" id="files" name="files[]" accept=".slf"><br>
 
 <div id="map" class="mymap"></div>
 
@@ -60,7 +60,7 @@ function loadFileAsText (evt) {
   fileReader.onload = function(fileLoadedEvent) {
     var file = fileLoadedEvent.target.result;
     var openLayersFeaturesWithStyle = new ms.GraphicsLayer( new ms.format.SLF(file) ).asOpenLayers();
-    //document.getElementById('slf_geojson').value = JSON.stringify( geoJSON, null, 4);  
+    //document.getElementById('slf_geojson').value = JSON.stringify( new ms.format.SLF(file), null, 4);  
     vectorSource.clear();
     vectorSource.addFeatures(openLayersFeaturesWithStyle);
     var extent = vectorSource.getExtent(openLayersFeaturesWithStyle);

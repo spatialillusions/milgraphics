@@ -1,6 +1,8 @@
 var ms = require('milsymbol');
 
 function SLF(xml) {
+  var features = [];
+  
   function parseSIDC(sidc) {
     for (var i in sidc.childNodes){
       if (sidc.childNodes[i].nodeName == 'SymbolCodeString'){
@@ -95,7 +97,7 @@ function SLF(xml) {
       if (line.childNodes[i].nodeName == 'StartPoint'){
         coordinates[0] = parsePoint(line.childNodes[i]);
       }
-      if (line.childNodes[i].nodeName == 'EndPoint'){
+      if (line.childNodes[i].nodeName == 'EndPoint' || line.childNodes[i].nodeName == 'Endpoint'){
         coordinates[1] = parsePoint(line.childNodes[i]);
       }
       if (line.childNodes[i].nodeName == 'Width'){
@@ -112,7 +114,7 @@ function SLF(xml) {
         //we reverse them because MIR vs 2525
         coordinates[1] = parsePoint(line.childNodes[i]);
       }
-      if (line.childNodes[i].nodeName == 'EndPoint'){
+      if (line.childNodes[i].nodeName == 'EndPoint' || line.childNodes[i].nodeName == 'Endpoint'){
         coordinates[0] = parsePoint(line.childNodes[i]);
       }
     }
@@ -263,18 +265,15 @@ function SLF(xml) {
     xml = (new DOMParser()).parseFromString(xml , "text/xml");	
   }
 
-  var features = [];
-  for (var i in xml.firstChild.childNodes){
-    if (xml.firstChild.childNodes[i].nodeName == 'Layers'){
-      for (var j in xml.firstChild.childNodes[i].childNodes){
-        if (xml.firstChild.childNodes[i].childNodes[j].nodeName == 'Layer'){
-          var layer = xml.firstChild.childNodes[i].childNodes[j];
-           features = features.concat( parseLayer(layer) );
-        }
-      }
-    }
-  } 
-  
+  var layers = xml.getElementsByTagName('Layer'); // For SLF files
+  for (var lyr in layers){
+    features = features.concat( parseLayer(layers[lyr]) );
+  }
+  var layers = xml.getElementsByTagName('Overlay'); // For SPF files
+  for (var lyr in layers){
+    features = features.concat( parseLayer(layers[lyr]) );
+  }
+ 
   var rawGeoJSON = {type: "FeatureCollection", features: features };
 	return ms.format.GeoJSON(rawGeoJSON, {
 	  Aliases: 'commonIdentifier',

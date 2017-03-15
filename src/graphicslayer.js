@@ -2,7 +2,6 @@
 
 function GraphicsLayer (data) {
   this.data = data;
-  //console.log(data)
   for (var i = 0; i< this.data.features.length; i++) {
     var feature = this.data.features[i];
 
