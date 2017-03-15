@@ -1,0 +1,865 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LayerFileFormatRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0" xmlns="http://schemas.systematic.com/SitaWare/Server/Contracts/LayerFile/2010/03/">
+  <Layers>
+    <Layer xsi:type="PlanLayer">
+      <CustomData />
+      <Name>BT 1</Name>
+      <SecurityClassification>Unclassified</SecurityClassification>
+      <Symbols>
+        <Symbol xsi:type="GenericShape">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Area">
+            <ExtraData xsi:nil="true" />
+            <Points>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.730190500441587</Latitude>
+                <Longitude>14.197501944319821</Longitude>
+              </Point>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.730728494716175</Latitude>
+                <Longitude>14.287461826331661</Longitude>
+              </Point>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.707558312670621</Latitude>
+                <Longitude>14.28791697098281</Longitude>
+              </Point>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.707027822485472</Latitude>
+                <Longitude>14.199124424758784</Longitude>
+              </Point>
+            </Points>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>Area</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T18:52:07.9730163Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>X---D----------</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>5418670406899928151</FirstLong>
+            <SecondLong>-5125282185701459066</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T18:52:07.993Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+          <stroke>#000000</stroke>
+          <stroke-opacity>1</stroke-opacity>
+          <stroke-width>2</stroke-width>
+          <stroke-dasharray xsi:nil="true" />
+          <fill>#000000</fill>
+          <fill-opacity>0</fill-opacity>
+          <fill-pattern>solid</fill-pattern>
+          <font-color>#000000</font-color>
+          <font-opacity>1</font-opacity>
+          <font>Arial</font>
+        </Symbol>
+        <Symbol xsi:type="GenericShape">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Area">
+            <ExtraData xsi:nil="true" />
+            <Points>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.852488371976918</Latitude>
+                <Longitude>13.576201801732436</Longitude>
+              </Point>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.856562792485242</Latitude>
+                <Longitude>13.930518208327584</Longitude>
+              </Point>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.803099253815475</Latitude>
+                <Longitude>13.932100743108595</Longitude>
+              </Point>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.799044455108579</Latitude>
+                <Longitude>13.579420677092795</Longitude>
+              </Point>
+            </Points>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>Area</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T19:19:20.3138071Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>X---D----------</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>4932287346110747768</FirstLong>
+            <SecondLong>-2871796820690836863</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T19:19:20.273Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+          <stroke>#000000</stroke>
+          <stroke-opacity>1</stroke-opacity>
+          <stroke-width>2</stroke-width>
+          <stroke-dasharray xsi:nil="true" />
+          <fill>#000000</fill>
+          <fill-opacity>0</fill-opacity>
+          <fill-pattern>solid</fill-pattern>
+          <font-color>#000000</font-color>
+          <font-opacity>1</font-opacity>
+          <font>Arial</font>
+        </Symbol>
+        <Symbol xsi:type="GenericShape">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Arrow">
+            <ExtraData xsi:nil="true" />
+            <Arrowhead>
+              <ExtraData xsi:nil="true" />
+              <Latitude>57.640781999023773</Latitude>
+              <Longitude>14.192381608402915</Longitude>
+            </Arrowhead>
+            <Points>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.759420874776048</Latitude>
+                <Longitude>14.177214123268275</Longitude>
+              </Point>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.615367534947708</Latitude>
+                <Longitude>14.174070305325598</Longitude>
+              </Point>
+            </Points>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>Arrow</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T18:43:59.3090568Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>X---A----------</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>4676971805674388506</FirstLong>
+            <SecondLong>-8960391937523705942</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T18:43:59.31Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+          <stroke>#0397FC</stroke>
+          <stroke-opacity>1</stroke-opacity>
+          <stroke-width>3</stroke-width>
+          <stroke-dasharray xsi:nil="true" />
+          <fill>#0397FC</fill>
+          <fill-opacity>1</fill-opacity>
+          <fill-pattern>solid</fill-pattern>
+          <font-color>#000000</font-color>
+          <font-opacity>1</font-opacity>
+          <font>Arial</font>
+        </Symbol>
+        <Symbol xsi:type="GenericShape">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Arrow">
+            <ExtraData xsi:nil="true" />
+            <Arrowhead>
+              <ExtraData xsi:nil="true" />
+              <Altitude>
+                <Type>TopographicSurface</Type>
+                <Value>0</Value>
+                <ExtraData xsi:nil="true" />
+              </Altitude>
+              <Latitude>57.754875501187215</Latitude>
+              <Longitude>13.655635292864185</Longitude>
+            </Arrowhead>
+            <Points>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.765582777841608</Latitude>
+                <Longitude>14.122668749433315</Longitude>
+              </Point>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.738397302326234</Latitude>
+                <Longitude>13.983338386881126</Longitude>
+              </Point>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.718039902377143</Latitude>
+                <Longitude>13.893965658908675</Longitude>
+              </Point>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.750307979953796</Latitude>
+                <Longitude>13.784061214807879</Longitude>
+              </Point>
+              <Point>
+                <ExtraData xsi:nil="true" />
+                <Altitude>
+                  <Type>TopographicSurface</Type>
+                  <Value>0</Value>
+                  <ExtraData xsi:nil="true" />
+                </Altitude>
+                <Latitude>57.768320996918753</Latitude>
+                <Longitude>13.627776483412978</Longitude>
+              </Point>
+            </Points>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>Arrow</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T19:02:51.3197246Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>X---A----------</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>5409227369525118386</FirstLong>
+            <SecondLong>-2275626222947886203</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T19:02:51.32Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+          <stroke>#0397FC</stroke>
+          <stroke-opacity>1</stroke-opacity>
+          <stroke-width>2</stroke-width>
+          <stroke-dasharray xsi:nil="true" />
+          <fill>#0397FC</fill>
+          <fill-opacity>1</fill-opacity>
+          <fill-pattern>solid</fill-pattern>
+          <font-color>#000000</font-color>
+          <font-opacity>1</font-opacity>
+          <font>Arial</font>
+        </Symbol>
+        <Symbol xsi:type="Unit">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Point">
+            <ExtraData xsi:nil="true" />
+            <Altitude>
+              <Type>TopographicSurface</Type>
+              <Value>0</Value>
+              <ExtraData xsi:nil="true" />
+            </Altitude>
+            <Latitude>57.750555739544865</Latitude>
+            <Longitude>13.902308688682176</Longitude>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name />
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T18:40:05.4668022Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>SHG*U-------***</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>5021894261261798305</FirstLong>
+            <SecondLong>-3603647153301346395</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T18:40:05.467Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+          <OperationalStatus>Operational</OperationalStatus>
+          <StatusQualifier>None</StatusQualifier>
+          <Reinforcement>NormalStrength</Reinforcement>
+        </Symbol>
+        <Symbol xsi:type="Unit">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Point">
+            <ExtraData xsi:nil="true" />
+            <Altitude>
+              <Type>TopographicSurface</Type>
+              <Value>0</Value>
+              <ExtraData xsi:nil="true" />
+            </Altitude>
+            <Latitude>57.790918826868833</Latitude>
+            <Longitude>13.997661647383447</Longitude>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>1. Infantry (Mechanised)</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T18:13:37.8673993Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>SFGPUCIZ---F***</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>5156696943754128856</FirstLong>
+            <SecondLong>148138308833151421</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T18:13:37.87Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+          <OperationalStatus>Operational</OperationalStatus>
+          <StatusQualifier>None</StatusQualifier>
+          <Reinforcement>NormalStrength</Reinforcement>
+        </Symbol>
+        <Symbol xsi:type="Unit">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Point">
+            <ExtraData xsi:nil="true" />
+            <Altitude>
+              <Type>TopographicSurface</Type>
+              <Value>0</Value>
+              <ExtraData xsi:nil="true" />
+            </Altitude>
+            <Latitude>57.799387813140683</Latitude>
+            <Longitude>14.080226392967452</Longitude>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>Engineer</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T18:13:43.3829345Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>SFGPUCE----F***</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>4648368547860463069</FirstLong>
+            <SecondLong>-4517590905122693698</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T18:13:43.373Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+          <OperationalStatus>Operational</OperationalStatus>
+          <StatusQualifier>None</StatusQualifier>
+          <Reinforcement>NormalStrength</Reinforcement>
+        </Symbol>
+        <Symbol xsi:type="Unit">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Point">
+            <ExtraData xsi:nil="true" />
+            <Altitude>
+              <Type>TopographicSurface</Type>
+              <Value>0</Value>
+              <ExtraData xsi:nil="true" />
+            </Altitude>
+            <Latitude>57.669223550639565</Latitude>
+            <Longitude>14.235220468896848</Longitude>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>Field Artillery</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T18:09:07.7779961Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>SFGPUCF----F***</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>5018761594679253408</FirstLong>
+            <SecondLong>4614584338789490085</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T18:09:07.763Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+          <OperationalStatus>Operational</OperationalStatus>
+          <StatusQualifier>None</StatusQualifier>
+          <Reinforcement>NormalStrength</Reinforcement>
+        </Symbol>
+        <Symbol xsi:type="Unit">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Point">
+            <ExtraData xsi:nil="true" />
+            <Altitude>
+              <Type>TopographicSurface</Type>
+              <Value>0</Value>
+              <ExtraData xsi:nil="true" />
+            </Altitude>
+            <Latitude>57.630883224817481</Latitude>
+            <Longitude>14.2626115993947</Longitude>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>Infantry (Mechanised)</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T18:09:00.0281209Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>SFGPUCIZ---F***</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>5660420805020387426</FirstLong>
+            <SecondLong>-4904900473076535404</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T18:09:00.033Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+          <OperationalStatus>Operational</OperationalStatus>
+          <StatusQualifier>None</StatusQualifier>
+          <Reinforcement>NormalStrength</Reinforcement>
+        </Symbol>
+        <Symbol xsi:type="Unit">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Point">
+            <ExtraData xsi:nil="true" />
+            <Altitude>
+              <Type>TopographicSurface</Type>
+              <Value>0</Value>
+              <ExtraData xsi:nil="true" />
+            </Altitude>
+            <Latitude>57.591080775284262</Latitude>
+            <Longitude>14.284661956147815</Longitude>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>Infantry (Motorised)</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T18:09:55.8098538Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>SFGPUCIM---F***</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>5468734774345650630</FirstLong>
+            <SecondLong>4418396280022131125</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T18:09:55.84Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+          <OperationalStatus>Operational</OperationalStatus>
+          <StatusQualifier>None</StatusQualifier>
+          <Reinforcement>NormalStrength</Reinforcement>
+        </Symbol>
+        <Symbol xsi:type="TacticalGraphic">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Point">
+            <ExtraData xsi:nil="true" />
+            <Altitude>
+              <Type>TopographicSurface</Type>
+              <Value>0</Value>
+              <ExtraData xsi:nil="true" />
+            </Altitude>
+            <Latitude>57.778784748550358</Latitude>
+            <Longitude>14.177516154439491</Longitude>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>1</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T18:35:08.0341225Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>GFG*GPPD----**X</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>5592926136624550645</FirstLong>
+            <SecondLong>8140346494136911537</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T18:35:08.047Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+        </Symbol>
+        <Symbol xsi:type="TacticalGraphic">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="TwoPointLine">
+            <ExtraData xsi:nil="true" />
+            <EndPoint>
+              <ExtraData xsi:nil="true" />
+              <Altitude>
+                <Type>TopographicSurface</Type>
+                <Value>0</Value>
+                <ExtraData xsi:nil="true" />
+              </Altitude>
+              <Latitude>57.755260335820196</Latitude>
+              <Longitude>13.938402872528892</Longitude>
+            </EndPoint>
+            <StartPoint>
+              <ExtraData xsi:nil="true" />
+              <Altitude>
+                <Type>TopographicSurface</Type>
+                <Value>0</Value>
+                <ExtraData xsi:nil="true" />
+              </Altitude>
+              <Latitude>57.772404108363773</Latitude>
+              <Longitude>14.07913307246773</Longitude>
+            </StartPoint>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>Fix</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T19:01:31.3522617Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>GFT*F-------**X</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>5048413168771597028</FirstLong>
+            <SecondLong>-2578211822911816795</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T19:01:31.343Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+        </Symbol>
+        <Symbol xsi:type="TextArea">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Rectangle">
+            <ExtraData xsi:nil="true" />
+            <EndPoint>
+              <ExtraData xsi:nil="true" />
+              <Altitude>
+                <Type>TopographicSurface</Type>
+                <Value>0</Value>
+                <ExtraData xsi:nil="true" />
+              </Altitude>
+              <Latitude>57.807443412459634</Latitude>
+              <Longitude>14.416279308952117</Longitude>
+            </EndPoint>
+            <StartPoint>
+              <ExtraData xsi:nil="true" />
+              <Altitude>
+                <Type>TopographicSurface</Type>
+                <Value>0</Value>
+                <ExtraData xsi:nil="true" />
+              </Altitude>
+              <Latitude>57.808162187908344</Latitude>
+              <Longitude>14.128322176620186</Longitude>
+            </StartPoint>
+            <Width>3376</Width>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>Text Area</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T18:35:17.7058417Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>X---J----------</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>5504437198155603438</FirstLong>
+            <SecondLong>3718364714407881615</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T18:35:17.703Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+          <stroke>#000000</stroke>
+          <stroke-opacity>1</stroke-opacity>
+          <stroke-width>2</stroke-width>
+          <stroke-dasharray xsi:nil="true" />
+          <fill>#000000</fill>
+          <fill-opacity>0</fill-opacity>
+          <fill-pattern>solid</fill-pattern>
+          <font-color>#000000</font-color>
+          <font-opacity>1</font-opacity>
+          <font>Arial</font>
+          <Text>Beslutstidpunkt</Text>
+        </Symbol>
+        <Symbol xsi:type="TextArea">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Rectangle">
+            <ExtraData xsi:nil="true" />
+            <EndPoint>
+              <ExtraData xsi:nil="true" />
+              <Altitude>
+                <Type>TopographicSurface</Type>
+                <Value>0</Value>
+                <ExtraData xsi:nil="true" />
+              </Altitude>
+              <Latitude>57.718702548422804</Latitude>
+              <Longitude>14.345580134657867</Longitude>
+            </EndPoint>
+            <StartPoint>
+              <ExtraData xsi:nil="true" />
+              <Altitude>
+                <Type>TopographicSurface</Type>
+                <Value>0</Value>
+                <ExtraData xsi:nil="true" />
+              </Altitude>
+              <Latitude>57.71878515716331</Latitude>
+              <Longitude>14.200809285956751</Longitude>
+            </StartPoint>
+            <Width>1745</Width>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>Text Area</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T18:50:15.0194153Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>X---J----------</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>5041284464543016145</FirstLong>
+            <SecondLong>-7372016549317570652</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T18:50:15.02Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+          <stroke>#000000</stroke>
+          <stroke-opacity>1</stroke-opacity>
+          <stroke-width>2</stroke-width>
+          <stroke-dasharray xsi:nil="true" />
+          <fill>#FFFFFF</fill>
+          <fill-opacity>1</fill-opacity>
+          <fill-pattern>solid</fill-pattern>
+          <font-color>#000000</font-color>
+          <font-opacity>1</font-opacity>
+          <font>Arial</font>
+          <Text>Alt. frr</Text>
+        </Symbol>
+        <Symbol xsi:type="TextArea">
+          <CustomData />
+          <GeopoliticalAffiliation>Unknown</GeopoliticalAffiliation>
+          <Location xsi:type="Rectangle">
+            <ExtraData xsi:nil="true" />
+            <EndPoint>
+              <ExtraData xsi:nil="true" />
+              <Altitude>
+                <Type>TopographicSurface</Type>
+                <Value>0</Value>
+                <ExtraData xsi:nil="true" />
+              </Altitude>
+              <Latitude>57.824258260165209</Latitude>
+              <Longitude>13.9297432610385</Longitude>
+            </EndPoint>
+            <StartPoint>
+              <ExtraData xsi:nil="true" />
+              <Altitude>
+                <Type>TopographicSurface</Type>
+                <Value>0</Value>
+                <ExtraData xsi:nil="true" />
+              </Altitude>
+              <Latitude>57.824973997091362</Latitude>
+              <Longitude>13.594470222945569</Longitude>
+            </StartPoint>
+            <Width>3381</Width>
+          </Location>
+          <Priority>Medium</Priority>
+          <Name>Text Area</Name>
+          <Report>
+            <Credibility>Null</Credibility>
+            <DataSourceType>Null</DataSourceType>
+            <Reliability>Null</Reliability>
+            <Reported>2017-03-13T19:02:29.0700814Z</Reported>
+            <ExtraData xsi:nil="true" />
+          </Report>
+          <SymbolCode>
+            <SymbolCodeString>X---J----------</SymbolCodeString>
+            <SubtypeSymbolCodeString />
+            <ExtraData xsi:nil="true" />
+          </SymbolCode>
+          <Addresses />
+          <Aliases />
+          <StaffComments />
+          <Id>
+            <FirstLong>5123550260364753102</FirstLong>
+            <SecondLong>6226316652504459426</SecondLong>
+          </Id>
+          <Timestamp>2017-03-13T19:02:29.077Z</Timestamp>
+          <ExtraData xsi:nil="true" />
+          <stroke>#000000</stroke>
+          <stroke-opacity>1</stroke-opacity>
+          <stroke-width>2</stroke-width>
+          <stroke-dasharray xsi:nil="true" />
+          <fill>#000000</fill>
+          <fill-opacity>0</fill-opacity>
+          <fill-pattern>solid</fill-pattern>
+          <font-color>#000000</font-color>
+          <font-opacity>1</font-opacity>
+          <font>Arial</font>
+          <Text>1.) Fi &lt; komp = nedkämpa
+2.) Fi &gt; komp = bind &amp; försvara, FARB</Text>
+        </Symbol>
+      </Symbols>
+      <Id>
+        <FirstLong>5376307652114591119</FirstLong>
+        <SecondLong>7720935584698482869</SecondLong>
+      </Id>
+      <Timestamp>2017-03-13T17:47:28.567Z</Timestamp>
+      <DevelopmentState>NotComplete</DevelopmentState>
+    </Layer>
+  </Layers>
+</LayerFileFormatRoot>
