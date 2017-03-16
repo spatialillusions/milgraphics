@@ -8,13 +8,17 @@ function GraphicsLayer (data) {
     if (feature.geometry.type == 'Point') {
       var properties = feature.properties;
       properties.size = properties.size || 30; //TODO set default size value from setting
-      if (properties.SIDC.charAt(0) != 'X') { //Skip SitaWare custom graphics for now
-        feature.symbol = new ms.Symbol('', properties);
+      if (properties.sidc.charAt(0) != 'X') { //Skip SitaWare custom graphics for now
+        feature.symbol = new ms.Symbol(properties);
       }
+    }
+    if (feature.geometry.type == 'LineString') {
+      console.log('LineString')
+      console.log(feature.properties.sidc)
     }
     if (feature.geometry.type == 'MultiPoint') {
     //console.log('multipoint')
-    //console.log(feature.properties.SIDC)
+    //console.log(feature.properties.sidc)
       feature.graphic = new ms.Graphic(feature);
       //console.log('woo we got something special')
       feature.geometry = feature.graphic.geometry;
@@ -23,6 +27,10 @@ function GraphicsLayer (data) {
           stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2})
         });
         feature.setStyle(style);*/
+    }
+    if (feature.geometry.type == 'Polygon') {
+      console.log('Polygon')
+      console.log(feature.properties.sidc)
     }
   }
 };

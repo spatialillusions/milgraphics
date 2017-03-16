@@ -1,6 +1,7 @@
 // 
 function delay(feature){
   var direction, width;
+  var directionFactor = -1;
   var points = feature.geometry.coordinates;
   
   var width = ms.geometry.distanceBetween(points[1],points[2]);
@@ -18,7 +19,11 @@ function delay(feature){
   
   var midpoint = ms.geometry.pointBetween(points[1],points[2],0.5);
   var curveBearing = ms.geometry.bearingBetween(points[1],points[2]);
-  var directionFactor = (Math.abs(curveBearing)/curveBearing)*(Math.abs(bearing)/bearing);
+  if (curveBearing < 0 && bearing < 0)directionFactor = 1; // OK
+  //if (curveBearing > 0 && bearing < 0)directionFactor = -1; // OK
+  //if (curveBearing < 0 && bearing > 0)directionFactor = -1; // OK
+  //if (curveBearing > 0 && bearing > 0)directionFactor = -1; // OK
+  //var directionFactor = (Math.abs(curveBearing)/curveBearing)*(Math.abs(bearing)/bearing);
 
   for (var i = 10; i<180; i+=10){
       geometry1.push(ms.geometry.toDistanceBearing(midpoint,width/2,curveBearing+(i*directionFactor)+180));

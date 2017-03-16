@@ -11,10 +11,8 @@ function asOpenLayers(crs) {
       var props = feature.getProperties();
       props.size = 30;
       
-      if (props.SIDC.charAt(0) != 'X') { //Skip SitaWare custom graphics for now
-        var mysymbol = new ms.Symbol(
-          '', props
-        );
+      if (props.sidc.charAt(0) != 'X') { //Skip SitaWare custom graphics for now
+        var mysymbol = new ms.Symbol(props);
         //var image = isIE ? mysymbol.asCanvas() : mysymbol.toDataURL();
         var image = mysymbol.asCanvas();
         

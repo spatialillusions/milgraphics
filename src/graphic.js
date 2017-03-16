@@ -3,7 +3,7 @@ var ms = require('milsymbol');
 var Graphic = function (feature){
   //=======================================================================================
   // The SIDC for the symbol.
-  this.SIDC = feature.properties.SIDC;
+  this.SIDC = feature.properties.sidc;
 
   this.properties = {numberSIDC: false}; // TODO Properties of the current marker
 

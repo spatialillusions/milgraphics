@@ -279,7 +279,7 @@ function SLF(xml) {
 	  Aliases: 'commonIdentifier',
 	  Name: 'uniqueDesignation', 
 	  StaffComments: 'staffComments',
-	  SymbolCode:'SIDC', 
+	  SymbolCode:'sidc', 
 	  Timestamp: 'dtg'});
 }
 
