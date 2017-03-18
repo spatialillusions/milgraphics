@@ -37,7 +37,7 @@ function delay(feature){
   geometry2.push(ms.geometry.toDistanceBearing(points[0],width*0.4,bearing-45));
   
   geometry.coordinates = [geometry1,geometry2];
-  return geometry
+  return {geometry:geometry};
 }
 
 module.exports = delay;

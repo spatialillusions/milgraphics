@@ -53,7 +53,7 @@ function mainAttack(feature){
   geometry1.push(ms.geometry.toDistanceBearing(points[points.length-1], width*widthHeadRatio, direction+90));
   
   geometry.coordinates = [geometry1,geometry2];
-  return geometry
+  return {geometry:geometry};
 }
 
 

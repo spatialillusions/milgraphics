@@ -39,7 +39,7 @@ function fix(feature){
   geometry2.push(ms.geometry.toDistanceBearing(points[0],widht*1.5,bearing-45));
   
   geometry.coordinates = [geometry1,geometry2];
-  return geometry
+  return {geometry:geometry};
 }
 
 module.exports = fix;

@@ -15,7 +15,7 @@ function block(feature){
   geometry2.push(points[2],midpoint);
   
   geometry.coordinates = [geometry1,geometry2];
-  return geometry
+  return {geometry:geometry};
 }
 
 module.exports = block;

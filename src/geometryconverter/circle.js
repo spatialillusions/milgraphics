@@ -7,7 +7,7 @@ function circle(feature){
   for (var direction = 360; direction >= 0; direction-=5){
     geometry.coordinates[0].push( ms.geometry.toDistanceBearing(p, r, direction));
   }
-  return geometry;
+  return {geometry:geometry};
 }
 
 module.exports = circle;
