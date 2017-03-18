@@ -1681,38 +1681,37 @@ function asOpenLayers(crs) {
   //var ua = window.navigator.userAgent;
   //var isIE = ( ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/')  > 0) ? true : false;
   var ratio = window.devicePixelRatio;
+  var geoJSON = new ol.format.GeoJSON();
+  var features = [];
   
-  var features = (new ol.format.GeoJSON()).readFeatures(this.data,{featureProjection:ol.proj.get(crs)});
-  for (var i = 0; i< features.length; i++) {
-    var feature = features[i];
-
+  for (var i = 0; i< this.data.features.length; i++) {
+    var feature = geoJSON.readFeature(this.data.features[i],{featureProjection:ol.proj.get(crs)});
+  
     if (feature.getGeometry().getType() == 'Point') {
-      var props = feature.getProperties();
-      props.size = 30;
-      
-      if (props.sidc.charAt(0) != 'X') { //Skip SitaWare custom graphics for now
-        var mysymbol = new ms.Symbol(props);
+      var properties = feature.getProperties();
+      if (properties.sidc.charAt(0) != 'X') { //TODO handle sitaware custom graphics
+        var milsymbol = this.data.features[i].symbol;
         //var image = isIE ? mysymbol.asCanvas() : mysymbol.toDataURL();
-        var image = mysymbol.asCanvas(ratio);
-        
         feature.setStyle(new ol.style.Style({
           image: new ol.style.Icon( ({
             scale: 1/ratio,
-            anchor: [mysymbol.getAnchor().x*ratio, mysymbol.getAnchor().y*ratio],
+            anchor: [milsymbol.getAnchor().x*ratio, milsymbol.getAnchor().y*ratio],
             anchorXUnits: 'pixels',
             anchorYUnits: 'pixels',
-            imgSize: [Math.floor(mysymbol.getSize().width*ratio), Math.floor(mysymbol.getSize().height*ratio)],
-            img: (image)
+            imgSize: [Math.floor(milsymbol.getSize().width*ratio), Math.floor(milsymbol.getSize().height*ratio)],
+            img: milsymbol.asCanvas(ratio)
           }))
         }));
       }
     }
+    
     if (feature.getGeometry().getType() == 'LineString' || feature.getGeometry().getType() == 'MultiLineString') {
       	var style = new ol.style.Style({
           stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2})
         });
         feature.setStyle(style);
     }
+    
     if (feature.getGeometry().getType() == 'Polygon') {
       	var style = new ol.style.Style({
           stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2}),
@@ -1720,7 +1719,10 @@ function asOpenLayers(crs) {
         });
         feature.setStyle(style);
     }
+    
+    features.push(feature);
   }
+  
   return features;
 }
 
