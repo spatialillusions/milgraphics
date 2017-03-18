@@ -1191,13 +1191,13 @@ function SLF(xml) {
                   var points = feature.geometry.coordinates;
                   feature.properties.distance = points[points.length-1];
                   points.pop();
-                  feature.geometry = {type: "Point", coordinates: points[0] };
+                  feature.geometry = {type: "LineString", coordinates: points };
                 }
                 if(feature.geometry && feature.geometry.type == 'Rectangle'){
                   var points = feature.geometry.coordinates;
                   feature.properties.distance = points[points.length-1];
                   points.pop();
-                  feature.geometry = {type: "Point", coordinates: points[0] };
+                  feature.geometry = {type: "LineString", coordinates: points };
                 }
                 if(feature.geometry && feature.geometry.type == 'TwoPointCorridor'){
                 //TODO make sure that we are drawing this in the right direction
