@@ -182,7 +182,8 @@ var Graphic = function (feature){
 	  var graphics = ms._graphicCache['letter-' + this.properties.numberSIDC];
 	  var genericSIDC = this.SIDC.substr(0,1)+'-'+this.SIDC.substr(2,1)+'-'+this.SIDC.substr(4,6);
     if(graphics[genericSIDC]){
-      this.geometry = graphics[genericSIDC].call(this, feature);
+      var graphic = graphics[genericSIDC].call(this, feature);
+      this.geometry = graphic.geometry;
     }else{
       //TODO check if we need to clone here;
       console.log('Failed to convert: ' + this.SIDC);
@@ -207,6 +208,10 @@ function GraphicsLayer (data) {
   for (var i = 0; i< this.data.features.length; i++) {
     var feature = this.data.features[i];
 
+/* TODO
+Add code that figures out if a point should use a point symbol or is a circle...
+*/
+
     if (feature.geometry.type == 'Point') {
       var properties = feature.properties;
       properties.size = properties.size || 30; //TODO set default size value from setting
@@ -214,25 +219,9 @@ function GraphicsLayer (data) {
         feature.symbol = new ms.Symbol(properties);
       }
     }
-    if (feature.geometry.type == 'LineString') {
-      console.log('LineString')
-      console.log(feature.properties.sidc)
-    }
-    if (feature.geometry.type == 'MultiPoint') {
-    //console.log('multipoint')
-    //console.log(feature.properties.sidc)
+    if (feature.geometry.type != 'Point') {
       feature.graphic = new ms.Graphic(feature);
-      //console.log('woo we got something special')
       feature.geometry = feature.graphic.geometry;
-      //feature.geometry = feature.graphic.geometry;//quick override of geometry
-/*      	var style = new ol.style.Style({
-          stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2})
-        });
-        feature.setStyle(style);*/
-    }
-    if (feature.geometry.type == 'Polygon') {
-      console.log('Polygon')
-      console.log(feature.properties.sidc)
     }
   }
 };
@@ -1136,7 +1125,7 @@ function SLF(xml) {
         return {type: "Polygon", coordinates: [parseArea(location)] };
         break;
       case 'Arrow':
-        return {type: "MultiPoint", coordinates: parseArrow(location) };
+        return {type: "LineString", coordinates: parseArrow(location) };
         break;
       case 'Circle':
         return {type: "Circle", coordinates: parseCircle(location) }; // We will fix circles later
@@ -1151,7 +1140,7 @@ function SLF(xml) {
         return {type: "Point", coordinates: parsePoint(location) };
         break;
       case 'PolyPoint':
-        return {type: "MultiPoint", coordinates: parseLine(location) }; //I know this isn't a line but they are stored in the same way.
+        return {type: "LineString", coordinates: parseLine(location) }; //I know this isn't a line but they are stored in the same way.
         break;
       case 'Rectangle':
         return {type: "Rectangle", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
@@ -1160,7 +1149,7 @@ function SLF(xml) {
         return {type: "TwoPointCorridor", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
         break;
       case 'TwoPointLine':
-        return {type: "MultiPoint", coordinates: parseTwoPointLine(location) }; 
+        return {type: "LineString", coordinates: parseTwoPointLine(location) }; 
         break;
       default:
         console.log('SitaWare Layer File: TODO parse location type ' + locationType)
@@ -1196,19 +1185,19 @@ function SLF(xml) {
                 if(feature.geometry && feature.geometry.type == 'Circle'){
                   var points = feature.geometry.coordinates;
                   feature.properties.distance = ms.geometry.distanceBetween(points[0],points[1]);
-                  feature.geometry = {type: "MultiPoint", coordinates: [points[0]] };
+                  feature.geometry = {type: "Point", coordinates: points[0] };
                 }
                 if(feature.geometry && feature.geometry.type == 'Corridor'){
                   var points = feature.geometry.coordinates;
                   feature.properties.distance = points[points.length-1];
                   points.pop();
-                  feature.geometry = {type: "MultiPoint", coordinates: points };
+                  feature.geometry = {type: "Point", coordinates: points[0] };
                 }
                 if(feature.geometry && feature.geometry.type == 'Rectangle'){
                   var points = feature.geometry.coordinates;
                   feature.properties.distance = points[points.length-1];
                   points.pop();
-                  feature.geometry = {type: "MultiPoint", coordinates: points };
+                  feature.geometry = {type: "Point", coordinates: points[0] };
                 }
                 if(feature.geometry && feature.geometry.type == 'TwoPointCorridor'){
                 //TODO make sure that we are drawing this in the right direction
@@ -1219,7 +1208,7 @@ function SLF(xml) {
                   coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing+90));
                   coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing-90));
                   coordinates.push(points[0]);
-                  feature.geometry = {type: "MultiPoint", coordinates: coordinates };
+                  feature.geometry = {type: "LineString", coordinates: coordinates };
                 }
                 break;
               case 'SymbolCode':
@@ -1398,7 +1387,7 @@ function block(feature){
   geometry2.push(points[2],midpoint);
   
   geometry.coordinates = [geometry1,geometry2];
-  return geometry
+  return {geometry:geometry};
 }
 
 module.exports = block;
@@ -1416,7 +1405,7 @@ function circle(feature){
   for (var direction = 360; direction >= 0; direction-=5){
     geometry.coordinates[0].push( ms.geometry.toDistanceBearing(p, r, direction));
   }
-  return geometry;
+  return {geometry:geometry};
 }
 
 module.exports = circle;
@@ -1455,7 +1444,7 @@ function corridor(feature){
   direction = (ms.geometry.bearingBetween(points[0],points[1]) +360) % 360;
   geometry.coordinates[0].push(ms.geometry.toDistanceBearing(points[0], width/2, direction+90));
   geometry.coordinates[0].push(ms.geometry.toDistanceBearing(points[0], width/2, direction-90));//Close line
-  return geometry;
+  return {geometry:geometry};
 }
 
 module.exports = corridor;
@@ -1503,7 +1492,7 @@ function delay(feature){
   geometry2.push(ms.geometry.toDistanceBearing(points[0],width*0.4,bearing-45));
   
   geometry.coordinates = [geometry1,geometry2];
-  return geometry
+  return {geometry:geometry};
 }
 
 module.exports = delay;
@@ -1553,7 +1542,7 @@ function fix(feature){
   geometry2.push(ms.geometry.toDistanceBearing(points[0],widht*1.5,bearing-45));
   
   geometry.coordinates = [geometry1,geometry2];
-  return geometry
+  return {geometry:geometry};
 }
 
 module.exports = fix;
@@ -1617,7 +1606,7 @@ function mainAttack(feature){
   geometry1.push(ms.geometry.toDistanceBearing(points[points.length-1], width*widthHeadRatio, direction+90));
   
   geometry.coordinates = [geometry1,geometry2];
-  return geometry
+  return {geometry:geometry};
 }
 
 
@@ -1676,7 +1665,7 @@ function supportingAttack(feature){
   geometry1.push(ms.geometry.toDistanceBearing(points[points.length-1], width*widthHeadRatio, direction+90));
   
   geometry.coordinates = geometry1;
-  return geometry
+  return {geometry:geometry};
 }
 
 
@@ -1689,9 +1678,11 @@ module.exports = supportingAttack;
 
 function asOpenLayers(crs) {
   var crs = crs || 'EPSG:3857';
-  var features = (new ol.format.GeoJSON()).readFeatures(this.data,{featureProjection:ol.proj.get(crs)});
   //var ua = window.navigator.userAgent;
-	//var isIE = ( ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/')  > 0) ? true : false;
+  //var isIE = ( ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/')  > 0) ? true : false;
+  var ratio = window.devicePixelRatio;
+  
+  var features = (new ol.format.GeoJSON()).readFeatures(this.data,{featureProjection:ol.proj.get(crs)});
   for (var i = 0; i< features.length; i++) {
     var feature = features[i];
 
@@ -1702,27 +1693,21 @@ function asOpenLayers(crs) {
       if (props.sidc.charAt(0) != 'X') { //Skip SitaWare custom graphics for now
         var mysymbol = new ms.Symbol(props);
         //var image = isIE ? mysymbol.asCanvas() : mysymbol.toDataURL();
-        var image = mysymbol.asCanvas();
+        var image = mysymbol.asCanvas(ratio);
         
         feature.setStyle(new ol.style.Style({
           image: new ol.style.Icon( ({
-            //scale: 1/ratio,
-            anchor: [mysymbol.getAnchor().x, mysymbol.getAnchor().y],
+            scale: 1/ratio,
+            anchor: [mysymbol.getAnchor().x*ratio, mysymbol.getAnchor().y*ratio],
             anchorXUnits: 'pixels',
             anchorYUnits: 'pixels',
-            imgSize: [Math.floor(mysymbol.getSize().width), Math.floor(mysymbol.getSize().height)],
+            imgSize: [Math.floor(mysymbol.getSize().width*ratio), Math.floor(mysymbol.getSize().height*ratio)],
             img: (image)
           }))
         }));
       }
     }
-    if (feature.getGeometry().getType() == 'LineString') {
-      	var style = new ol.style.Style({
-          stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2})
-        });
-        feature.setStyle(style);
-    }
-    if (feature.getGeometry().getType() == 'MultiLineString') {
+    if (feature.getGeometry().getType() == 'LineString' || feature.getGeometry().getType() == 'MultiLineString') {
       	var style = new ol.style.Style({
           stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2})
         });

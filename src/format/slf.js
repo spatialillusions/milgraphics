@@ -141,7 +141,7 @@ function SLF(xml) {
         return {type: "Polygon", coordinates: [parseArea(location)] };
         break;
       case 'Arrow':
-        return {type: "MultiPoint", coordinates: parseArrow(location) };
+        return {type: "LineString", coordinates: parseArrow(location) };
         break;
       case 'Circle':
         return {type: "Circle", coordinates: parseCircle(location) }; // We will fix circles later
@@ -156,7 +156,7 @@ function SLF(xml) {
         return {type: "Point", coordinates: parsePoint(location) };
         break;
       case 'PolyPoint':
-        return {type: "MultiPoint", coordinates: parseLine(location) }; //I know this isn't a line but they are stored in the same way.
+        return {type: "LineString", coordinates: parseLine(location) }; //I know this isn't a line but they are stored in the same way.
         break;
       case 'Rectangle':
         return {type: "Rectangle", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
@@ -165,7 +165,7 @@ function SLF(xml) {
         return {type: "TwoPointCorridor", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
         break;
       case 'TwoPointLine':
-        return {type: "MultiPoint", coordinates: parseTwoPointLine(location) }; 
+        return {type: "LineString", coordinates: parseTwoPointLine(location) }; 
         break;
       default:
         console.log('SitaWare Layer File: TODO parse location type ' + locationType)
@@ -201,19 +201,19 @@ function SLF(xml) {
                 if(feature.geometry && feature.geometry.type == 'Circle'){
                   var points = feature.geometry.coordinates;
                   feature.properties.distance = ms.geometry.distanceBetween(points[0],points[1]);
-                  feature.geometry = {type: "MultiPoint", coordinates: [points[0]] };
+                  feature.geometry = {type: "Point", coordinates: points[0] };
                 }
                 if(feature.geometry && feature.geometry.type == 'Corridor'){
                   var points = feature.geometry.coordinates;
                   feature.properties.distance = points[points.length-1];
                   points.pop();
-                  feature.geometry = {type: "MultiPoint", coordinates: points };
+                  feature.geometry = {type: "Point", coordinates: points[0] };
                 }
                 if(feature.geometry && feature.geometry.type == 'Rectangle'){
                   var points = feature.geometry.coordinates;
                   feature.properties.distance = points[points.length-1];
                   points.pop();
-                  feature.geometry = {type: "MultiPoint", coordinates: points };
+                  feature.geometry = {type: "Point", coordinates: points[0] };
                 }
                 if(feature.geometry && feature.geometry.type == 'TwoPointCorridor'){
                 //TODO make sure that we are drawing this in the right direction
@@ -224,7 +224,7 @@ function SLF(xml) {
                   coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing+90));
                   coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing-90));
                   coordinates.push(points[0]);
-                  feature.geometry = {type: "MultiPoint", coordinates: coordinates };
+                  feature.geometry = {type: "LineString", coordinates: coordinates };
                 }
                 break;
               case 'SymbolCode':
