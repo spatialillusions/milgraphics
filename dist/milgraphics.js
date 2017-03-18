@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 34);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -145,17 +145,20 @@ module.exports = geometry;
 var geometryConverter = {};
 
 geometryConverter.block = __webpack_require__(18);
-geometryConverter.circle = __webpack_require__(19);
-geometryConverter.corridor = __webpack_require__(20);
-geometryConverter.cover = __webpack_require__(21);
-geometryConverter.delay = __webpack_require__(22);
-geometryConverter.fix = __webpack_require__(23);
-geometryConverter.guard = __webpack_require__(24);
-geometryConverter.isolate = __webpack_require__(25);
-geometryConverter.mainAttack = __webpack_require__(26);
-geometryConverter.occupy = __webpack_require__(27);
-geometryConverter.searchArea = __webpack_require__(28);
-geometryConverter.supportingAttack = __webpack_require__(29);
+geometryConverter.bypass = __webpack_require__(19);
+geometryConverter.canalize = __webpack_require__(20);
+geometryConverter.circle = __webpack_require__(21);
+geometryConverter.clear = __webpack_require__(22);
+geometryConverter.corridor = __webpack_require__(23);
+geometryConverter.cover = __webpack_require__(24);
+geometryConverter.delay = __webpack_require__(25);
+geometryConverter.fix = __webpack_require__(26);
+geometryConverter.guard = __webpack_require__(27);
+geometryConverter.isolate = __webpack_require__(28);
+geometryConverter.mainAttack = __webpack_require__(29);
+geometryConverter.occupy = __webpack_require__(30);
+geometryConverter.searchArea = __webpack_require__(31);
+geometryConverter.supportingAttack = __webpack_require__(32);
 
 module.exports = geometryConverter;
 
@@ -231,7 +234,7 @@ function GraphicsLayer (data) {
   
 };
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(30);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(33);
 
 module.exports = GraphicsLayer;
 
@@ -258,9 +261,9 @@ module.exports = function(sidc,STD2525){
 module.exports = function tacticalPoints(sidc,std2525){
   sidc['G-T-B-----'] = ms.geometryConverter.block;//TACGRP.TSK.BLK
   //sidc['G-T-H-----'] = [];//TACGRP.TSK.BRH
-  //sidc['G-T-Y-----'] = [];//TACGRP.TSK.BYS
-  //sidc['G-T-C-----'] = [];//TACGRP.TSK.CNZ
-  //sidc['G-T-X-----'] = [];//TACGRP.TSK.CLR
+  sidc['G-T-Y-----'] = ms.geometryConverter.bypass;//TACGRP.TSK.BYS
+  sidc['G-T-C-----'] = ms.geometryConverter.canalize;//TACGRP.TSK.CNZ
+  sidc['G-T-X-----'] = ms.geometryConverter.clear;//TACGRP.TSK.CLR
   //sidc['G-T-J-----'] = [];//TACGRP.TSK.CNT
   //sidc['G-T-K-----'] = [];//TACGRP.TSK.CATK
   //sidc['G-T-KF----'] = [];//TACGRP.TSK.CATK.CATKF
@@ -1425,6 +1428,82 @@ module.exports = block;
 /* 19 */
 /***/ (function(module, exports) {
 
+// 
+function bypass(feature){
+  var direction, width;
+  var points = feature.geometry.coordinates;
+  var geometry = {"type": "MultiLineString"};
+  var scale = ms.geometry.distanceBetween(points[0],points[1]);
+  var pMid = ms.geometry.pointBetween(points[0],points[1], 0.5);
+  var length = ms.geometry.distanceBetween(pMid,points[2]);
+  var bearing = ms.geometry.bearingBetween(points[0],points[1]);
+  
+  geometry.coordinates = [];
+  
+  var geom = [points[0]];
+  geom.push(ms.geometry.toDistanceBearing(points[0], length, bearing+90));
+  geom.push(ms.geometry.toDistanceBearing(points[1], length, bearing+90));  
+  geom.push(points[1]);
+  geometry.coordinates.push(geom)
+  
+  geom = [];
+  geom.push(ms.geometry.toDistanceBearing(points[0], scale*0.2, bearing+90-30));
+  geom.push(points[0]);
+  geom.push(ms.geometry.toDistanceBearing(points[0], scale*0.2, bearing+90+30));  
+  geometry.coordinates.push(geom)
+  
+  geom = [];
+  geom.push(ms.geometry.toDistanceBearing(points[1], scale*0.2, bearing+90-30));
+  geom.push(points[1]);
+  geom.push(ms.geometry.toDistanceBearing(points[1], scale*0.2, bearing+90+30));  
+  geometry.coordinates.push(geom)  
+  
+  return {geometry:geometry};
+}
+
+module.exports = bypass;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+// 
+function canalize(feature){
+  var direction, width;
+  var points = feature.geometry.coordinates;
+  var geometry = {"type": "MultiLineString"};
+  var scale = ms.geometry.distanceBetween(points[0],points[1]);
+  var pMid = ms.geometry.pointBetween(points[0],points[1], 0.5);
+  var length = ms.geometry.distanceBetween(pMid,points[2]);
+  var bearing = ms.geometry.bearingBetween(points[0],points[1]);
+  
+  geometry.coordinates = [];
+  
+  var geom = [points[0]];
+  geom.push(ms.geometry.toDistanceBearing(points[0], length, bearing+90));
+  geom.push(ms.geometry.toDistanceBearing(points[1], length, bearing+90));  
+  geom.push(points[1]);
+  geometry.coordinates.push(geom)
+  
+  geom = [];
+  geom.push(ms.geometry.toDistanceBearing(points[0], scale*0.2, bearing+45));
+  geom.push(ms.geometry.toDistanceBearing(points[0], scale*0.2, bearing+45+180));  
+  geometry.coordinates.push(geom)
+  
+  geom = [];
+  geom.push(ms.geometry.toDistanceBearing(points[1], scale*0.2, bearing-45));
+  geom.push(ms.geometry.toDistanceBearing(points[1], scale*0.2, bearing-45+180));  
+  geometry.coordinates.push(geom)  
+  
+  return {geometry:geometry};
+}
+
+module.exports = canalize;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
 // Draws a circle withe a radius in meters
 function circle(feature){
   var p = feature.geometry.coordinates;
@@ -1440,7 +1519,61 @@ function circle(feature){
 module.exports = circle;
 
 /***/ }),
-/* 20 */
+/* 22 */
+/***/ (function(module, exports) {
+
+// 
+function clear(feature){
+  var direction, width;
+  var points = feature.geometry.coordinates;
+  var geometry = {"type": "MultiLineString"};
+  var scale = ms.geometry.distanceBetween(points[0],points[1]);
+
+  geometry.coordinates = [];
+  
+  var geom = [points[0],points[1]];
+  geometry.coordinates.push(geom)
+  
+  var pMid = ms.geometry.pointBetween(points[0],points[1], 0.5);
+  var length = ms.geometry.distanceBetween(pMid,points[2]);
+  var bearing = ms.geometry.bearingBetween(points[0],points[1]);
+  
+  geom = [pMid, ms.geometry.toDistanceBearing(pMid, length, bearing+90)];
+  geometry.coordinates.push(geom)
+
+  geom = [];
+  geom.push(ms.geometry.toDistanceBearing(pMid, scale*0.15, bearing+60));
+  geom.push(pMid);
+  geom.push(ms.geometry.toDistanceBearing(pMid, scale*0.15, bearing+60+60));
+  geometry.coordinates.push(geom)
+
+  pMid = ms.geometry.pointBetween(points[0],points[1], 0.2);
+  geom = [pMid, ms.geometry.toDistanceBearing(pMid, length, bearing+90)];
+  geometry.coordinates.push(geom)
+
+  geom = [];
+  geom.push(ms.geometry.toDistanceBearing(pMid, scale*0.15, bearing+60));
+  geom.push(pMid);
+  geom.push(ms.geometry.toDistanceBearing(pMid, scale*0.15, bearing+60+60));
+  geometry.coordinates.push(geom)
+  
+  pMid = ms.geometry.pointBetween(points[0],points[1], 0.8);  
+  geom = [pMid, ms.geometry.toDistanceBearing(pMid, length, bearing+90)];
+  geometry.coordinates.push(geom)
+  
+  geom = [];
+  geom.push(ms.geometry.toDistanceBearing(pMid, scale*0.15, bearing+60));
+  geom.push(pMid);
+  geom.push(ms.geometry.toDistanceBearing(pMid, scale*0.15, bearing+60+60));
+  geometry.coordinates.push(geom)
+  
+  return {geometry:geometry};
+}
+
+module.exports = clear;
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -1479,7 +1612,7 @@ function corridor(feature){
 module.exports = corridor;
 
 /***/ }),
-/* 21 */
+/* 24 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -1493,8 +1626,8 @@ function cover(feature){
   var pMid = ms.geometry.pointBetween(p[0], p[1], 0.5);
   var bearing = ms.geometry.bearingBetween(p[0], p[1]);
   geom.push(p[0]);
-  geom.push( ms.geometry.toDistanceBearing(pMid, scale*0.08, bearing + (120-180) ));
-  var pMid2 = ms.geometry.toDistanceBearing(pMid, scale*0.08, bearing + (120) );
+  geom.push( ms.geometry.toDistanceBearing(pMid, scale*0.05, bearing + (120-180) ));
+  var pMid2 = ms.geometry.toDistanceBearing(pMid, scale*0.05, bearing + (120) );
   geom.push( pMid2 );
   geom.push( p[1] );
   geometry.coordinates.push(geom);
@@ -1510,8 +1643,8 @@ function cover(feature){
   pMid = ms.geometry.pointBetween(p[0], p[2], 0.5);
   bearing = ms.geometry.bearingBetween(p[0], p[2]);
   geom.push(p[0]);
-  geom.push( ms.geometry.toDistanceBearing(pMid, scale*0.08, bearing + (120-180) ));
-  pMid2 = ms.geometry.toDistanceBearing(pMid, scale*0.08, bearing + (120) );
+  geom.push( ms.geometry.toDistanceBearing(pMid, scale*0.05, bearing + (120-180) ));
+  pMid2 = ms.geometry.toDistanceBearing(pMid, scale*0.05, bearing + (120) );
   geom.push( pMid2 );
   geom.push( p[2] );
   geometry.coordinates.push(geom);
@@ -1529,7 +1662,7 @@ function cover(feature){
 module.exports = cover;
 
 /***/ }),
-/* 22 */
+/* 25 */
 /***/ (function(module, exports) {
 
 // 
@@ -1577,7 +1710,7 @@ function delay(feature){
 module.exports = delay;
 
 /***/ }),
-/* 23 */
+/* 26 */
 /***/ (function(module, exports) {
 
 // 
@@ -1627,7 +1760,7 @@ function fix(feature){
 module.exports = fix;
 
 /***/ }),
-/* 24 */
+/* 27 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -1638,7 +1771,7 @@ function guard(feature){
 module.exports = guard;
 
 /***/ }),
-/* 25 */
+/* 28 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -1674,7 +1807,7 @@ function isolate(feature){
 module.exports = isolate;
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -1739,7 +1872,7 @@ function mainAttack(feature){
 module.exports = mainAttack;
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -1774,7 +1907,7 @@ function occupy(feature){
 module.exports = occupy;
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -1785,7 +1918,7 @@ function searchArea(feature){
 module.exports = searchArea;
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -1844,7 +1977,7 @@ function supportingAttack(feature){
 module.exports = supportingAttack;
 
 /***/ }),
-/* 30 */
+/* 33 */
 /***/ (function(module, exports) {
 
 
@@ -1903,7 +2036,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************

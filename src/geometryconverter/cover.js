@@ -9,8 +9,8 @@ function cover(feature){
   var pMid = ms.geometry.pointBetween(p[0], p[1], 0.5);
   var bearing = ms.geometry.bearingBetween(p[0], p[1]);
   geom.push(p[0]);
-  geom.push( ms.geometry.toDistanceBearing(pMid, scale*0.08, bearing + (120-180) ));
-  var pMid2 = ms.geometry.toDistanceBearing(pMid, scale*0.08, bearing + (120) );
+  geom.push( ms.geometry.toDistanceBearing(pMid, scale*0.05, bearing + (120-180) ));
+  var pMid2 = ms.geometry.toDistanceBearing(pMid, scale*0.05, bearing + (120) );
   geom.push( pMid2 );
   geom.push( p[1] );
   geometry.coordinates.push(geom);
@@ -26,8 +26,8 @@ function cover(feature){
   pMid = ms.geometry.pointBetween(p[0], p[2], 0.5);
   bearing = ms.geometry.bearingBetween(p[0], p[2]);
   geom.push(p[0]);
-  geom.push( ms.geometry.toDistanceBearing(pMid, scale*0.08, bearing + (120-180) ));
-  pMid2 = ms.geometry.toDistanceBearing(pMid, scale*0.08, bearing + (120) );
+  geom.push( ms.geometry.toDistanceBearing(pMid, scale*0.05, bearing + (120-180) ));
+  pMid2 = ms.geometry.toDistanceBearing(pMid, scale*0.05, bearing + (120) );
   geom.push( pMid2 );
   geom.push( p[2] );
   geometry.coordinates.push(geom);
