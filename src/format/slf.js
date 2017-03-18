@@ -213,12 +213,13 @@ function SLF(xml) {
                 if(feature.geometry && feature.geometry.type == 'TwoPointCorridor'){
                 //TODO make sure that we are drawing this in the right direction
                   var points = feature.geometry.coordinates;
-                  var coordinates = [];
+                  var coordinates = [points[0],points[1]];
                   var width = points[2];
                   var bearing = ms.geometry.bearingBetween(points[1],points[0]);
-                  coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing+90));
-                  coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing-90));
-                  coordinates.push(points[0]);
+                  coordinates.push( ms.geometry.toDistanceBearing(ms.geometry.pointBetween(points[0],points[1],0.5),width/2,bearing-90));
+                  //coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing-90));
+                  //coordinates.push(points[0]);
+
                   feature.geometry = {type: "LineString", coordinates: coordinates };
                 }
                 break;

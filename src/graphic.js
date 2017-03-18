@@ -1,6 +1,6 @@
 var ms = require('milsymbol');
 
-var Graphic = function (feature){
+function graphic(feature) {
   //=======================================================================================
   // The SIDC for the symbol.
   this.SIDC = feature.properties.sidc;
@@ -22,12 +22,14 @@ var Graphic = function (feature){
 	  var graphics = ms._graphicCache['letter-' + this.properties.numberSIDC];
 	  var genericSIDC = this.SIDC.substr(0,1)+'-'+this.SIDC.substr(2,1)+'-'+this.SIDC.substr(4,6);
     if(graphics[genericSIDC]){
-      var graphic = graphics[genericSIDC].call(this, feature);
-      this.geometry = graphic.geometry;
+      var graphicObject = graphics[genericSIDC].call(this, feature);
+      this.geometry = graphicObject.geometry;
+      this.converted = true;
     }else{
       //TODO check if we need to clone here;
       console.log('Failed to convert: ' + this.SIDC);
       this.geometry = feature.geometry;
+      this.converted = false;
     }
 	}else{
 	  console.log('TODO number sidc stuff')
@@ -35,4 +37,6 @@ var Graphic = function (feature){
 	}
 };
 
-module.exports = Graphic;
+graphic.prototype.isConverted = function() { return this.converted; };
+
+module.exports = graphic;

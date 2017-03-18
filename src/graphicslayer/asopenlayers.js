@@ -8,14 +8,15 @@ function asOpenLayers(crs) {
   var features = [];
   
   for (var i = 0; i< this.data.features.length; i++) {
-    var feature = geoJSON.readFeature(this.data.features[i],{featureProjection:ol.proj.get(crs)});
-  
-    if (feature.getGeometry().getType() == 'Point') {
-      var properties = feature.getProperties();
+    var feature = this.data.features[i];
+    var olFeature = geoJSON.readFeature(feature,{featureProjection:ol.proj.get(crs)});
+
+    if (olFeature.getGeometry().getType() == 'Point') {
+      var properties = olFeature.getProperties();
       if (properties.sidc.charAt(0) != 'X') { //TODO handle sitaware custom graphics
         var milsymbol = this.data.features[i].symbol;
         //var image = isIE ? mysymbol.asCanvas() : mysymbol.toDataURL();
-        feature.setStyle(new ol.style.Style({
+        olFeature.setStyle(new ol.style.Style({
           image: new ol.style.Icon( ({
             scale: 1/ratio,
             anchor: [milsymbol.getAnchor().x*ratio, milsymbol.getAnchor().y*ratio],
@@ -28,22 +29,22 @@ function asOpenLayers(crs) {
       }
     }
     
-    if (feature.getGeometry().getType() == 'LineString' || feature.getGeometry().getType() == 'MultiLineString') {
+    if (feature.graphic.isConverted() && (olFeature.getGeometry().getType() == 'LineString' || olFeature.getGeometry().getType() == 'MultiLineString')) {
       	var style = new ol.style.Style({
           stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2})
         });
-        feature.setStyle(style);
+        olFeature.setStyle(style);
     }
     
-    if (feature.getGeometry().getType() == 'Polygon') {
+    if (feature.graphic.isConverted() && olFeature.getGeometry().getType() == 'Polygon') {
       	var style = new ol.style.Style({
           stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2}),
           fill: new ol.style.Fill({color: 'rgba(0,0,0,0)'})
         });
-        feature.setStyle(style);
+        olFeature.setStyle(style);
     }
     
-    features.push(feature);
+    features.push(olFeature);
   }
   
   return features;

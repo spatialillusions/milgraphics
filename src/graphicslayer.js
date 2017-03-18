@@ -9,7 +9,6 @@ function GraphicsLayer (data) {
     feature.geometry = feature.graphic.geometry;
 
     if (feature.geometry.type == 'Point') {
-    console.log(feature)
       var properties = feature.properties;
       properties.size = properties.size || 30; //TODO set default size value from setting
       if (properties.sidc.charAt(0) != 'X') { //Skip SitaWare custom graphics for now

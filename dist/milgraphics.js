@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 26);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -147,10 +147,15 @@ var geometryConverter = {};
 geometryConverter.block = __webpack_require__(18);
 geometryConverter.circle = __webpack_require__(19);
 geometryConverter.corridor = __webpack_require__(20);
-geometryConverter.delay = __webpack_require__(21);
-geometryConverter.fix = __webpack_require__(22);
-geometryConverter.mainAttack = __webpack_require__(23);
-geometryConverter.supportingAttack = __webpack_require__(24);
+geometryConverter.cover = __webpack_require__(21);
+geometryConverter.delay = __webpack_require__(22);
+geometryConverter.fix = __webpack_require__(23);
+geometryConverter.guard = __webpack_require__(24);
+geometryConverter.isolate = __webpack_require__(25);
+geometryConverter.mainAttack = __webpack_require__(26);
+geometryConverter.occupy = __webpack_require__(27);
+geometryConverter.searchArea = __webpack_require__(28);
+geometryConverter.supportingAttack = __webpack_require__(29);
 
 module.exports = geometryConverter;
 
@@ -160,7 +165,7 @@ module.exports = geometryConverter;
 
 var ms = __webpack_require__(0);
 
-var Graphic = function (feature){
+function graphic(feature) {
   //=======================================================================================
   // The SIDC for the symbol.
   this.SIDC = feature.properties.sidc;
@@ -182,12 +187,14 @@ var Graphic = function (feature){
 	  var graphics = ms._graphicCache['letter-' + this.properties.numberSIDC];
 	  var genericSIDC = this.SIDC.substr(0,1)+'-'+this.SIDC.substr(2,1)+'-'+this.SIDC.substr(4,6);
     if(graphics[genericSIDC]){
-      var graphic = graphics[genericSIDC].call(this, feature);
-      this.geometry = graphic.geometry;
+      var graphicObject = graphics[genericSIDC].call(this, feature);
+      this.geometry = graphicObject.geometry;
+      this.converted = true;
     }else{
       //TODO check if we need to clone here;
       console.log('Failed to convert: ' + this.SIDC);
       this.geometry = feature.geometry;
+      this.converted = false;
     }
 	}else{
 	  console.log('TODO number sidc stuff')
@@ -195,7 +202,9 @@ var Graphic = function (feature){
 	}
 };
 
-module.exports = Graphic;
+graphic.prototype.isConverted = function() { return this.converted; };
+
+module.exports = graphic;
 
 /***/ }),
 /* 5 */
@@ -212,7 +221,6 @@ function GraphicsLayer (data) {
     feature.geometry = feature.graphic.geometry;
 
     if (feature.geometry.type == 'Point') {
-    console.log(feature)
       var properties = feature.properties;
       properties.size = properties.size || 30; //TODO set default size value from setting
       if (properties.sidc.charAt(0) != 'X') { //Skip SitaWare custom graphics for now
@@ -223,7 +231,7 @@ function GraphicsLayer (data) {
   
 };
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(25);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(30);
 
 module.exports = GraphicsLayer;
 
@@ -261,8 +269,8 @@ module.exports = function tacticalPoints(sidc,std2525){
   sidc['G-T-F-----'] = ms.geometryConverter.fix;//TACGRP.TSK.FIX
   //sidc['G-T-A-----'] = [];//TACGRP.TSK.FLWASS
   //sidc['G-T-AS----'] = [];//TACGRP.TSK.FLWASS.FLWSUP
-  //sidc['G-T-E-----'] = [];//TACGRP.TSK.ISL
-  //sidc['G-T-O-----'] = [];//TACGRP.TSK.OCC
+  sidc['G-T-E-----'] = ms.geometryConverter.isolate;//TACGRP.TSK.ISL
+  sidc['G-T-O-----'] = ms.geometryConverter.occupy;//TACGRP.TSK.OCC
   //sidc['G-T-P-----'] = [];//TACGRP.TSK.PNE
   //sidc['G-T-R-----'] = [];//TACGRP.TSK.RIP
   //sidc['G-T-Q-----'] = [];//TACGRP.TSK.RTN
@@ -270,8 +278,8 @@ module.exports = function tacticalPoints(sidc,std2525){
   //sidc['G-T-S-----'] = [];//TACGRP.TSK.SCE
   //sidc['G-T-U-----'] = [];//TACGRP.TSK.SEC
   //sidc['G-T-US----'] = [];//TACGRP.TSK.SEC.SCN
-  //sidc['G-T-UG----'] = [];//TACGRP.TSK.SEC.GUD
-  //sidc['G-T-UC----'] = [];//TACGRP.TSK.SEC.COV
+  sidc['G-T-UG----'] = ms.geometryConverter.guard;//TACGRP.TSK.SEC.GUD
+  sidc['G-T-UC----'] = ms.geometryConverter.cover;//TACGRP.TSK.SEC.COV
   //sidc['G-T-Z-----'] = [];//TACGRP.TSK.SZE
   //sidc['G-T-W-----'] = [];//TACGRP.TSK.WDR
   //sidc['G-T-WP----'] = [];//TACGRP.TSK.WDR.WDRUP
@@ -1195,12 +1203,13 @@ function SLF(xml) {
                 if(feature.geometry && feature.geometry.type == 'TwoPointCorridor'){
                 //TODO make sure that we are drawing this in the right direction
                   var points = feature.geometry.coordinates;
-                  var coordinates = [];
+                  var coordinates = [points[0],points[1]];
                   var width = points[2];
                   var bearing = ms.geometry.bearingBetween(points[1],points[0]);
-                  coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing+90));
-                  coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing-90));
-                  coordinates.push(points[0]);
+                  coordinates.push( ms.geometry.toDistanceBearing(ms.geometry.pointBetween(points[0],points[1],0.5),width/2,bearing-90));
+                  //coordinates.push( ms.geometry.toDistanceBearing(points[1],width/2,bearing-90));
+                  //coordinates.push(points[0]);
+
                   feature.geometry = {type: "LineString", coordinates: coordinates };
                 }
                 break;
@@ -1473,6 +1482,56 @@ module.exports = corridor;
 /* 21 */
 /***/ (function(module, exports) {
 
+// Draws a circle withe a radius in meters
+function cover(feature){
+  var p = feature.geometry.coordinates;
+  var scale = Math.max(ms.geometry.distanceBetween(p[0],p[1]),ms.geometry.distanceBetween(p[0],p[2]));
+  var geometry = {"type": "MultiLineString"};
+  geometry.coordinates = [[]];
+
+  var geom = [];
+  var pMid = ms.geometry.pointBetween(p[0], p[1], 0.5);
+  var bearing = ms.geometry.bearingBetween(p[0], p[1]);
+  geom.push(p[0]);
+  geom.push( ms.geometry.toDistanceBearing(pMid, scale*0.08, bearing + (120-180) ));
+  var pMid2 = ms.geometry.toDistanceBearing(pMid, scale*0.08, bearing + (120) );
+  geom.push( pMid2 );
+  geom.push( p[1] );
+  geometry.coordinates.push(geom);
+
+  geom = [];
+  bearing = ms.geometry.bearingBetween(p[1], pMid2);
+  geom.push( ms.geometry.toDistanceBearing(p[1], scale*0.08, bearing - 45 ));
+  geom.push( p[1] );
+  geom.push( ms.geometry.toDistanceBearing(p[1], scale*0.08, bearing + 45 ));
+  geometry.coordinates.push(geom);
+  
+  geom = [];
+  pMid = ms.geometry.pointBetween(p[0], p[2], 0.5);
+  bearing = ms.geometry.bearingBetween(p[0], p[2]);
+  geom.push(p[0]);
+  geom.push( ms.geometry.toDistanceBearing(pMid, scale*0.08, bearing + (120-180) ));
+  pMid2 = ms.geometry.toDistanceBearing(pMid, scale*0.08, bearing + (120) );
+  geom.push( pMid2 );
+  geom.push( p[2] );
+  geometry.coordinates.push(geom);
+  
+  geom = [];
+  bearing = ms.geometry.bearingBetween(p[2], pMid2);
+  geom.push( ms.geometry.toDistanceBearing(p[2], scale*0.08, bearing - 45 ));
+  geom.push( p[2] );
+  geom.push( ms.geometry.toDistanceBearing(p[2], scale*0.08, bearing + 45 ));
+  geometry.coordinates.push(geom);
+  
+  return {geometry:geometry};
+}
+
+module.exports = cover;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
 // 
 function delay(feature){
   var direction, width;
@@ -1518,7 +1577,7 @@ function delay(feature){
 module.exports = delay;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 // 
@@ -1568,7 +1627,54 @@ function fix(feature){
 module.exports = fix;
 
 /***/ }),
-/* 23 */
+/* 24 */
+/***/ (function(module, exports) {
+
+// Draws a circle withe a radius in meters
+function guard(feature){
+
+}
+
+module.exports = guard;
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+// Draws a circle withe a radius in meters
+function isolate(feature){
+  var p = feature.geometry.coordinates;
+  var r = ms.geometry.distanceBetween(p[0],p[1]);
+  var bearing = ms.geometry.bearingBetween(p[0],p[1]);
+  
+  var geometry = {"type": "MultiLineString"};
+  geometry.coordinates = [[]];
+  for (var d = 0; d <= 340; d+=5){
+    geometry.coordinates[0].push( ms.geometry.toDistanceBearing(p[0], r, d+bearing));
+  }
+
+  for (var d = 20; d <= 320; d+=40){
+    var geom = [];
+    geom.push( ms.geometry.toDistanceBearing(p[0], r, d+bearing));
+    geom.push( ms.geometry.toDistanceBearing(p[0], r*0.7, 10+d+bearing));
+    geom.push( ms.geometry.toDistanceBearing(p[0], r, 20+d+bearing));
+    geometry.coordinates.push(geom);
+  }
+
+  var geom = [];
+  var pEnd = ms.geometry.toDistanceBearing(p[0], r, 340+bearing);
+  geom.push( ms.geometry.toDistanceBearing(pEnd, r*0.2, 320+bearing-(90-15)+45));
+  geom.push( pEnd );
+  geom.push( ms.geometry.toDistanceBearing(pEnd, r*0.2, 320+bearing-(90-15)-45));
+  geometry.coordinates.push(geom);
+    
+  return {geometry:geometry};
+}
+
+module.exports = isolate;
+
+/***/ }),
+/* 26 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -1633,7 +1739,53 @@ function mainAttack(feature){
 module.exports = mainAttack;
 
 /***/ }),
-/* 24 */
+/* 27 */
+/***/ (function(module, exports) {
+
+// Draws a circle withe a radius in meters
+function occupy(feature){
+  var p = feature.geometry.coordinates;
+  var r = ms.geometry.distanceBetween(p[0],p[1]);
+  var bearing = ms.geometry.bearingBetween(p[0],p[1]);
+  
+  var geometry = {"type": "MultiLineString"};
+  geometry.coordinates = [[]];
+  for (var d = 0; d <= 340; d+=5){
+    geometry.coordinates[0].push( ms.geometry.toDistanceBearing(p[0], r, d+bearing));
+  }
+
+  var geom = [];
+  var pEnd = ms.geometry.toDistanceBearing(p[0], r, 340+bearing);
+  geom.push( ms.geometry.toDistanceBearing(pEnd, r*0.2, 320+bearing-(90-15)+45));
+  geom.push( pEnd );
+  geom.push( ms.geometry.toDistanceBearing(pEnd, r*0.2, 320+bearing-(90-15)-45));
+  geometry.coordinates.push(geom);
+
+  geom = [];
+  pEnd = ms.geometry.toDistanceBearing(p[0], r, 340+bearing);
+  geom.push( ms.geometry.toDistanceBearing(pEnd, r*0.2, 320+bearing+(90+15)+45));
+  geom.push( pEnd );
+  geom.push( ms.geometry.toDistanceBearing(pEnd, r*0.2, 320+bearing+(90+15)-45));
+  geometry.coordinates.push(geom);
+
+  return {geometry:geometry};
+}
+
+module.exports = occupy;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+// Draws a circle withe a radius in meters
+function searchArea(feature){
+
+}
+
+module.exports = searchArea;
+
+/***/ }),
+/* 29 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -1692,7 +1844,7 @@ function supportingAttack(feature){
 module.exports = supportingAttack;
 
 /***/ }),
-/* 25 */
+/* 30 */
 /***/ (function(module, exports) {
 
 
@@ -1705,14 +1857,15 @@ function asOpenLayers(crs) {
   var features = [];
   
   for (var i = 0; i< this.data.features.length; i++) {
-    var feature = geoJSON.readFeature(this.data.features[i],{featureProjection:ol.proj.get(crs)});
-  
-    if (feature.getGeometry().getType() == 'Point') {
-      var properties = feature.getProperties();
+    var feature = this.data.features[i];
+    var olFeature = geoJSON.readFeature(feature,{featureProjection:ol.proj.get(crs)});
+
+    if (olFeature.getGeometry().getType() == 'Point') {
+      var properties = olFeature.getProperties();
       if (properties.sidc.charAt(0) != 'X') { //TODO handle sitaware custom graphics
         var milsymbol = this.data.features[i].symbol;
         //var image = isIE ? mysymbol.asCanvas() : mysymbol.toDataURL();
-        feature.setStyle(new ol.style.Style({
+        olFeature.setStyle(new ol.style.Style({
           image: new ol.style.Icon( ({
             scale: 1/ratio,
             anchor: [milsymbol.getAnchor().x*ratio, milsymbol.getAnchor().y*ratio],
@@ -1725,22 +1878,22 @@ function asOpenLayers(crs) {
       }
     }
     
-    if (feature.getGeometry().getType() == 'LineString' || feature.getGeometry().getType() == 'MultiLineString') {
+    if (feature.graphic.isConverted() && (olFeature.getGeometry().getType() == 'LineString' || olFeature.getGeometry().getType() == 'MultiLineString')) {
       	var style = new ol.style.Style({
           stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2})
         });
-        feature.setStyle(style);
+        olFeature.setStyle(style);
     }
     
-    if (feature.getGeometry().getType() == 'Polygon') {
+    if (feature.graphic.isConverted() && olFeature.getGeometry().getType() == 'Polygon') {
       	var style = new ol.style.Style({
           stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2}),
           fill: new ol.style.Fill({color: 'rgba(0,0,0,0)'})
         });
-        feature.setStyle(style);
+        olFeature.setStyle(style);
     }
     
-    features.push(feature);
+    features.push(olFeature);
   }
   
   return features;
@@ -1750,7 +1903,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 26 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************
