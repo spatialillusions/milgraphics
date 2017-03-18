@@ -1,6 +1,6 @@
 // Draws a circle withe a radius in meters
 function circle(feature){
-  var p = feature.geometry.coordinates[0];
+  var p = feature.geometry.coordinates;
   var r = feature.properties.distance;
   var geometry = {"type": "Polygon"};
   geometry.coordinates = [[]];

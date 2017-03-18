@@ -208,22 +208,19 @@ function GraphicsLayer (data) {
   for (var i = 0; i< this.data.features.length; i++) {
     var feature = this.data.features[i];
 
-/* TODO
-Add code that figures out if a point should use a point symbol or is a circle...
-*/
+    feature.graphic = new ms.Graphic(feature);
+    feature.geometry = feature.graphic.geometry;
 
     if (feature.geometry.type == 'Point') {
+    console.log(feature)
       var properties = feature.properties;
       properties.size = properties.size || 30; //TODO set default size value from setting
       if (properties.sidc.charAt(0) != 'X') { //Skip SitaWare custom graphics for now
         feature.symbol = new ms.Symbol(properties);
       }
     }
-    if (feature.geometry.type != 'Point') {
-      feature.graphic = new ms.Graphic(feature);
-      feature.geometry = feature.graphic.geometry;
-    }
   }
+  
 };
 
 GraphicsLayer.prototype.asOpenLayers = __webpack_require__(25);
@@ -575,6 +572,7 @@ module.exports = function tacticalPoints(sidc,std2525){
 	sidc['X---A-----'] = ms.geometryConverter.supportingAttack;
 
 	//2525B compatibility
+	sidc['G-F-ATC---'] = ms.geometryConverter.circle;
 	sidc['G-F-AZIC--'] = ms.geometryConverter.circle;
 
 }
@@ -1128,7 +1126,7 @@ function SLF(xml) {
         return {type: "LineString", coordinates: parseArrow(location) };
         break;
       case 'Circle':
-        return {type: "Circle", coordinates: parseCircle(location) }; // We will fix circles later
+        return {type: "LineString", coordinates: parseCircle(location) };
         break;
       case 'Corridor':
         return {type: "Corridor", coordinates: parseCorridor(location) }; // We fix Corridors later
@@ -1182,11 +1180,6 @@ function SLF(xml) {
             switch (nodeName) {
               case 'Location':
                 feature.geometry = parseLocation( symbol.childNodes[j] );
-                if(feature.geometry && feature.geometry.type == 'Circle'){
-                  var points = feature.geometry.coordinates;
-                  feature.properties.distance = ms.geometry.distanceBetween(points[0],points[1]);
-                  feature.geometry = {type: "Point", coordinates: points[0] };
-                }
                 if(feature.geometry && feature.geometry.type == 'Corridor'){
                   var points = feature.geometry.coordinates;
                   feature.properties.distance = points[points.length-1];
@@ -1257,7 +1250,34 @@ function SLF(xml) {
   for (var lyr in layers){
     features = features.concat( parseLayer(layers[lyr]) );
   }
- 
+  
+  // Fix circles 
+  for (var f in features){
+    var sidc = features[f].properties.SymbolCode
+    var genericSIDC = sidc.substr(0,1)+'-'+sidc.substr(2,1)+'-'+sidc.substr(4,6);
+    if ( ['G-F-ATC---',
+          'G-F-ACSC--',
+          'G-F-ACAC--',
+          'G-F-ACFC--',
+          'G-F-ACNC--',
+          'G-F-ACRC--',
+          'G-F-ACPC--',
+          'G-F-AZIC--',
+          'G-F-AZXC--',
+          'G-F-AZSC--',
+          'G-F-AZCC--',
+          'G-F-AZDC--',
+          'G-F-AZFC--',
+          'G-F-AZZC--',
+          'G-F-AZBC--',
+          'G-F-AZVC--',
+          'X---I-----'].indexOf(genericSIDC) != -1 ) {
+      var points = features[f].geometry.coordinates;
+      features[f].properties.distance = ms.geometry.distanceBetween(points[0],points[1]);
+      features[f].geometry = {type: "Point", coordinates: points[0] };
+    }
+  }
+  
   var rawGeoJSON = {type: "FeatureCollection", features: features };
 	return ms.format.GeoJSON(rawGeoJSON, {
 	  Aliases: 'commonIdentifier',
@@ -1398,7 +1418,7 @@ module.exports = block;
 
 // Draws a circle withe a radius in meters
 function circle(feature){
-  var p = feature.geometry.coordinates[0];
+  var p = feature.geometry.coordinates;
   var r = feature.properties.distance;
   var geometry = {"type": "Polygon"};
   geometry.coordinates = [[]];

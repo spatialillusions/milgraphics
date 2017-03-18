@@ -324,6 +324,7 @@ module.exports = function tacticalPoints(sidc,std2525){
 	sidc['X---A-----'] = ms.geometryConverter.supportingAttack;
 
 	//2525B compatibility
+	sidc['G-F-ATC---'] = ms.geometryConverter.circle;
 	sidc['G-F-AZIC--'] = ms.geometryConverter.circle;
 
 }
