@@ -1084,6 +1084,23 @@ function SLF(xml) {
     return coordinates;
   }
 
+  function parseTwoPointArrow(arrow) {
+    var coordinates = [0,0,0];
+    for (var i in arrow.childNodes){
+      if (arrow.childNodes[i].nodeName == 'StartPoint'){
+        coordinates[1] = parsePoint(arrow.childNodes[i]);
+      }
+      if (arrow.childNodes[i].nodeName == 'EndPoint' || arrow.childNodes[i].nodeName == 'Endpoint'){
+        coordinates[0] = parsePoint(arrow.childNodes[i]);
+      }
+      if (arrow.childNodes[i].nodeName == 'Arrowhead' || arrow.childNodes[i].nodeName == 'ArrowHead'){
+        coordinates[2] = parsePoint(arrow.childNodes[i]);
+      }
+    }
+    console.log(coordinates)
+    return coordinates;
+  }
+  
   function parseTwoPointCorridor(line) {
     var coordinates = [0,0,0];
     for (var i in line.childNodes){
@@ -1153,6 +1170,9 @@ function SLF(xml) {
         break;
       case 'Rectangle':
         return {type: "Rectangle", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
+        break;
+      case 'TwoPointArrow':
+        return {type: "LineString", coordinates: parseTwoPointArrow(location) }; 
         break;
       case 'TwoPointCorridor':
         return {type: "TwoPointCorridor", coordinates: parseTwoPointCorridor(location) }; // We will fix TwoPointCorridor later
