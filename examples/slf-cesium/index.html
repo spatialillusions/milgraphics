@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <meta charset="utf-8">
+
+  <script src="cesium/Build/Cesium/Cesium.js"></script>
+  <script src="../../dist/milgraphics.js"></script>
+	
+  <style>
+    @import url(cesium/Build/Cesium/Widgets/widgets.css);
+    
+    html,
+    body,
+    .mymap {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      font-family: 'Open Sans', Helvetica, sans-serif;
+    }
+  </style>
+</head>
+<body onload="document.getElementById('files').addEventListener('change', loadFileAsText, false)">
+SitaWare Layer File (SLF) or SitaWare Plan File (SPF): <input type="file" id="files" name="files[]"><br>
+
+<div id="map" class="mymap"></div>
+
+<script>
+    var viewer = new Cesium.Viewer('map', {
+      imageryProvider : Cesium.createOpenStreetMapImageryProvider(),
+      baseLayerPicker : false,
+    	sceneMode : Cesium.SceneMode.SCENE3D,
+    	timeline : false,
+    	animation : false,
+	  });
+</script>
+
+<script>
+function loadFileAsText (evt) {
+  var fileToLoad = evt.target.files[0];
+  var fileReader = new FileReader();
+  fileReader.onload = function(fileLoadedEvent) {
+    var file = fileLoadedEvent.target.result;
+    var cesiumEntitiesWithStyle = new ms.GraphicsLayer( new ms.format.SLF(file) ).asCesium();    
+  
+    viewer.entities.removeAll();// Clear all current features
+
+    for (key in cesiumEntitiesWithStyle.values) { // Add new features
+      viewer.entities.add(cesiumEntitiesWithStyle.values[key]);
+    }
+    
+    viewer.zoomTo(viewer.entities); // Zoom to entities
+    
+  };
+  fileReader.readAsText(fileToLoad, "UTF-8");
+}
+</script>
+
+
+</body>
+</html>

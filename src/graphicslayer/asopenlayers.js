@@ -3,7 +3,7 @@ function asOpenLayers(crs) {
   var crs = crs || 'EPSG:3857';
   //var ua = window.navigator.userAgent;
   //var isIE = ( ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/')  > 0) ? true : false;
-  var ratio = window.devicePixelRatio;
+  var ratio = window.devicePixelRatio || 1;
   var geoJSON = new ol.format.GeoJSON();
   var features = [];
   

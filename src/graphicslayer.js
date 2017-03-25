@@ -19,6 +19,8 @@ function GraphicsLayer (data) {
   
 };
 
+GraphicsLayer.prototype.asCesium = require('./graphicslayer/ascesium.js');
+
 GraphicsLayer.prototype.asOpenLayers = require('./graphicslayer/asopenlayers.js');
 
 module.exports = GraphicsLayer;
