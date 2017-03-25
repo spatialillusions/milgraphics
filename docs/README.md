@@ -9,10 +9,20 @@ Creates a new Graphics Layer from the provided GeoJSON. Properties in the GeoJSO
 
 
 -----
+### asCesium()
+
+Takes the current Graphics Layer and returns it as a Cesium Entity Collection with suitable styles applied.
+
+**Returns**
+
+```javascript
+Cesium.EntityCollection
+```
 
 
 ### asOpenLayers(*crs*)
 
+Takes the current Graphics Layer and returns it as Open Layers Feature Collection with suitable styles applied.
 
 **Returns**
 
