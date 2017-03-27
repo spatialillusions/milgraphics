@@ -28,13 +28,14 @@ SitaWare Layer File (SLF) or SitaWare Plan File (SPF): <input type="file" id="fi
 <div id="map" class="mymap"></div>
 
 <script>
-    var viewer = new Cesium.Viewer('map', {
-      imageryProvider : Cesium.createOpenStreetMapImageryProvider(),
-      baseLayerPicker : false,
-    	sceneMode : Cesium.SceneMode.SCENE3D,
-    	timeline : false,
-    	animation : false,
-	  });
+  var viewer = new Cesium.Viewer('map', {
+    imageryProvider : Cesium.createOpenStreetMapImageryProvider(),
+    baseLayerPicker : false,
+    sceneMode : Cesium.SceneMode.SCENE3D,
+    timeline : false,
+    animation : false
+  });
+	viewer.resolutionScale = window.devicePixelRatio || 1;
 </script>
 
 <script>
