@@ -43,25 +43,46 @@ function asCesium() {
         for (c in coordinates) {
           positions.push(Cesium.Cartesian3.fromDegrees(coordinates[c][0], coordinates[c][1], coordinates[c][2]));
         }
-                                                
-        var entity = {polyline: {
-          positions: positions,
-          material: Cesium.Color.BLACK,
-          width: 2
-        }}
+                                           
+        var entity = new Cesium.Entity({
+          polyline: new Cesium.PolylineGraphics({
+            positions: positions,
+            material: Cesium.Color.BLACK,
+            width: 1.5
+          })
+        });
+
         entities.add(entity);
       }
     }
 
-/*    
-    if (feature.graphic.isConverted() && olFeature.getGeometry().getType() == 'Polygon') {
-      	var style = new ol.style.Style({
-          stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2}),
-          fill: new ol.style.Fill({color: 'rgba(0,0,0,0)'})
+    if (feature.graphic.isConverted() && feature.geometry.type == 'Polygon') {
+        var coordinates = feature.geometry.coordinates[0];
+        var positions = [];
+        for (c in coordinates) {
+          positions.push(Cesium.Cartesian3.fromDegrees(coordinates[c][0], coordinates[c][1], coordinates[c][2]));
+        }
+                                           
+        /*var entity = new Cesium.Entity({
+          polygon: new Cesium.PolygonGraphics({
+            hierarchy: new Cesium.PolygonHierarchy(positions),
+            fill: false,
+            outline: true,
+            outlineColor: Cesium.Color.BLACK,
+            outlineWidth: 3
+          })
+        });*/
+        
+        var entity = new Cesium.Entity({
+          polyline: new Cesium.PolylineGraphics({
+            positions: positions,
+            material: Cesium.Color.BLACK,
+            width: 1.5
+          })
         });
-        olFeature.setStyle(style);
+
+        entities.add(entity);
     }
-    */
     
   }
   

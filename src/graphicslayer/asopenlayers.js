@@ -11,7 +11,7 @@ function asOpenLayers(crs) {
     var feature = this.data.features[i];
     var olFeature = geoJSON.readFeature(feature,{featureProjection:ol.proj.get(crs)});
 
-    if (olFeature.getGeometry().getType() == 'Point') {
+    if (olFeature.getGeometry() && olFeature.getGeometry().getType() == 'Point') {
       var properties = olFeature.getProperties();
       if (properties.sidc.charAt(0) != 'X') { //TODO handle sitaware custom graphics
         var milsymbol = this.data.features[i].symbol;

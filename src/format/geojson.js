@@ -1,11 +1,22 @@
 
 function GeoJSON(data, mapping) {
-  //if (typeof mapping === 'undefined') return data;
+  
+  // If input is a string, parse it to JSON
+  if (typeof data == 'string'){
+      data = JSON.parse(data);
+      for (var key in data){
+        this[key] = data[key];
+      }
+		}
+
+  // Parse and clone the JSON
   var feature_copy = [];
   for (var i = 0; i < data.features.length; i++) {
     feature = data.features[i];
     var f = {type: "Feature", properties: {} }
-    f.geometry = {type: feature.geometry.type, coordinates: feature.geometry.coordinates };
+    if (feature.geometry) {
+      f.geometry = {type: feature.geometry.type, coordinates: feature.geometry.coordinates };
+    }
     for (key in feature.properties) {
       if (mapping.hasOwnProperty(key)){
         f.properties[mapping[key]] = feature.properties[key];

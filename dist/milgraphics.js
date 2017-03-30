@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 35);
+/******/ 	return __webpack_require__(__webpack_require__.s = 36);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -119,9 +119,10 @@ var R=new function(){this._colorModes={},this._dashArrays={pending:"4,4",anticip
 
 var format = {};
 
-format.GeoJSON = __webpack_require__(11);
-format.NVG = __webpack_require__(12);
-format.SLF = __webpack_require__(13);
+format.ArmyXML = __webpack_require__(11);
+format.GeoJSON = __webpack_require__(12);
+format.NVG = __webpack_require__(13);
+format.SLF = __webpack_require__(14);
 
 module.exports = format;
 
@@ -131,10 +132,10 @@ module.exports = format;
 
 var geometry = {};
 
-geometry.bearingBetween = __webpack_require__(14);
-geometry.distanceBetween = __webpack_require__(15);
-geometry.pointBetween = __webpack_require__(16);
-geometry.toDistanceBearing = __webpack_require__(17);
+geometry.bearingBetween = __webpack_require__(15);
+geometry.distanceBetween = __webpack_require__(16);
+geometry.pointBetween = __webpack_require__(17);
+geometry.toDistanceBearing = __webpack_require__(18);
 
 module.exports = geometry;
 
@@ -144,21 +145,21 @@ module.exports = geometry;
 
 var geometryConverter = {};
 
-geometryConverter.block = __webpack_require__(18);
-geometryConverter.bypass = __webpack_require__(19);
-geometryConverter.canalize = __webpack_require__(20);
-geometryConverter.circle = __webpack_require__(21);
-geometryConverter.clear = __webpack_require__(22);
-geometryConverter.corridor = __webpack_require__(23);
-geometryConverter.cover = __webpack_require__(24);
-geometryConverter.delay = __webpack_require__(25);
-geometryConverter.fix = __webpack_require__(26);
-geometryConverter.guard = __webpack_require__(27);
-geometryConverter.isolate = __webpack_require__(28);
-geometryConverter.mainAttack = __webpack_require__(29);
-geometryConverter.occupy = __webpack_require__(30);
-geometryConverter.searchArea = __webpack_require__(31);
-geometryConverter.supportingAttack = __webpack_require__(32);
+geometryConverter.block = __webpack_require__(19);
+geometryConverter.bypass = __webpack_require__(20);
+geometryConverter.canalize = __webpack_require__(21);
+geometryConverter.circle = __webpack_require__(22);
+geometryConverter.clear = __webpack_require__(23);
+geometryConverter.corridor = __webpack_require__(24);
+geometryConverter.cover = __webpack_require__(25);
+geometryConverter.delay = __webpack_require__(26);
+geometryConverter.fix = __webpack_require__(27);
+geometryConverter.guard = __webpack_require__(28);
+geometryConverter.isolate = __webpack_require__(29);
+geometryConverter.mainAttack = __webpack_require__(30);
+geometryConverter.occupy = __webpack_require__(31);
+geometryConverter.searchArea = __webpack_require__(32);
+geometryConverter.supportingAttack = __webpack_require__(33);
 
 module.exports = geometryConverter;
 
@@ -223,7 +224,7 @@ function GraphicsLayer (data) {
     feature.graphic = new ms.Graphic(feature);
     feature.geometry = feature.graphic.geometry;
 
-    if (feature.geometry.type == 'Point') {
+    if (feature.geometry && feature.geometry.type == 'Point') {
       var properties = feature.properties;
       properties.size = properties.size || 30; //TODO set default size value from setting
       if (properties.sidc.charAt(0) != 'X') { //Skip SitaWare custom graphics for now
@@ -234,9 +235,9 @@ function GraphicsLayer (data) {
   
 };
 
-GraphicsLayer.prototype.asCesium = __webpack_require__(33);
+GraphicsLayer.prototype.asCesium = __webpack_require__(34);
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(34);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(35);
 
 module.exports = GraphicsLayer;
 
@@ -954,16 +955,282 @@ module.exports = function(module) {
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
+function ArmyXML(xml) {
+  var features = [];
+/*  
+  function parseSIDC(sidc) {
+    for (var i in sidc.childNodes){
+      if (sidc.childNodes[i].nodeName == 'SymbolCodeString'){
+        return sidc.childNodes[i].textContent;
+      }
+    }
+  }
+*/
+
+  function parseArea(area) {
+    var coordinates = [];
+    area = area.getElementsByTagName(ns+'Point');
+    for (var i in area){
+      if (area[i].nodeName == ns+'Point'){
+      var point = area[i];
+      var coord = [];
+      coord[0] = parseFloat(point.getAttribute('Longitude'));
+      coord[1] = parseFloat(point.getAttribute('Latitude'));
+      if (point.getAttribute('Elevation')) {
+        coord[2] = parseFloat(point.getAttribute('Elevation'));
+      }
+      coordinates.push(coord);
+      }
+    }
+    coordinates.push(coordinates[0]);//close ring
+    return coordinates;
+  }
+
+/*
+  function parseArrow(arrow) {
+    var coordinates = [];
+    var arrowHead = [];
+    for (var i in arrow.childNodes){
+      if (arrow.childNodes[i].nodeName == 'Arrowhead'){
+        arrowHead = parsePoint(arrow.childNodes[i]);
+      }
+      if (arrow.childNodes[i].nodeName == 'Points'){
+        for (var j in arrow.childNodes[i].childNodes){
+          if (arrow.childNodes[i].childNodes[j].nodeName == 'Point'){
+            coordinates.unshift( parsePoint(arrow.childNodes[i].childNodes[j]) );
+          }
+        }
+      }
+    }
+    coordinates.push(arrowHead);//Add arrow head last in multipoint
+    return coordinates;
+  }
+*/
+/*   
+  function parseCircle(line) {
+    var coordinates = [0,0];
+    for (var i in line.childNodes){
+      if (line.childNodes[i].nodeName == 'CenterPoint'){
+        coordinates[0] = parsePoint(line.childNodes[i]);
+      }
+      if (line.childNodes[i].nodeName == 'PerimeterPoint'){
+        coordinates[1] = parsePoint(line.childNodes[i]);
+      }
+    }
+    return coordinates;
+  }
+*/
+/*
+  function parseCorridor(corridor) {
+    var coordinates = [];
+    var width = 0;
+    for (var i in corridor.childNodes){
+      if (corridor.childNodes[i].nodeName == 'Width'){
+        width = corridor.childNodes[i].textContent;
+      }
+      if (corridor.childNodes[i].nodeName == 'Points'){
+        for (var j in corridor.childNodes[i].childNodes){
+          if (corridor.childNodes[i].childNodes[j].nodeName == 'Point'){
+            coordinates.push( parsePoint(corridor.childNodes[i].childNodes[j]) );
+          }
+        }
+      }
+    }
+    coordinates.push(width);//Add width last in array, we fix this later
+    return coordinates;
+  }
+*/
+  
+  function parseLine(line) {
+    var coordinates = [];
+    line = line.getElementsByTagName(ns+'Point');
+    for (var i in line){
+      if (line[i].nodeName == ns+'Point'){
+      var point = line[i];
+      var coord = [];
+      coord[0] = parseFloat(point.getAttribute('Longitude'));
+      coord[1] = parseFloat(point.getAttribute('Latitude'));
+      if (point.getAttribute('Elevation')) {
+        coord[2] = parseFloat(point.getAttribute('Elevation'));
+      }
+      coordinates.push(coord);
+      }
+    }
+    return coordinates;
+  }
+
+/*
+  function parseTwoPointArrow(arrow) {
+    var coordinates = [0,0,0];
+    for (var i in arrow.childNodes){
+      if (arrow.childNodes[i].nodeName == 'StartPoint'){
+        coordinates[1] = parsePoint(arrow.childNodes[i]);
+      }
+      if (arrow.childNodes[i].nodeName == 'EndPoint' || arrow.childNodes[i].nodeName == 'Endpoint'){
+        coordinates[0] = parsePoint(arrow.childNodes[i]);
+      }
+      if (arrow.childNodes[i].nodeName == 'Arrowhead' || arrow.childNodes[i].nodeName == 'ArrowHead'){
+        coordinates[2] = parsePoint(arrow.childNodes[i]);
+      }
+    }
+    console.log(coordinates)
+    return coordinates;
+  }
+*/
+/*
+  function parseTwoPointCorridor(line) {
+    var coordinates = [0,0,0];
+    for (var i in line.childNodes){
+      if (line.childNodes[i].nodeName == 'StartPoint'){
+        coordinates[0] = parsePoint(line.childNodes[i]);
+      }
+      if (line.childNodes[i].nodeName == 'EndPoint' || line.childNodes[i].nodeName == 'Endpoint'){
+        coordinates[1] = parsePoint(line.childNodes[i]);
+      }
+      if (line.childNodes[i].nodeName == 'Width'){
+        coordinates[2] = line.childNodes[i].textContent;
+      }
+    }
+    return coordinates;
+  }
+*/
+/*
+  function parseTwoPointLine(line) {
+    var coordinates = [0,0];
+    for (var i in line.childNodes){
+      if (line.childNodes[i].nodeName == 'StartPoint'){
+        //we reverse them because MIR vs 2525
+        coordinates[1] = parsePoint(line.childNodes[i]);
+      }
+      if (line.childNodes[i].nodeName == 'EndPoint' || line.childNodes[i].nodeName == 'Endpoint'){
+        coordinates[0] = parsePoint(line.childNodes[i]);
+      }
+    }
+    return coordinates;
+  }
+*/
+       
+  function parsePoint(point) {
+    var coordinates = [0,0];
+    point = point.getElementsByTagName(ns+'Point')[0];
+    coordinates[0] = parseFloat(point.getAttribute('Longitude'));
+    coordinates[1] = parseFloat(point.getAttribute('Latitude'));
+    if (point.getAttribute('Elevation')) {
+      coordinates[2] = parseFloat(point.getAttribute('Elevation'));
+    }
+    return coordinates;
+  }
+
+  function parseSymbol(symbol) {
+    var feature = {type: "Feature", properties: {} };
+    
+    var symbolNodes = {};
+    for (var i in symbol.childNodes){
+      symbolNodes[symbol.childNodes[i].nodeName] = symbol.childNodes[i];
+    }
+    
+    var symbolDefinition = symbolNodes[ns+'Symbol_Definition'];
+    for (var i in symbolDefinition.childNodes) {
+      var nodeName = symbolDefinition.childNodes[i].nodeName;
+      if (nodeName == '#text' || typeof nodeName === 'undefined') continue;
+      if (nodeName.indexOf(':') != -1) nodeName = nodeName.split(':')[1];
+      feature.properties[nodeName] = symbolDefinition.childNodes[i].textContent;
+    }
+
+    var operationalAttributes = symbolNodes[ns+'Operational_Attributes'];
+    for (var i in operationalAttributes.childNodes) {
+      var nodeName = operationalAttributes.childNodes[i].nodeName;
+      if (nodeName == '#text' || typeof nodeName === 'undefined') continue;
+      if (nodeName.indexOf(':') != -1) nodeName = nodeName.split(':')[1];
+      feature.properties[nodeName] = operationalAttributes.childNodes[i].textContent;
+    }
+
+    var displayAttributes = symbolNodes[ns+'Display_Attributes'];
+    for (var i in displayAttributes.childNodes) {
+      var nodeName = displayAttributes.childNodes[i].nodeName;
+      if (nodeName == '#text' || typeof nodeName === 'undefined') continue;
+      if (nodeName.indexOf(':') != -1) nodeName = nodeName.split(':')[1];
+      feature.properties[nodeName] = displayAttributes.childNodes[i].textContent;
+    }
+
+    switch (feature.properties['Symbol_Category']) {
+      case 'AREA':
+        feature.geometry = {type: "Polygon", coordinates: [parseArea(symbolNodes[ns+'Symbol_Points'])] };
+        break;
+      case 'LINE':
+        feature.geometry = {type: "LineString", coordinates: parseLine(symbolNodes[ns+'Symbol_Points']) };
+        break;
+      case 'POINT':
+        feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        break;
+      case 'UNIT':
+        feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        break;
+      default:
+        console.log('cannot handle Symbol_Category: ' + feature.properties['Symbol_Category'])
+    }
+    return feature;
+  }
+
+
+  if (typeof xml == 'string'){
+    xml = (new DOMParser()).parseFromString(xml , "text/xml");	
+  }
+  var ns = '';
+  if (xml.firstChild.nodeName.indexOf(':') != -1) {
+    ns = xml.firstChild.nodeName.split(':')[0] + ':';
+  }
+
+  var symbols = xml.getElementsByTagName(ns+'Symbol');
+  for (var sym in symbols){
+    if (symbols[sym].nodeName) {
+      features = features.concat( parseSymbol(symbols[sym]) );
+    }
+  }
+  
+  var rawGeoJSON = {type: "FeatureCollection", features: features };
+	return ms.format.GeoJSON(rawGeoJSON, {
+	  //Aliases: 'commonIdentifier'
+	  Additional_Info1: 'additionalInformation',
+	  Additional_Info2: 'additionalInformation1',
+	  Higher_Formation: 'higherFormation',
+	  Unique_Designator1: 'uniqueDesignation', 
+	  Staff_Comments: 'staffComments',
+	  Symbol_Code:'sidc', 
+	  DTG_1: 'dtg'});
+}
+
+if (true) {
+  module.exports = ArmyXML;
+}
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports) {
 
 
 function GeoJSON(data, mapping) {
-  //if (typeof mapping === 'undefined') return data;
+  
+  // If input is a string, parse it to JSON
+  if (typeof data == 'string'){
+      data = JSON.parse(data);
+      for (var key in data){
+        this[key] = data[key];
+      }
+		}
+
+  // Parse and clone the JSON
   var feature_copy = [];
   for (var i = 0; i < data.features.length; i++) {
     feature = data.features[i];
     var f = {type: "Feature", properties: {} }
-    f.geometry = {type: feature.geometry.type, coordinates: feature.geometry.coordinates };
+    if (feature.geometry) {
+      f.geometry = {type: feature.geometry.type, coordinates: feature.geometry.coordinates };
+    }
     for (key in feature.properties) {
       if (mapping.hasOwnProperty(key)){
         f.properties[mapping[key]] = feature.properties[key];
@@ -979,7 +1246,7 @@ function GeoJSON(data, mapping) {
 module.exports = GeoJSON;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 
@@ -990,7 +1257,7 @@ function NVG(data) {
 module.exports = NVG;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -1326,7 +1593,7 @@ if (true) {
 }
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 // Calculates the bearing between two points in meter
@@ -1343,7 +1610,7 @@ function bearingBetween(p1,p2){
 module.exports = bearingBetween;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 // Calculates the great circle distance between two points in meter
@@ -1366,7 +1633,7 @@ function distanceBetween(p1, p2 ) {
 module.exports = distanceBetween;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 // Calculates a point between two other points at any fractional distance f between them
@@ -1402,7 +1669,7 @@ function pointBetween(p1, p2, f){
 module.exports = pointBetween;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 // Calculates the bearing between two points in meter
@@ -1421,7 +1688,7 @@ function toDistanceBearing(point, dist, bearing){
 module.exports = toDistanceBearing;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 // 
@@ -1447,7 +1714,7 @@ function block(feature){
 module.exports = block;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports) {
 
 // 
@@ -1486,7 +1753,7 @@ function bypass(feature){
 module.exports = bypass;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 // 
@@ -1523,7 +1790,7 @@ function canalize(feature){
 module.exports = canalize;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -1541,7 +1808,7 @@ function circle(feature){
 module.exports = circle;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 // 
@@ -1595,7 +1862,7 @@ function clear(feature){
 module.exports = clear;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -1634,7 +1901,7 @@ function corridor(feature){
 module.exports = corridor;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -1684,7 +1951,7 @@ function cover(feature){
 module.exports = cover;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 // 
@@ -1732,7 +1999,7 @@ function delay(feature){
 module.exports = delay;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 // 
@@ -1782,7 +2049,7 @@ function fix(feature){
 module.exports = fix;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -1793,7 +2060,7 @@ function guard(feature){
 module.exports = guard;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -1829,7 +2096,7 @@ function isolate(feature){
 module.exports = isolate;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -1894,7 +2161,7 @@ function mainAttack(feature){
 module.exports = mainAttack;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -1929,7 +2196,7 @@ function occupy(feature){
 module.exports = occupy;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -1940,7 +2207,7 @@ function searchArea(feature){
 module.exports = searchArea;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -1999,7 +2266,7 @@ function supportingAttack(feature){
 module.exports = supportingAttack;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports) {
 
 
@@ -2047,25 +2314,46 @@ function asCesium() {
         for (c in coordinates) {
           positions.push(Cesium.Cartesian3.fromDegrees(coordinates[c][0], coordinates[c][1], coordinates[c][2]));
         }
-                                                
-        var entity = {polyline: {
-          positions: positions,
-          material: Cesium.Color.BLACK,
-          width: 2
-        }}
+                                           
+        var entity = new Cesium.Entity({
+          polyline: new Cesium.PolylineGraphics({
+            positions: positions,
+            material: Cesium.Color.BLACK,
+            width: 1.5
+          })
+        });
+
         entities.add(entity);
       }
     }
 
-/*    
-    if (feature.graphic.isConverted() && olFeature.getGeometry().getType() == 'Polygon') {
-      	var style = new ol.style.Style({
-          stroke: new ol.style.Stroke({lineCap:'butt', color:'#000000', width: 2}),
-          fill: new ol.style.Fill({color: 'rgba(0,0,0,0)'})
+    if (feature.graphic.isConverted() && feature.geometry.type == 'Polygon') {
+        var coordinates = feature.geometry.coordinates[0];
+        var positions = [];
+        for (c in coordinates) {
+          positions.push(Cesium.Cartesian3.fromDegrees(coordinates[c][0], coordinates[c][1], coordinates[c][2]));
+        }
+                                           
+        /*var entity = new Cesium.Entity({
+          polygon: new Cesium.PolygonGraphics({
+            hierarchy: new Cesium.PolygonHierarchy(positions),
+            fill: false,
+            outline: true,
+            outlineColor: Cesium.Color.BLACK,
+            outlineWidth: 3
+          })
+        });*/
+        
+        var entity = new Cesium.Entity({
+          polyline: new Cesium.PolylineGraphics({
+            positions: positions,
+            material: Cesium.Color.BLACK,
+            width: 1.5
+          })
         });
-        olFeature.setStyle(style);
+
+        entities.add(entity);
     }
-    */
     
   }
   
@@ -2076,7 +2364,7 @@ module.exports = asCesium;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 
@@ -2092,7 +2380,7 @@ function asOpenLayers(crs) {
     var feature = this.data.features[i];
     var olFeature = geoJSON.readFeature(feature,{featureProjection:ol.proj.get(crs)});
 
-    if (olFeature.getGeometry().getType() == 'Point') {
+    if (olFeature.getGeometry() && olFeature.getGeometry().getType() == 'Point') {
       var properties = olFeature.getProperties();
       if (properties.sidc.charAt(0) != 'X') { //TODO handle sitaware custom graphics
         var milsymbol = this.data.features[i].symbol;
@@ -2135,7 +2423,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************

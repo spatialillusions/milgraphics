@@ -8,7 +8,7 @@ function GraphicsLayer (data) {
     feature.graphic = new ms.Graphic(feature);
     feature.geometry = feature.graphic.geometry;
 
-    if (feature.geometry.type == 'Point') {
+    if (feature.geometry && feature.geometry.type == 'Point') {
       var properties = feature.properties;
       properties.size = properties.size || 30; //TODO set default size value from setting
       if (properties.sidc.charAt(0) != 'X') { //Skip SitaWare custom graphics for now
