@@ -16,12 +16,15 @@ ms.GraphicsLayer = require('../src/graphicslayer.js');
 /* ***************************************************************************************
 Letter based SIDC
 *************************************************************************************** */
+ms._getLetterPropertiesGraphic = require('../src/letter-sidc/properties.js');
+
 ms._getLetterSIDCgraphic = require('../src/letter-sidc/getgraphic.js');
 ms.addSIDCgraphics(require('../src/letter-sidc/tactical-2525.js'), 'letter');
 ms.addSIDCgraphics(require('../src/letter-sidc/tactical-app6.js'), 'letter');
 /* ***************************************************************************************
 Number based SIDC
 *************************************************************************************** */
+ms._getNumberPropertiesGraphic = require('../src/number-sidc/properties.js');
 
 /* ***************************************************************************************
 Export ms to the world

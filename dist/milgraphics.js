@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 36);
+/******/ 	return __webpack_require__(__webpack_require__.s = 39);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -119,10 +119,10 @@ var R=new function(){this._colorModes={},this._dashArrays={pending:"4,4",anticip
 
 var format = {};
 
-format.ArmyXML = __webpack_require__(11);
-format.GeoJSON = __webpack_require__(12);
-format.NVG = __webpack_require__(13);
-format.SLF = __webpack_require__(14);
+format.ArmyXML = __webpack_require__(13);
+format.GeoJSON = __webpack_require__(14);
+format.NVG = __webpack_require__(15);
+format.SLF = __webpack_require__(16);
 
 module.exports = format;
 
@@ -132,10 +132,10 @@ module.exports = format;
 
 var geometry = {};
 
-geometry.bearingBetween = __webpack_require__(15);
-geometry.distanceBetween = __webpack_require__(16);
-geometry.pointBetween = __webpack_require__(17);
-geometry.toDistanceBearing = __webpack_require__(18);
+geometry.bearingBetween = __webpack_require__(17);
+geometry.distanceBetween = __webpack_require__(18);
+geometry.pointBetween = __webpack_require__(19);
+geometry.toDistanceBearing = __webpack_require__(20);
 
 module.exports = geometry;
 
@@ -145,21 +145,21 @@ module.exports = geometry;
 
 var geometryConverter = {};
 
-geometryConverter.block = __webpack_require__(19);
-geometryConverter.bypass = __webpack_require__(20);
-geometryConverter.canalize = __webpack_require__(21);
-geometryConverter.circle = __webpack_require__(22);
-geometryConverter.clear = __webpack_require__(23);
-geometryConverter.corridor = __webpack_require__(24);
-geometryConverter.cover = __webpack_require__(25);
-geometryConverter.delay = __webpack_require__(26);
-geometryConverter.fix = __webpack_require__(27);
-geometryConverter.guard = __webpack_require__(28);
-geometryConverter.isolate = __webpack_require__(29);
-geometryConverter.mainAttack = __webpack_require__(30);
-geometryConverter.occupy = __webpack_require__(31);
-geometryConverter.searchArea = __webpack_require__(32);
-geometryConverter.supportingAttack = __webpack_require__(33);
+geometryConverter.block = __webpack_require__(21);
+geometryConverter.bypass = __webpack_require__(22);
+geometryConverter.canalize = __webpack_require__(23);
+geometryConverter.circle = __webpack_require__(24);
+geometryConverter.clear = __webpack_require__(25);
+geometryConverter.corridor = __webpack_require__(26);
+geometryConverter.cover = __webpack_require__(27);
+geometryConverter.delay = __webpack_require__(28);
+geometryConverter.fix = __webpack_require__(29);
+geometryConverter.guard = __webpack_require__(30);
+geometryConverter.isolate = __webpack_require__(31);
+geometryConverter.mainAttack = __webpack_require__(32);
+geometryConverter.occupy = __webpack_require__(33);
+geometryConverter.searchArea = __webpack_require__(34);
+geometryConverter.supportingAttack = __webpack_require__(35);
 
 module.exports = geometryConverter;
 
@@ -170,42 +170,42 @@ module.exports = geometryConverter;
 var ms = __webpack_require__(0);
 
 function graphic(feature) {
-  //=======================================================================================
-  // The SIDC for the symbol.
   this.SIDC = feature.properties.sidc;
-
-  this.properties = {numberSIDC: false}; // TODO Properties of the current marker
-
-  // If we don't have a graphics cache, create one
-  if (typeof ms._graphicCache === 'undefined'){
-    ms._graphicCache = {};
-  }
-
-  //Letter based SIDCs.
-	if(!this.properties.numberSIDC){
-	  if (!ms._graphicCache.hasOwnProperty('letter-' + this.properties.numberSIDC)){
-	    var sidc = {};
-	    ms._getLetterSIDCgraphic(sidc,this.properties.numberSIDC);
-	    ms._graphicCache['letter-' + this.properties.numberSIDC] = sidc;
-	  }
-	  var graphics = ms._graphicCache['letter-' + this.properties.numberSIDC];
-	  var genericSIDC = this.SIDC.substr(0,1)+'-'+this.SIDC.substr(2,1)+'-'+this.SIDC.substr(4,6);
-    if(graphics[genericSIDC]){
-      var graphicObject = graphics[genericSIDC].call(this, feature);
-      this.geometry = graphicObject.geometry;
-      this.converted = true;
-    }else{
-      //TODO check if we need to clone here;
-      console.log('Failed to convert: ' + this.SIDC);
-      this.geometry = feature.geometry;
-      this.converted = false;
+  this.converted = false;
+  this.geometry = feature.geometry;
+  this.properties = this.getProperties();
+  
+  if (this.properties.graphic) {
+    // If we don't have a graphics cache, create one
+    if (typeof ms._graphicCache === 'undefined'){
+      ms._graphicCache = {};
     }
-	}else{
-	  console.log('TODO number sidc stuff')
-	
+
+    // Letter based SIDC.
+    if(!this.properties.numberSIDC){
+      if (!ms._graphicCache.hasOwnProperty('letter-' + this.properties.numberSIDC)){
+        var sidc = {};
+        ms._getLetterSIDCgraphic(sidc,this.properties.numberSIDC);
+        ms._graphicCache['letter-' + this.properties.numberSIDC] = sidc;
+      }
+      var graphics = ms._graphicCache['letter-' + this.properties.numberSIDC];
+      var genericSIDC = this.SIDC.substr(0,1)+'-'+this.SIDC.substr(2,1)+'-'+this.SIDC.substr(4,6);
+      if(graphics[genericSIDC]){
+        var graphicObject = graphics[genericSIDC].call(this, feature);
+        this.geometry = graphicObject.geometry;
+        this.converted = true;
+      }else{
+        //TODO check if we need to clone here;
+        console.log('Did not find graphic converter for: ' + this.SIDC + ' (' + this.geometry.type + ')');
+      }
+    }else{
+    // Number based SIDC
+      console.log('TODO number sidc stuff')
+    }
 	}
 };
 
+graphic.prototype.getProperties = __webpack_require__(36);
 graphic.prototype.isConverted = function() { return this.converted; };
 
 module.exports = graphic;
@@ -235,9 +235,9 @@ function GraphicsLayer (data) {
   
 };
 
-GraphicsLayer.prototype.asCesium = __webpack_require__(34);
+GraphicsLayer.prototype.asCesium = __webpack_require__(37);
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(35);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(38);
 
 module.exports = GraphicsLayer;
 
@@ -258,6 +258,59 @@ module.exports = function(sidc,STD2525){
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
+module.exports = function(properties, mapping){
+	this.SIDC = this.SIDC.toUpperCase();
+
+	var codingscheme 		= this.SIDC.charAt(0)!=''?this.SIDC.charAt(0):'-';
+	var affiliation 		= this.SIDC.charAt(1)!=''?this.SIDC.charAt(1):'-';
+	var battledimension = this.SIDC.charAt(2)!=''?this.SIDC.charAt(2):'-';
+	var status 				  = this.SIDC.charAt(3)!=''?this.SIDC.charAt(3):'-';
+	var functionid 			= properties.functionid	= this.SIDC.substr(4,6)!=''?this.SIDC.substr(4,6):'------';
+	var symbolmodifier11 	= this.SIDC.charAt(10)!=''?this.SIDC.charAt(10):'-';
+	var symbolmodifier12 	= this.SIDC.charAt(11)!=''?this.SIDC.charAt(11):'-';
+	var countrycode 		= this.SIDC.substr(12,2)!=''?this.SIDC.substr(12,2):'--';
+	var orderofbattle 		= this.SIDC.charAt(14)!=''?this.SIDC.charAt(14):'-';
+
+	if(['H','S','J','K'].indexOf(affiliation) > -1)		properties.affiliation = mapping.affiliation[0];
+	if(['F','A','D','M'].indexOf(affiliation) > -1)		properties.affiliation = mapping.affiliation[1];
+	if(['N','L'].indexOf(affiliation) > -1)			properties.affiliation = mapping.affiliation[2];
+	if(['P','U','G','W','O'].indexOf(affiliation) > -1)	properties.affiliation = mapping.affiliation[3];
+
+	if(['P','A'].indexOf(battledimension) > -1)		properties.dimension = mapping.dimension[0];
+	if(['G','Z','F','X'].indexOf(battledimension) > -1)	properties.dimension = mapping.dimension[1];
+	if(['S'].indexOf(battledimension) > -1)			properties.dimension = mapping.dimension[2];
+	if(['U'].indexOf(battledimension) > -1)			properties.dimension = mapping.dimension[3];
+	
+	//Planned/Anticipated/Suspect symbols should have a dashed outline
+	if(status == 'A' ) {
+	  properties.notpresent = ms._dashArrays.anticipated;
+	}
+	if((['P','A','S','G','M'].indexOf(affiliation) > -1)){
+		properties.notpresent = ms._dashArrays.pending;
+	}
+
+  if (orderofbattle == 'X') {
+    properties.graphic = true;
+  }
+
+	// Army XML compability
+	//sidc['CIRCLE----'] = ms.geometryConverter.circle;
+
+	// Systematic SitaWare compatibility
+	var genericSIDC = this.SIDC.substr(0,1)+'-'+this.SIDC.substr(2,1)+'-'+this.SIDC.substr(4,6);
+	if (['X---C-----','X---I-----','X---A-----'].indexOf(genericSIDC) != -1) {
+	  properties.graphic = true;
+	}
+
+	return properties;
+};
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports) {
 
 // Tactical graphics in 2525C + some extra
@@ -580,19 +633,27 @@ module.exports = function tacticalPoints(sidc,std2525){
   //sidc['G-O-BO----'] = [];//TACGRP.OTH.BERLNE.EOPI
   //sidc['G-O-F-----'] = [];//TACGRP.OTH.FIX
 
-	// Systematic SitaWare compatibility
-	sidc['X---C-----'] = ms.geometryConverter.corridor;
-	sidc['X---I-----'] = ms.geometryConverter.circle;
-	sidc['X---A-----'] = ms.geometryConverter.supportingAttack;
 
 	//2525B compatibility
 	sidc['G-F-ATC---'] = ms.geometryConverter.circle;
 	sidc['G-F-AZIC--'] = ms.geometryConverter.circle;
 
+	
+	// Army XML compability
+	//sidc['C-R-LE----'] = ms.geometryConverter.circle;
+
+	// Systematic SitaWare compatibility
+	sidc['X---C-----'] = ms.geometryConverter.corridor;
+	sidc['X---I-----'] = ms.geometryConverter.circle;
+	sidc['X---A-----'] = ms.geometryConverter.supportingAttack;
+
+
+
+
 }
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {// Tactical graphics in APP6-B
@@ -907,10 +968,10 @@ module.exportS= function tacticalPoints(sidc,std2525){
   //sidc['G-O-I-----'] = [];//2.X.3.4
 
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)(module)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 var addSIDCgraphics = function(parts, type){
@@ -926,7 +987,140 @@ var addSIDCgraphics = function(parts, type){
 module.exports = addSIDCgraphics;
 
 /***/ }),
-/* 10 */
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
+module.exports = function(properties,mapping){
+	var version  			= this.SIDC.substr(0,2);
+	var standardIdentity1 	= this.SIDC.substr(2,1);
+	var standardIdentity2 	= this.SIDC.substr(3,1);
+	var symbolSet 			= this.SIDC.substr(4,2);
+	var status 				= this.SIDC.substr(6,1);
+	var headquartersTaskForceDummy = this.SIDC.substr(7,1);
+	var echelonMobility 	= this.SIDC.substr(8,2);
+
+	var affiliationMapping = {
+		'0':'Unknown',
+		'1':'Unknown',
+		'2':'Friend',
+		'3':'Friend',
+		'4':'Neutral',
+		'5':'Hostile',
+		'6':'Hostile'};
+
+	var dimensionMapping = {
+		'00':'Sea',
+		'01':'Air',
+		'02':'Air',
+		'05':'Air',
+		'06':'Air',
+		'10':'Ground',
+		'11':'Ground',
+		'12':'Ground',
+		'15':'Ground',
+		'20':'Ground',
+		'30':'Sea',
+		'35':'Subsurface',
+		'36':'Subsurface',
+		'39':'Subsurface',
+		'40':'Ground',
+		'50':'Air',
+		'51':'Air',
+		'52':'Ground',
+		'53':'Sea',
+		'54':'Subsurface',
+		'60':'Ground'};
+
+	var functionid = properties.functionid = this.SIDC.substr(10,10);
+
+	properties.context = mapping.context[parseInt(this.SIDC.substr(2,1))];
+	properties.affiliation = affiliationMapping[standardIdentity2];
+	properties.dimension = dimensionMapping[symbolSet];
+
+	//SymbolSets in Space
+	if(symbolSet == '05' || symbolSet == '06' || symbolSet == '50')properties.space = true;
+	//SymbolSets that are Activities
+	if(symbolSet == '40')properties.activity = true;
+	//SymbolSets that are Installations
+	if(symbolSet == '20')properties.installation = true;
+	//Sea Mines with MEDAL icn
+	if(symbolSet == '36' && this.alternateMedal == false)properties.fill = false;
+	//Sea own track
+	if(symbolSet == '30' && functionid.substr(0,6) == 150000)properties.frame = false;
+
+	//Planned/Anticipated/Suspect symbols should have a dashed outline
+	if(status == '1' )properties.notpresent = ms._dashArrays.anticipated;
+	if(standardIdentity2 == '0' || standardIdentity2 == '2' || standardIdentity2 == '5')properties.notpresent = ms._dashArrays.pending;
+
+	//All ETC/POSCON tracks shall have a pending standard identity frame.
+	//All fused tracks shall have a pending standard identity frame.
+	if(symbolSet == '30' && functionid.substr(0,6) == 160000)properties.notpresent = ms._dashArrays.pending;
+	if(symbolSet == '35' && functionid.substr(0,6) == 140000)properties.notpresent = ms._dashArrays.pending;
+	if(symbolSet == '35' && functionid.substr(0,6) == 150000)properties.notpresent = ms._dashArrays.pending;
+
+
+	//Should it have a Condition Bar
+	if(status == '2' || status == '3' || status == '4' || status == '5')properties.condition = mapping.status[parseInt(status)];
+
+	//First save the dimensionType and affiliationType before we modifies it...
+	properties.baseDimension = properties.dimension;
+	properties.baseAffilation = properties.affiliation;
+
+	//Joker and faker should have the shape of friendly
+	if(standardIdentity2 == '5' && standardIdentity1 == '1')properties.joker = true;
+	if(standardIdentity2 == '6' && standardIdentity1 == '1')properties.faker = true;
+	if(properties.joker || properties.faker){
+		properties.affiliation = mapping.affiliation[1];
+	}
+
+	if(symbolSet=='00')properties.dimensionUnknown = true;
+
+	//If battle dimension is unknown, standard identity is Exersize and other than Unknown we should not have a symbol
+	if(symbolSet=='00' && standardIdentity1 == '1' && properties.affiliation != 'Unknown') properties.affiliation = '';
+
+	//Land Dismounted Individual should have special icons
+	if(symbolSet == '12'){
+		properties.dimension = 'LandDismountedIndividual';
+		properties.dismounted = true;
+	}
+	
+	//Ground Equipment should have the same geometry as sea Friend...
+	//Signal INTELLIGENCE Ground should have the same geometry as sea Friend...
+	if(symbolSet == '15' || symbolSet == '52' )properties.dimension = mapping.dimension[2];
+
+	//Setting up Headquarters/task force/dummy
+	if(['1','3','5','7'].indexOf(headquartersTaskForceDummy) > -1)properties.feintDummy = true;
+	if(['2','3','6','7'].indexOf(headquartersTaskForceDummy) > -1)properties.headquarters = true;
+	if(['4','5','6','7'].indexOf(headquartersTaskForceDummy) > -1)properties.taskForce = true;
+
+	//Setting up Echelon/Mobility/Towed Array Amplifier
+	if(echelonMobility <= 30){
+		properties.echelon = mapping.echelonMobility[echelonMobility];
+	}
+	if(echelonMobility >= 30 && echelonMobility < 70){
+		properties.mobility = mapping.echelonMobility[echelonMobility];
+	}
+	if(echelonMobility >= 70 && echelonMobility < 80){
+		properties.leadership = mapping.echelonMobility[echelonMobility];
+	}
+	//Civilian stuff
+	if(
+		(symbolSet == '01' && functionid.substring(0,2)=='12')||
+		(symbolSet == '05' && functionid.substring(0,2)=='12')||
+		(symbolSet == '11')||
+		(symbolSet == '12' && functionid.substring(0,2)=='12')||
+		(symbolSet == '15' && functionid.substring(0,2)=='16')||
+		(symbolSet == '30' && functionid.substring(0,2)=='14')||
+		(symbolSet == '35' && functionid.substring(0,2)=='12')	
+	){properties.civilian = true;}
+
+	return properties;
+};
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -954,7 +1148,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -1161,17 +1355,82 @@ function ArmyXML(xml) {
       case 'AREA':
         feature.geometry = {type: "Polygon", coordinates: [parseArea(symbolNodes[ns+'Symbol_Points'])] };
         break;
+      case 'BIOCHEM':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          feature.geometry = {type: "Polygon", coordinates: [parseArea(symbolNodes[ns+'Symbol_Points'])] };
+        }
+        break;
+//BOUNDARY, 
+      case 'EQUIPMENT':
+        feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        break;
+//GROUP , 
+      case 'INSTALLATION':
+        feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        break;
       case 'LINE':
         feature.geometry = {type: "LineString", coordinates: parseLine(symbolNodes[ns+'Symbol_Points']) };
         break;
+      case 'MINE':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          feature.geometry = {type: "Polygon", coordinates: [parseArea(symbolNodes[ns+'Symbol_Points'])] };
+        }
+        break;
+      case 'MOOTW':
+        feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        break;
+      case 'NOT_SPECIFIED':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          console.log('cannot handle Symbol_Category: ' + feature.properties['Symbol_Category']);
+          console.log(feature.properties['Symbol_Name']);
+          console.log(symbol);
+        }
+        break;
+      case 'NUCLEAR':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          feature.geometry = {type: "Polygon", coordinates: [parseArea(symbolNodes[ns+'Symbol_Points'])] };
+        }
+        break;
+      case 'OBSTACLE':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          console.log('cannot handle Symbol_Category: ' + feature.properties['Symbol_Category']);
+          console.log(symbol);
+        }
+        break;
       case 'POINT':
         feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        break;
+      case 'SIG_INT':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          console.log('cannot handle Symbol_Category: ' + feature.properties['Symbol_Category']);
+          console.log(symbol);
+        }
+        break;
+      case 'TARGET':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          feature.geometry = {type: "Polygon", coordinates: [parseArea(symbolNodes[ns+'Symbol_Points'])] };
+        }
         break;
       case 'UNIT':
         feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
         break;
       default:
-        console.log('cannot handle Symbol_Category: ' + feature.properties['Symbol_Category'])
+        console.log('cannot handle Symbol_Category: ' + feature.properties['Symbol_Category']);
+        console.log(symbol);
     }
     return feature;
   }
@@ -1194,14 +1453,27 @@ function ArmyXML(xml) {
   
   var rawGeoJSON = {type: "FeatureCollection", features: features };
 	return ms.format.GeoJSON(rawGeoJSON, {
-	  //Aliases: 'commonIdentifier'
 	  Additional_Info1: 'additionalInformation',
 	  Additional_Info2: 'additionalInformation1',
+	  Additional_Info3: 'additionalInformation1',
+	  Common_Identifier: 'commonIdentifier',
 	  Higher_Formation: 'higherFormation',
 	  Unique_Designator1: 'uniqueDesignation', 
+	  Unique_Designator2: 'uniqueDesignation1', 
 	  Staff_Comments: 'staffComments',
 	  Symbol_Code:'sidc', 
-	  DTG_1: 'dtg'});
+	  DTG_1: 'dtg',
+	  DTG_2: 'dtg1',
+	  //Speed: 'speed',
+	  //Direction: 'direction',
+	  //Altitude_Depth: 'altitudeDepth',
+	  Reinforced_or_Reduced: 'reinforcedReduced',
+	  Quantity: 'quantity',
+	  //Combat_Effectiveness: 'combatEffectiveness',
+	  Signature_Equipment: 'signatureEquipment',
+	  IFF_SIF: 'iffSif',
+	  Special_C2HQ: 'specialHeadquarters'
+	  });
 }
 
 if (true) {
@@ -1209,7 +1481,7 @@ if (true) {
 }
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports) {
 
 
@@ -1246,7 +1518,7 @@ function GeoJSON(data, mapping) {
 module.exports = GeoJSON;
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports) {
 
 
@@ -1257,7 +1529,7 @@ function NVG(data) {
 module.exports = NVG;
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -1593,7 +1865,7 @@ if (true) {
 }
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports) {
 
 // Calculates the bearing between two points in meter
@@ -1610,7 +1882,7 @@ function bearingBetween(p1,p2){
 module.exports = bearingBetween;
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports) {
 
 // Calculates the great circle distance between two points in meter
@@ -1633,7 +1905,7 @@ function distanceBetween(p1, p2 ) {
 module.exports = distanceBetween;
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports) {
 
 // Calculates a point between two other points at any fractional distance f between them
@@ -1669,7 +1941,7 @@ function pointBetween(p1, p2, f){
 module.exports = pointBetween;
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports) {
 
 // Calculates the bearing between two points in meter
@@ -1688,7 +1960,7 @@ function toDistanceBearing(point, dist, bearing){
 module.exports = toDistanceBearing;
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports) {
 
 // 
@@ -1714,7 +1986,7 @@ function block(feature){
 module.exports = block;
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports) {
 
 // 
@@ -1753,7 +2025,7 @@ function bypass(feature){
 module.exports = bypass;
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports) {
 
 // 
@@ -1790,7 +2062,7 @@ function canalize(feature){
 module.exports = canalize;
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -1808,7 +2080,7 @@ function circle(feature){
 module.exports = circle;
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports) {
 
 // 
@@ -1862,7 +2134,7 @@ function clear(feature){
 module.exports = clear;
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -1901,7 +2173,7 @@ function corridor(feature){
 module.exports = corridor;
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -1951,7 +2223,7 @@ function cover(feature){
 module.exports = cover;
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports) {
 
 // 
@@ -1999,7 +2271,7 @@ function delay(feature){
 module.exports = delay;
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports) {
 
 // 
@@ -2049,7 +2321,7 @@ function fix(feature){
 module.exports = fix;
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -2060,7 +2332,7 @@ function guard(feature){
 module.exports = guard;
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -2096,7 +2368,7 @@ function isolate(feature){
 module.exports = isolate;
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -2161,7 +2433,7 @@ function mainAttack(feature){
 module.exports = mainAttack;
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -2196,7 +2468,7 @@ function occupy(feature){
 module.exports = occupy;
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -2207,7 +2479,7 @@ function searchArea(feature){
 module.exports = searchArea;
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -2266,7 +2538,76 @@ function supportingAttack(feature){
 module.exports = supportingAttack;
 
 /***/ }),
-/* 34 */
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
+module.exports = function(){
+  var properties = {
+//    "activity"			: false,	//Is it an Activity
+    "affiliation"		: "",		//Affiliation it is shown as (Friend/Hostile...)
+//    "baseAffilation"		: "",		//Affiliation it belongs to (Friend/Hostile...)
+//    "baseDimension" 	: "",		//Dimension it belongs to (Air/Ground...)
+//    "baseGeometry"		: {g:"",bbox:{}},		//Geometry is a combination of dimension and affiliation (AirFriend/GroundHostile...)
+//    "civilian"			: false,	//Is it Civilian
+//    "condition"		: "",		//What condition is it in
+    "context"			: "",		//Context of the symbol (Reality/Exercise...)
+    "dimension"		: "",		//Dimension it is shown as (Air/Ground...)
+    "dimensionUnknown"	: false,	//Is the dimension unknown
+    "echelon"			: "",		//What echelon (Platoon/Company...)
+    "faker"			: false,	//Is it a Faker
+    "fenintDummy"		: false,	//Is it a feint/dummy
+//    "fill"				: this.fill,		//Standard says it should be filled
+//    "frame"			: this.frame,		//Standard says it should be framed
+    "functionid" 		: "", 		//Part of SIDC referring to the icon.
+//    "headquarters"		: false,	//Is it a Headquarters
+//    "installation" 		: false,	//Is it an Instalation
+    "joker"			: false,	//Is it a Joker
+//    "mobility"			: "",		//What mobility (Tracked/Sled)
+    "notpresent"		: "",		//Is it Anticipated or Pending
+    "numberSIDC"		: false,	//Is the SIDC number based
+//    "space"			: false,	//Is it in Space
+//    "taskForce"		: false		//Is it a task force
+    "graphic" : false
+  };
+  var mapping = {};
+  mapping.context = ["Reality","Exercise","Simulation"];
+  mapping.status = ["Present","Planned","FullyCapable","Damaged","Destroyed","FullToCapacity"];
+  mapping.affiliation = ["Hostile", "Friend", "Neutral", "Unknown"];
+  mapping.dimension = ["Air", "Ground", "Sea", "Subsurface"];
+
+  properties.context = mapping.context[0];
+
+  if(this.monoColor != ''){
+    properties.fill = false;
+  }
+  this.SIDC = String(this.SIDC).replace(/\*/g,"-").replace(/ /g,"");
+
+  properties.numberSIDC = !isNaN(this.SIDC);
+  if(properties.numberSIDC){ //This is for new number based SIDCs
+
+    if (typeof ms._getNumberProperties === 'function') {
+      properties = ms._getNumberPropertiesGraphic.call(this,properties, mapping);
+    }else{
+      console.warn("ms._getNumberPropertiesGraphic() is not present, you will need to load functionality for letter based SIDCs");
+    }
+
+  }else{ //This would be old letter based SIDCs
+
+    if (typeof ms._getLetterProperties === 'function') {
+      properties = ms._getLetterPropertiesGraphic.call(this,properties, mapping);
+    }else{
+      console.warn("ms._getLetterPropertiesGraphic() is not present, you will need to load functionality for letter based SIDCs");
+    }
+
+  }
+
+  return properties;
+};
+
+/***/ }),
+/* 37 */
 /***/ (function(module, exports) {
 
 
@@ -2364,7 +2705,7 @@ module.exports = asCesium;
 
 
 /***/ }),
-/* 35 */
+/* 38 */
 /***/ (function(module, exports) {
 
 
@@ -2423,7 +2764,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 36 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************
@@ -2431,7 +2772,7 @@ Creating the base of milgraphics by importing milsymbol
 *************************************************************************************** */
 var ms = __webpack_require__(0);
 
-ms.addSIDCgraphics = __webpack_require__(9);
+ms.addSIDCgraphics = __webpack_require__(10);
 
 ms.format = __webpack_require__(1);
 ms.geometry = __webpack_require__(2);
@@ -2444,12 +2785,15 @@ ms.GraphicsLayer = __webpack_require__(5);
 /* ***************************************************************************************
 Letter based SIDC
 *************************************************************************************** */
+ms._getLetterPropertiesGraphic = __webpack_require__(7);
+
 ms._getLetterSIDCgraphic = __webpack_require__(6);
-ms.addSIDCgraphics(__webpack_require__(7), 'letter');
 ms.addSIDCgraphics(__webpack_require__(8), 'letter');
+ms.addSIDCgraphics(__webpack_require__(9), 'letter');
 /* ***************************************************************************************
 Number based SIDC
 *************************************************************************************** */
+ms._getNumberPropertiesGraphic = __webpack_require__(11);
 
 /* ***************************************************************************************
 Export ms to the world

@@ -202,17 +202,82 @@ function ArmyXML(xml) {
       case 'AREA':
         feature.geometry = {type: "Polygon", coordinates: [parseArea(symbolNodes[ns+'Symbol_Points'])] };
         break;
+      case 'BIOCHEM':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          feature.geometry = {type: "Polygon", coordinates: [parseArea(symbolNodes[ns+'Symbol_Points'])] };
+        }
+        break;
+//BOUNDARY, 
+      case 'EQUIPMENT':
+        feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        break;
+//GROUP , 
+      case 'INSTALLATION':
+        feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        break;
       case 'LINE':
         feature.geometry = {type: "LineString", coordinates: parseLine(symbolNodes[ns+'Symbol_Points']) };
         break;
+      case 'MINE':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          feature.geometry = {type: "Polygon", coordinates: [parseArea(symbolNodes[ns+'Symbol_Points'])] };
+        }
+        break;
+      case 'MOOTW':
+        feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        break;
+      case 'NOT_SPECIFIED':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          console.log('cannot handle Symbol_Category: ' + feature.properties['Symbol_Category']);
+          console.log(feature.properties['Symbol_Name']);
+          console.log(symbol);
+        }
+        break;
+      case 'NUCLEAR':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          feature.geometry = {type: "Polygon", coordinates: [parseArea(symbolNodes[ns+'Symbol_Points'])] };
+        }
+        break;
+      case 'OBSTACLE':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          console.log('cannot handle Symbol_Category: ' + feature.properties['Symbol_Category']);
+          console.log(symbol);
+        }
+        break;
       case 'POINT':
         feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        break;
+      case 'SIG_INT':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          console.log('cannot handle Symbol_Category: ' + feature.properties['Symbol_Category']);
+          console.log(symbol);
+        }
+        break;
+      case 'TARGET':
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          feature.geometry = {type: "Polygon", coordinates: [parseArea(symbolNodes[ns+'Symbol_Points'])] };
+        }
         break;
       case 'UNIT':
         feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
         break;
       default:
-        console.log('cannot handle Symbol_Category: ' + feature.properties['Symbol_Category'])
+        console.log('cannot handle Symbol_Category: ' + feature.properties['Symbol_Category']);
+        console.log(symbol);
     }
     return feature;
   }
@@ -235,14 +300,27 @@ function ArmyXML(xml) {
   
   var rawGeoJSON = {type: "FeatureCollection", features: features };
 	return ms.format.GeoJSON(rawGeoJSON, {
-	  //Aliases: 'commonIdentifier'
 	  Additional_Info1: 'additionalInformation',
 	  Additional_Info2: 'additionalInformation1',
+	  Additional_Info3: 'additionalInformation1',
+	  Common_Identifier: 'commonIdentifier',
 	  Higher_Formation: 'higherFormation',
 	  Unique_Designator1: 'uniqueDesignation', 
+	  Unique_Designator2: 'uniqueDesignation1', 
 	  Staff_Comments: 'staffComments',
 	  Symbol_Code:'sidc', 
-	  DTG_1: 'dtg'});
+	  DTG_1: 'dtg',
+	  DTG_2: 'dtg1',
+	  //Speed: 'speed',
+	  //Direction: 'direction',
+	  //Altitude_Depth: 'altitudeDepth',
+	  Reinforced_or_Reduced: 'reinforcedReduced',
+	  Quantity: 'quantity',
+	  //Combat_Effectiveness: 'combatEffectiveness',
+	  Signature_Equipment: 'signatureEquipment',
+	  IFF_SIF: 'iffSif',
+	  Special_C2HQ: 'specialHeadquarters'
+	  });
 }
 
 if (typeof module !== 'undefined') {

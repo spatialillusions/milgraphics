@@ -318,13 +318,21 @@ module.exports = function tacticalPoints(sidc,std2525){
   //sidc['G-O-BO----'] = [];//TACGRP.OTH.BERLNE.EOPI
   //sidc['G-O-F-----'] = [];//TACGRP.OTH.FIX
 
+
+	//2525B compatibility
+	sidc['G-F-ATC---'] = ms.geometryConverter.circle;
+	sidc['G-F-AZIC--'] = ms.geometryConverter.circle;
+
+	
+	// Army XML compability
+	//sidc['C-R-LE----'] = ms.geometryConverter.circle;
+
 	// Systematic SitaWare compatibility
 	sidc['X---C-----'] = ms.geometryConverter.corridor;
 	sidc['X---I-----'] = ms.geometryConverter.circle;
 	sidc['X---A-----'] = ms.geometryConverter.supportingAttack;
 
-	//2525B compatibility
-	sidc['G-F-ATC---'] = ms.geometryConverter.circle;
-	sidc['G-F-AZIC--'] = ms.geometryConverter.circle;
+
+
 
 }
