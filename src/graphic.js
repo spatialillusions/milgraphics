@@ -26,8 +26,9 @@ function graphic(feature) {
         this.geometry = graphicObject.geometry;
         this.converted = true;
       }else{
-        //TODO check if we need to clone here;
-        console.log('Did not find graphic converter for: ' + this.SIDC + ' (' + this.geometry.type + ')');
+        if (this.geometry.type != 'Point') { // Points is likely symbols, remove this when everything is implemented.     
+          console.log('Did not find graphic converter for: ' + this.SIDC + ' (' + this.geometry.type + ')');
+        }
       }
     }else{
     // Number based SIDC

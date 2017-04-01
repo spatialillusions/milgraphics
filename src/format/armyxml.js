@@ -255,7 +255,12 @@ function ArmyXML(xml) {
         }
         break;
       case 'POINT':
-        feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          // OK this is bonkers, but i found some errors in some of my sample files...
+          feature.geometry = {type: "LineString", coordinates: parseLine(symbolNodes[ns+'Symbol_Points']) };
+        }
         break;
       case 'SIG_INT':
         if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {

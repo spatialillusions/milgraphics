@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 39);
+/******/ 	return __webpack_require__(__webpack_require__.s = 40);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -145,21 +145,22 @@ module.exports = geometry;
 
 var geometryConverter = {};
 
-geometryConverter.block = __webpack_require__(21);
-geometryConverter.bypass = __webpack_require__(22);
-geometryConverter.canalize = __webpack_require__(23);
-geometryConverter.circle = __webpack_require__(24);
-geometryConverter.clear = __webpack_require__(25);
-geometryConverter.corridor = __webpack_require__(26);
-geometryConverter.cover = __webpack_require__(27);
-geometryConverter.delay = __webpack_require__(28);
-geometryConverter.fix = __webpack_require__(29);
-geometryConverter.guard = __webpack_require__(30);
-geometryConverter.isolate = __webpack_require__(31);
-geometryConverter.mainAttack = __webpack_require__(32);
-geometryConverter.occupy = __webpack_require__(33);
-geometryConverter.searchArea = __webpack_require__(34);
-geometryConverter.supportingAttack = __webpack_require__(35);
+geometryConverter.ambush = __webpack_require__(21);
+geometryConverter.block = __webpack_require__(22);
+geometryConverter.bypass = __webpack_require__(23);
+geometryConverter.canalize = __webpack_require__(24);
+geometryConverter.circle = __webpack_require__(25);
+geometryConverter.clear = __webpack_require__(26);
+geometryConverter.corridor = __webpack_require__(27);
+geometryConverter.cover = __webpack_require__(28);
+geometryConverter.delay = __webpack_require__(29);
+geometryConverter.fix = __webpack_require__(30);
+geometryConverter.guard = __webpack_require__(31);
+geometryConverter.isolate = __webpack_require__(32);
+geometryConverter.mainAttack = __webpack_require__(33);
+geometryConverter.occupy = __webpack_require__(34);
+geometryConverter.searchArea = __webpack_require__(35);
+geometryConverter.supportingAttack = __webpack_require__(36);
 
 module.exports = geometryConverter;
 
@@ -195,8 +196,9 @@ function graphic(feature) {
         this.geometry = graphicObject.geometry;
         this.converted = true;
       }else{
-        //TODO check if we need to clone here;
-        console.log('Did not find graphic converter for: ' + this.SIDC + ' (' + this.geometry.type + ')');
+        if (this.geometry.type != 'Point') { // Points is likely symbols, remove this when everything is implemented.     
+          console.log('Did not find graphic converter for: ' + this.SIDC + ' (' + this.geometry.type + ')');
+        }
       }
     }else{
     // Number based SIDC
@@ -205,7 +207,7 @@ function graphic(feature) {
 	}
 };
 
-graphic.prototype.getProperties = __webpack_require__(36);
+graphic.prototype.getProperties = __webpack_require__(37);
 graphic.prototype.isConverted = function() { return this.converted; };
 
 module.exports = graphic;
@@ -235,9 +237,9 @@ function GraphicsLayer (data) {
   
 };
 
-GraphicsLayer.prototype.asCesium = __webpack_require__(37);
+GraphicsLayer.prototype.asCesium = __webpack_require__(38);
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(38);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(39);
 
 module.exports = GraphicsLayer;
 
@@ -428,7 +430,7 @@ module.exports = function tacticalPoints(sidc,std2525){
   //sidc['G-G-OAP---'] = [];//TACGRP.C2GM.OFF.ARS.PBX
   //sidc['G-G-S-----'] = [];//TACGRP.C2GM.SPL
   //sidc['G-G-SL----'] = [];//TACGRP.C2GM.SPL.LNE
-  //sidc['G-G-SLA---'] = [];//TACGRP.C2GM.SPL.LNE.AMB
+  sidc['G-G-SLA---'] = ms.geometryConverter.ambush;//TACGRP.C2GM.SPL.LNE.AMB
   //sidc['G-G-SLH---'] = [];//TACGRP.C2GM.SPL.LNE.HGL
   //sidc['G-G-SLR---'] = [];//TACGRP.C2GM.SPL.LNE.REL
   //sidc['G-G-SLB---'] = [];//TACGRP.C2GM.SPL.LNE.BRGH
@@ -1039,82 +1041,13 @@ module.exports = function(properties,mapping){
 	properties.affiliation = affiliationMapping[standardIdentity2];
 	properties.dimension = dimensionMapping[symbolSet];
 
-	//SymbolSets in Space
-	if(symbolSet == '05' || symbolSet == '06' || symbolSet == '50')properties.space = true;
-	//SymbolSets that are Activities
-	if(symbolSet == '40')properties.activity = true;
-	//SymbolSets that are Installations
-	if(symbolSet == '20')properties.installation = true;
-	//Sea Mines with MEDAL icn
-	if(symbolSet == '36' && this.alternateMedal == false)properties.fill = false;
-	//Sea own track
-	if(symbolSet == '30' && functionid.substr(0,6) == 150000)properties.frame = false;
-
 	//Planned/Anticipated/Suspect symbols should have a dashed outline
 	if(status == '1' )properties.notpresent = ms._dashArrays.anticipated;
 	if(standardIdentity2 == '0' || standardIdentity2 == '2' || standardIdentity2 == '5')properties.notpresent = ms._dashArrays.pending;
 
-	//All ETC/POSCON tracks shall have a pending standard identity frame.
-	//All fused tracks shall have a pending standard identity frame.
-	if(symbolSet == '30' && functionid.substr(0,6) == 160000)properties.notpresent = ms._dashArrays.pending;
-	if(symbolSet == '35' && functionid.substr(0,6) == 140000)properties.notpresent = ms._dashArrays.pending;
-	if(symbolSet == '35' && functionid.substr(0,6) == 150000)properties.notpresent = ms._dashArrays.pending;
-
-
-	//Should it have a Condition Bar
-	if(status == '2' || status == '3' || status == '4' || status == '5')properties.condition = mapping.status[parseInt(status)];
-
-	//First save the dimensionType and affiliationType before we modifies it...
-	properties.baseDimension = properties.dimension;
-	properties.baseAffilation = properties.affiliation;
-
-	//Joker and faker should have the shape of friendly
-	if(standardIdentity2 == '5' && standardIdentity1 == '1')properties.joker = true;
-	if(standardIdentity2 == '6' && standardIdentity1 == '1')properties.faker = true;
-	if(properties.joker || properties.faker){
-		properties.affiliation = mapping.affiliation[1];
-	}
-
-	if(symbolSet=='00')properties.dimensionUnknown = true;
-
-	//If battle dimension is unknown, standard identity is Exersize and other than Unknown we should not have a symbol
-	if(symbolSet=='00' && standardIdentity1 == '1' && properties.affiliation != 'Unknown') properties.affiliation = '';
-
-	//Land Dismounted Individual should have special icons
-	if(symbolSet == '12'){
-		properties.dimension = 'LandDismountedIndividual';
-		properties.dismounted = true;
-	}
-	
-	//Ground Equipment should have the same geometry as sea Friend...
-	//Signal INTELLIGENCE Ground should have the same geometry as sea Friend...
-	if(symbolSet == '15' || symbolSet == '52' )properties.dimension = mapping.dimension[2];
-
-	//Setting up Headquarters/task force/dummy
-	if(['1','3','5','7'].indexOf(headquartersTaskForceDummy) > -1)properties.feintDummy = true;
-	if(['2','3','6','7'].indexOf(headquartersTaskForceDummy) > -1)properties.headquarters = true;
-	if(['4','5','6','7'].indexOf(headquartersTaskForceDummy) > -1)properties.taskForce = true;
-
-	//Setting up Echelon/Mobility/Towed Array Amplifier
-	if(echelonMobility <= 30){
-		properties.echelon = mapping.echelonMobility[echelonMobility];
-	}
-	if(echelonMobility >= 30 && echelonMobility < 70){
-		properties.mobility = mapping.echelonMobility[echelonMobility];
-	}
 	if(echelonMobility >= 70 && echelonMobility < 80){
 		properties.leadership = mapping.echelonMobility[echelonMobility];
 	}
-	//Civilian stuff
-	if(
-		(symbolSet == '01' && functionid.substring(0,2)=='12')||
-		(symbolSet == '05' && functionid.substring(0,2)=='12')||
-		(symbolSet == '11')||
-		(symbolSet == '12' && functionid.substring(0,2)=='12')||
-		(symbolSet == '15' && functionid.substring(0,2)=='16')||
-		(symbolSet == '30' && functionid.substring(0,2)=='14')||
-		(symbolSet == '35' && functionid.substring(0,2)=='12')	
-	){properties.civilian = true;}
 
 	return properties;
 };
@@ -1408,7 +1341,12 @@ function ArmyXML(xml) {
         }
         break;
       case 'POINT':
-        feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
+          feature.geometry = {type: "Point", coordinates: parsePoint(symbolNodes[ns+'Symbol_Points']) };
+        }else{
+          // OK this is bonkers, but i found some errors in some of my sample files...
+          feature.geometry = {type: "LineString", coordinates: parseLine(symbolNodes[ns+'Symbol_Points']) };
+        }
         break;
       case 'SIG_INT':
         if(symbolNodes[ns+'Symbol_Points'].getElementsByTagName(ns+'Point').length == 1) {
@@ -1971,6 +1909,78 @@ function block(feature){
   var geometry = {"type": "MultiLineString"};
 
   geometry.coordinates = [];
+
+  var midpoint = ms.geometry.pointBetween(points[1],points[2],0.5);
+
+  var bearing = (ms.geometry.bearingBetween(points[1],points[2])+360)%360;
+  var bearing1 = (ms.geometry.bearingBetween(points[1],points[0])+360)%360;
+  var distance = Math.abs( Math.sin( (bearing-bearing1) * (Math.PI/180) ) * ms.geometry.distanceBetween(points[0],points[1]) );
+  var flip = (bearing-bearing1) / Math.abs(bearing-bearing1);
+  
+  var rotationpoint = ms.geometry.toDistanceBearing(midpoint, distance, bearing+(90*flip))
+  var radius = ms.geometry.distanceBetween(rotationpoint,points[1]);
+  var b1 = (ms.geometry.bearingBetween(rotationpoint,points[1])+360)%360;
+  var b2 = (ms.geometry.bearingBetween(rotationpoint,points[2])+360)%360;
+  var tip = ms.geometry.toDistanceBearing(rotationpoint, distance*2, (b1+b2)/2);
+  var b3 = (ms.geometry.bearingBetween(tip,rotationpoint)+360)%360;
+
+  var geom = [];
+  
+  // Arc
+  geom.push(points[1]);
+  if (flip > 0) {
+    for (var i = b1; i < b2; i+= 5 ) {
+      geom.push(ms.geometry.toDistanceBearing(rotationpoint, radius, i));
+    }
+  }else{
+    for (var i = b1; i > b2; i-= 5 ) {
+      geom.push(ms.geometry.toDistanceBearing(rotationpoint, radius, i));
+    }
+  }
+  geom.push(points[2]);
+  geometry.coordinates.push(geom);
+
+  // Lines
+  var diff = (b2-b1)/7;
+  var p1,p2;
+  for (var i = 1; i<=6; i++){
+    geom = [];
+    p1 = ms.geometry.toDistanceBearing(rotationpoint, radius, b1+(diff*i));
+    p2 = ms.geometry.toDistanceBearing(p1, distance*0.3, b3);
+    geom.push(p1,p2);
+    geometry.coordinates.push(geom);
+  }
+     
+  // Arrow
+  geom = [];
+  geom.push(ms.geometry.toDistanceBearing(rotationpoint, radius, (b1+b2)/2));
+  geom.push(ms.geometry.toDistanceBearing(rotationpoint, distance*2, (b1+b2)/2));
+  geometry.coordinates.push(geom);
+
+  // Arrow head
+  geom = [];
+  geom.push(ms.geometry.toDistanceBearing(tip, distance*0.2, b3+45));
+  geom.push(tip);
+  geom.push(ms.geometry.toDistanceBearing(tip, distance*0.2, b3-45));
+  geometry.coordinates.push(geom);
+  
+  return {geometry:geometry};
+}
+
+module.exports = block;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+// 
+function block(feature){
+  var direction, width;
+  var points = feature.geometry.coordinates;
+  
+  var geometry = {"type": "MultiLineString"};
+
+  geometry.coordinates = [];
   
   var geometry1 = [];
   geometry1.push(points[0],points[1]);
@@ -1986,7 +1996,7 @@ function block(feature){
 module.exports = block;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 // 
@@ -2025,7 +2035,7 @@ function bypass(feature){
 module.exports = bypass;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 // 
@@ -2062,7 +2072,7 @@ function canalize(feature){
 module.exports = canalize;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -2080,7 +2090,7 @@ function circle(feature){
 module.exports = circle;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 // 
@@ -2134,7 +2144,7 @@ function clear(feature){
 module.exports = clear;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -2173,7 +2183,7 @@ function corridor(feature){
 module.exports = corridor;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -2223,7 +2233,7 @@ function cover(feature){
 module.exports = cover;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 // 
@@ -2271,7 +2281,7 @@ function delay(feature){
 module.exports = delay;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports) {
 
 // 
@@ -2321,7 +2331,7 @@ function fix(feature){
 module.exports = fix;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -2332,7 +2342,7 @@ function guard(feature){
 module.exports = guard;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -2368,7 +2378,7 @@ function isolate(feature){
 module.exports = isolate;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -2433,7 +2443,7 @@ function mainAttack(feature){
 module.exports = mainAttack;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -2468,7 +2478,7 @@ function occupy(feature){
 module.exports = occupy;
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -2479,7 +2489,7 @@ function searchArea(feature){
 module.exports = searchArea;
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports) {
 
 // Draws a corridor with a widht in meters
@@ -2538,7 +2548,7 @@ function supportingAttack(feature){
 module.exports = supportingAttack;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -2607,7 +2617,7 @@ module.exports = function(){
 };
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports) {
 
 
@@ -2705,7 +2715,7 @@ module.exports = asCesium;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports) {
 
 
@@ -2764,7 +2774,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************
