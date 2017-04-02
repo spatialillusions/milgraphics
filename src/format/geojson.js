@@ -1,6 +1,8 @@
 
 function GeoJSON(data, mapping) {
-  
+  if (typeof mapping == 'undefined')  {
+    mapping = {};
+  }
   // If input is a string, parse it to JSON
   if (typeof data == 'string'){
       data = JSON.parse(data);
