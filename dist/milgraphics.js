@@ -1763,6 +1763,12 @@ function NVG(data) {
 					if (key == 'symbol' && (item[key].substring(0,4) == 'app6' || item[key].substring(0,4) == '2525' )) {
 			      feature.properties['sidc'] = item[key].split(':')[1];
 			    }
+			    if (key == 'modifiers') {
+			      var modifiers = item[key];
+            for (mod in modifiers) {
+              feature.properties[mod] = modifiers[mod];
+            }
+			    }
 				}
 				switch (item.drawable) {
 					case 'arc':
