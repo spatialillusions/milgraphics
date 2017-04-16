@@ -1,3 +1,5 @@
+var ms = require("milsymbol");
+
 // Tactical graphics in 2525C + some extra
 module.exports = function tacticalPoints(sidc,std2525){
   sidc['G-T-B-----'] = ms.geometryConverter.block;//TACGRP.TSK.BLK
@@ -331,8 +333,5 @@ module.exports = function tacticalPoints(sidc,std2525){
 	sidc['X---C-----'] = ms.geometryConverter.corridor;
 	sidc['X---I-----'] = ms.geometryConverter.circle;
 	sidc['X---A-----'] = ms.geometryConverter.supportingAttack;
-
-
-
-
-}
+  
+};

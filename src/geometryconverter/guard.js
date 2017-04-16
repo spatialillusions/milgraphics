@@ -1,6 +1,4 @@
 // Draws a circle withe a radius in meters
-function guard(feature){
-
-}
+function guard(feature) {}
 
 module.exports = guard;

@@ -1,6 +1,7 @@
-// 
+var ms = require("milsymbol");
+ 
 function block(feature){
-  var direction, width;
+  //var direction, width;
   var points = feature.geometry.coordinates;
   
   var geometry = {"type": "MultiLineString"};

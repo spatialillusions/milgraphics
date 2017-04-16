@@ -1,6 +1,7 @@
-// 
+var ms = require("milsymbol");
+
 function bypass(feature){
-  var direction, width;
+  //var direction, width;
   var points = feature.geometry.coordinates;
   var geometry = {"type": "MultiLineString"};
   var scale = ms.geometry.distanceBetween(points[0],points[1]);
@@ -14,19 +15,19 @@ function bypass(feature){
   geom.push(ms.geometry.toDistanceBearing(points[0], length, bearing+90));
   geom.push(ms.geometry.toDistanceBearing(points[1], length, bearing+90));  
   geom.push(points[1]);
-  geometry.coordinates.push(geom)
+  geometry.coordinates.push(geom);
   
   geom = [];
   geom.push(ms.geometry.toDistanceBearing(points[0], scale*0.2, bearing+90-30));
   geom.push(points[0]);
   geom.push(ms.geometry.toDistanceBearing(points[0], scale*0.2, bearing+90+30));  
-  geometry.coordinates.push(geom)
+  geometry.coordinates.push(geom);
   
   geom = [];
   geom.push(ms.geometry.toDistanceBearing(points[1], scale*0.2, bearing+90-30));
   geom.push(points[1]);
   geom.push(ms.geometry.toDistanceBearing(points[1], scale*0.2, bearing+90+30));  
-  geometry.coordinates.push(geom)  
+  geometry.coordinates.push(geom);
   
   return {geometry:geometry};
 }

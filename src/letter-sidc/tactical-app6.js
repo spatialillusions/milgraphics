@@ -1,5 +1,5 @@
 // Tactical graphics in APP6-B
-module.exportS= function tacticalPoints(sidc,std2525){
+module.exportS = function tacticalPoints(sidc, std2525) {
   //sidc['G---------'] = [];//2.X
   //sidc['G-T-------'] = [];//2.X.1
   //sidc['G-T-G-----'] = [];//2.X.1.1
@@ -308,5 +308,4 @@ module.exportS= function tacticalPoints(sidc,std2525){
   //sidc['G-O-P-----'] = [];//2.X.3.3
   //sidc['G-O-PJ----'] = [];//2.X.3.3.13
   //sidc['G-O-I-----'] = [];//2.X.3.4
-
-}
+};
