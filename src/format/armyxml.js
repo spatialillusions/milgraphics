@@ -10,8 +10,7 @@ function ArmyXML(xml) {
       }
     }
   }
-*/
-
+  */
   function parseArea(area) {
     var coordinates = [];
     area = area.getElementsByTagName(ns + "Point");
