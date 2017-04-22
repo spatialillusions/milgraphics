@@ -13,7 +13,8 @@ function asOpenLayers(crs) {
     });
 
     if (
-      olFeature.getGeometry() && olFeature.getGeometry().getType() == "Point"
+      olFeature.getGeometry() &&
+      olFeature.getGeometry().getType() == "Point"
     ) {
       var properties = olFeature.getProperties();
       if (properties.sidc.charAt(0) != "X") {
@@ -66,7 +67,11 @@ function asOpenLayers(crs) {
           color: "#000000",
           width: 2
         }),
-        fill: new ol.style.Fill({ color: "rgba(0,0,0,0)" })
+        fill: new ol.style.Fill({ color: "rgba(0,0,0,0)" }),
+        text: new ol.style.Text({
+          font: "bold 14px sans-serif",
+          text: feature.graphic.annotations[0].properties.text || ""
+        })
       });
       olFeature.setStyle(style);
     }

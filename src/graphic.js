@@ -31,6 +31,7 @@ function graphic(feature) {
       if (graphics[genericSIDC]) {
         var graphicObject = graphics[genericSIDC].call(this, feature);
         this.geometry = graphicObject.geometry;
+        this.annotations = graphicObject.annotations;
         this.converted = true;
       } else {
         if (this.geometry.type != "Point") {

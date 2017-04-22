@@ -4,11 +4,14 @@ geometryConverter.ambush = require("./geometryconverter/ambush.js");
 geometryConverter.block = require("./geometryconverter/block.js");
 geometryConverter.bypass = require("./geometryconverter/bypass.js");
 geometryConverter.canalize = require("./geometryconverter/canalize.js");
-geometryConverter.circle = require("./geometryconverter/circle.js");
+//geometryConverter.circle = require("./geometryconverter/circle.js");
 geometryConverter.clear = require("./geometryconverter/clear.js");
 geometryConverter.corridor = require("./geometryconverter/corridor.js");
 geometryConverter.cover = require("./geometryconverter/cover.js");
 geometryConverter.delay = require("./geometryconverter/delay.js");
+geometryConverter[
+  "FIRE-SUPPORT-AREA"
+] = require("./geometryconverter/fire-support-area.js");
 geometryConverter.fix = require("./geometryconverter/fix.js");
 geometryConverter.guard = require("./geometryconverter/guard.js");
 geometryConverter.isolate = require("./geometryconverter/isolate.js");

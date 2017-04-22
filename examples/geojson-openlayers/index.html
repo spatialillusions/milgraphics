@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <style type="text/css">
-  html,
-  body,
-  .mymap {
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-    font-family: 'Open Sans', Helvetica, sans-serif;
-  }
+    html,
+    body,
+    .mymap {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      font-family: 'Open Sans', Helvetica, sans-serif;
+    }
   </style>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.0.1/ol.css" type="text/css">
@@ -19,58 +20,57 @@
 
   <script src="../../dist/milgraphics.js"></script>
 </head>
+
 <body onload="document.getElementById('files').addEventListener('change', loadFileAsText, false)">
-TacticalJSON: <input type="file" id="files" name="files[]"><br>
+  TacticalJSON: <input type="file" id="files" name="files[]"><br>
 
-<div id="map" class="mymap"></div>
+  <div id="map" class="mymap"></div>
 
-<script>
-var vectorSource = new ol.source.Vector();
-    
-var vectorLayer = new ol.layer.Vector({
-  source: vectorSource
-});
+  <script>
+    var vectorSource = new ol.source.Vector();
 
-var map = new ol.Map({
-  layers: [
-    new ol.layer.Tile({
-      source: new ol.source.OSM()
-    }),
-    vectorLayer
-  ],
-  target: 'map',
-  controls: ol.control.defaults({
-    attributionOptions: ({
-      collapsible: false
-    })
-  }),
-  view: new ol.View({
-    center: [0, 0],
-    zoom: 2
-  })
-});
-</script>   
+    var vectorLayer = new ol.layer.Vector({
+      source: vectorSource
+    });
 
-<!--<textarea id="slf_geojson" style="width: 960px; height: 300px;">
-</textarea><br>-->
-<script>
-function loadFileAsText (evt) {
-  var fileToLoad = evt.target.files[0];
-  var fileReader = new FileReader();
-  fileReader.onload = function(fileLoadedEvent) {
-    var file = fileLoadedEvent.target.result;
-    var openLayersFeaturesWithStyle = new ms.GraphicsLayer( new ms.format.GeoJSON(file) ).asOpenLayers();
-    
-    //document.getElementById('slf_geojson').value = JSON.stringify( new ms.format.ArmyXML(file), null, 4);  
-    
-    vectorSource.clear();
-    vectorSource.addFeatures(openLayersFeaturesWithStyle);
-    var extent = vectorSource.getExtent(openLayersFeaturesWithStyle);
-    map.getView().fit(extent, map.getSize());
-    
-  };
-  fileReader.readAsText(fileToLoad, "UTF-8");
-}
-</script>
+    var map = new ol.Map({
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM()
+        }),
+        vectorLayer
+      ],
+      target: 'map',
+      controls: ol.control.defaults({
+        attributionOptions: ({
+          collapsible: false
+        })
+      }),
+      view: new ol.View({
+        center: [0, 0],
+        zoom: 2
+      })
+    });
+  </script>
+
+  <script>
+    function loadFileAsText(evt) {
+      var fileToLoad = evt.target.files[0];
+      var fileReader = new FileReader();
+      fileReader.onload = function (fileLoadedEvent) {
+        var file = fileLoadedEvent.target.result;
+        var openLayersFeaturesWithStyle = new ms.GraphicsLayer(new ms.format.GeoJSON(file)).asOpenLayers();
+        console.log(new ms.GraphicsLayer(new ms.format.GeoJSON(file)))
+
+        vectorSource.clear();
+        vectorSource.addFeatures(openLayersFeaturesWithStyle);
+        var extent = vectorSource.getExtent(openLayersFeaturesWithStyle);
+        map.getView().fit(extent, map.getSize());
+
+      };
+      fileReader.readAsText(fileToLoad, "UTF-8");
+    }
+  </script>
 </body>
+
 </html>
