@@ -26,6 +26,9 @@ geometryConverter[
   "NAMED AREA OF INTEREST"
 ] = require("./geometryconverter/named-area-of-interest.js");
 geometryConverter.occupy = require("./geometryconverter/occupy.js");
+geometryConverter[
+  "RESTRICTIVE FIRE AREA"
+] = require("./geometryconverter/restrictive-fire-area.js");
 geometryConverter.searchArea = require("./geometryconverter/search-area.js");
 geometryConverter.supportingAttack = require("./geometryconverter/supportingattack.js");
 geometryConverter[

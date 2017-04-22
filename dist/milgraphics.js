@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 47);
+/******/ 	return __webpack_require__(__webpack_require__.s = 48);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -176,11 +176,14 @@ geometryConverter[
   "NAMED AREA OF INTEREST"
 ] = __webpack_require__(39);
 geometryConverter.occupy = __webpack_require__(40);
-geometryConverter.searchArea = __webpack_require__(41);
-geometryConverter.supportingAttack = __webpack_require__(42);
+geometryConverter[
+  "RESTRICTIVE FIRE AREA"
+] = __webpack_require__(41);
+geometryConverter.searchArea = __webpack_require__(42);
+geometryConverter.supportingAttack = __webpack_require__(43);
 geometryConverter[
   "TARGETED AREA OF INTEREST"
-] = __webpack_require__(43);
+] = __webpack_require__(44);
 
 module.exports = geometryConverter;
 
@@ -243,7 +246,7 @@ function graphic(feature) {
   }
 }
 
-graphic.prototype.getProperties = __webpack_require__(44);
+graphic.prototype.getProperties = __webpack_require__(45);
 graphic.prototype.isConverted = function() {
   return this.converted;
 };
@@ -276,9 +279,9 @@ function GraphicsLayer(data) {
   }
 }
 
-GraphicsLayer.prototype.asCesium = __webpack_require__(45);
+GraphicsLayer.prototype.asCesium = __webpack_require__(46);
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(46);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(47);
 
 module.exports = GraphicsLayer;
 
@@ -613,11 +616,11 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-F-ACN---'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA
   //sidc['G-F-ACNI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA.IRR
   //sidc['G-F-ACNR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA.RTG
-  sidc["G-F-ACNC--"] = []; //ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.NFA.CIRCLR
+  sidc["G-F-ACNC--"] = []; //TACGRP.FSUPP.ARS.C2ARS.NFA.CIRCLR
   //sidc['G-F-ACR---'] = [];//TACGRP.FSUPP.ARS.C2ARS.RFA
-  //sidc['G-F-ACRI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.RFA.IRR
-  //sidc['G-F-ACRR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.RFA.RTG
-  sidc["G-F-ACRC--"] = []; //ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.RFA.CIRCLR
+  sidc["G-F-ACRI--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.IRR
+  sidc["G-F-ACRR--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.RTG
+  sidc["G-F-ACRC--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.CIRCLR
   //sidc['G-F-ACP---'] = [];//TACGRP.FSUPP.ARS.C2ARS.PAA
   //sidc['G-F-ACPR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.PAA.RTG
   sidc["G-F-ACPC--"] = []; //ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.PAA.CIRCLR
@@ -4104,6 +4107,53 @@ module.exports = occupy;
 
 /***/ }),
 /* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
+// Draws a Fire Support Area
+module.exports = function(feature) {
+  var annotations = [{}];
+  var geometry;
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text = "RFA";
+  if (feature.properties.uniqueDesignation)
+    annotations[0].properties.text +=
+      "\n" + feature.properties.uniqueDesignation;
+  if (feature.properties.dtg)
+    annotations[0].properties.text += "\n" + feature.properties.dtg;
+  if (feature.properties.dtg1)
+    annotations[0].properties.text += "\n" + feature.properties.dtg1;
+
+  switch (feature.geometry.type) {
+    case "Point":
+      geometry = ms.geometry.circle(feature).geometry;
+      annotations[0].geometry.coordinates = feature.geometry.coordinates;
+      break;
+    case "LineString":
+      geometry = ms.geometry.rectangle(feature).geometry;
+      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+        feature.geometry.coordinates[0],
+        feature.geometry.coordinates[1],
+        0.5
+      );
+      break;
+    case "Polygon":
+      geometry = { type: feature.geometry.type };
+      geometry.coordinates = feature.geometry.coordinates;
+      // add annotation geometry
+      break;
+    default:
+      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  }
+  return { geometry: geometry, annotations: annotations };
+};
+
+
+/***/ }),
+/* 42 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -4113,7 +4163,7 @@ module.exports = searchArea;
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4230,7 +4280,7 @@ module.exports = supportingAttack;
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4273,7 +4323,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4362,7 +4412,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports) {
 
 function asCesium() {
@@ -4486,7 +4536,7 @@ module.exports = asCesium;
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports) {
 
 function asOpenLayers(crs) {
@@ -4577,7 +4627,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************
