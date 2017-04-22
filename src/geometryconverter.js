@@ -30,6 +30,9 @@ geometryConverter[
   "RESTRICTIVE FIRE AREA"
 ] = require("./geometryconverter/restrictive-fire-area.js");
 geometryConverter.searchArea = require("./geometryconverter/search-area.js");
+geometryConverter[
+  "SENSOR ZONE"
+] = require("./geometryconverter/sensor-zone.js");
 geometryConverter.supportingAttack = require("./geometryconverter/supportingattack.js");
 geometryConverter[
   "TARGETED AREA OF INTEREST"
