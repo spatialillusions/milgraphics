@@ -1,5 +1,8 @@
 var geometryConverter = {};
 
+geometryConverter[
+  "AIRSPACE COORDINATION AREA"
+] = require("./geometryconverter/airspace-coordination-area.js");
 geometryConverter["AMBUSH"] = require("./geometryconverter/ambush.js");
 geometryConverter.block = require("./geometryconverter/block.js");
 geometryConverter.bypass = require("./geometryconverter/bypass.js");
