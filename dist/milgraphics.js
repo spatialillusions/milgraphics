@@ -150,7 +150,7 @@ module.exports = geometry;
 
 var geometryConverter = {};
 
-geometryConverter.ambush = __webpack_require__(24);
+geometryConverter["AMBUSH"] = __webpack_require__(24);
 geometryConverter.block = __webpack_require__(25);
 geometryConverter.bypass = __webpack_require__(26);
 geometryConverter.canalize = __webpack_require__(27);
@@ -489,7 +489,7 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-G-OAP---'] = [];//TACGRP.C2GM.OFF.ARS.PBX
   //sidc['G-G-S-----'] = [];//TACGRP.C2GM.SPL
   //sidc['G-G-SL----'] = [];//TACGRP.C2GM.SPL.LNE
-  sidc["G-G-SLA---"] = ms.geometryConverter.ambush; //TACGRP.C2GM.SPL.LNE.AMB
+  sidc["G-G-SLA---"] = ms.geometryConverter["AMBUSH"]; //TACGRP.C2GM.SPL.LNE.AMB
   //sidc['G-G-SLH---'] = [];//TACGRP.C2GM.SPL.LNE.HGL
   //sidc['G-G-SLR---'] = [];//TACGRP.C2GM.SPL.LNE.REL
   //sidc['G-G-SLB---'] = [];//TACGRP.C2GM.SPL.LNE.BRGH
@@ -873,7 +873,7 @@ module.exportS = function tacticalPoints(sidc, std2525) {
   //sidc['G-C-MSGE--'] = [];//2.X.2.1.6.1.1
   //sidc['G-C-MSGEF-'] = [];//2.X.2.1.6.1.1.1
   //sidc['G-C-MSGEY-'] = [];//2.X.2.1.6.1.1.2
-  //sidc['G-C-MSGA--'] = [];//2.X.2.1.6.1.2
+  sidc["G-C-MSGA--"] = ms.geometryConverter["AMBUSH"]; //2.X.2.1.6.1.2
   //sidc['G-C-MSL---'] = [];//2.X.2.1.6.2
   //sidc['G-C-MSLA--'] = [];//2.X.2.1.6.2.1
   //sidc['G-C-MSLB--'] = [];//2.X.2.1.6.2.2

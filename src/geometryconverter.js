@@ -1,6 +1,6 @@
 var geometryConverter = {};
 
-geometryConverter.ambush = require("./geometryconverter/ambush.js");
+geometryConverter["AMBUSH"] = require("./geometryconverter/ambush.js");
 geometryConverter.block = require("./geometryconverter/block.js");
 geometryConverter.bypass = require("./geometryconverter/bypass.js");
 geometryConverter.canalize = require("./geometryconverter/canalize.js");
