@@ -16,6 +16,9 @@ geometryConverter[
   "FIRE SUPPORT AREA"
 ] = require("./geometryconverter/fire-support-area.js");
 geometryConverter.fix = require("./geometryconverter/fix.js");
+geometryConverter[
+  "FREE FIRE AREA"
+] = require("./geometryconverter/free-fire-area.js");
 geometryConverter.guard = require("./geometryconverter/guard.js");
 geometryConverter.isolate = require("./geometryconverter/isolate.js");
 geometryConverter.mainAttack = require("./geometryconverter/mainattack.js");
