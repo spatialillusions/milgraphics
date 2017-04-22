@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 43);
+/******/ 	return __webpack_require__(__webpack_require__.s = 45);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -117,111 +117,70 @@ var R=new function(){this._colorModes={},this._dashArrays={pending:"4,4",anticip
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ms = __webpack_require__(0);
+var format = {};
 
-// Draws a NAI
-module.exports = function(feature) {
-  var annotations = [{}];
-  var geometry;
+format.ArmyXML = __webpack_require__(13);
+format.GeoJSON = __webpack_require__(14);
+format.NVG = __webpack_require__(15);
+format.SLF = __webpack_require__(16);
 
-  annotations[0].geometry = { type: "Point" };
-  annotations[0].properties = {};
-  annotations[0].properties.text = "NAI";
-  if (feature.properties.uniqueDesignation)
-    annotations[0].properties.text +=
-      "\n" + feature.properties.uniqueDesignation;
-
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
-  }
-  return { geometry: geometry, annotations: annotations };
-};
+module.exports = format;
 
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var format = {};
+var geometry = {};
 
-format.ArmyXML = __webpack_require__(14);
-format.GeoJSON = __webpack_require__(15);
-format.NVG = __webpack_require__(16);
-format.SLF = __webpack_require__(17);
+geometry.bearingBetween = __webpack_require__(17);
+geometry.circle = __webpack_require__(18);
+geometry.corridor = __webpack_require__(19);
+geometry.distanceBetween = __webpack_require__(20);
+geometry.pointBetween = __webpack_require__(21);
+geometry.rectangle = __webpack_require__(22);
+geometry.toDistanceBearing = __webpack_require__(23);
 
-module.exports = format;
+module.exports = geometry;
 
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var geometry = {};
-
-geometry.bearingBetween = __webpack_require__(18);
-geometry.circle = __webpack_require__(19);
-geometry.corridor = __webpack_require__(20);
-geometry.distanceBetween = __webpack_require__(21);
-geometry.pointBetween = __webpack_require__(22);
-geometry.rectangle = __webpack_require__(23);
-geometry.toDistanceBearing = __webpack_require__(24);
-
-module.exports = geometry;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var geometryConverter = {};
 
-geometryConverter.ambush = __webpack_require__(25);
-geometryConverter.block = __webpack_require__(26);
-geometryConverter.bypass = __webpack_require__(27);
-geometryConverter.canalize = __webpack_require__(28);
+geometryConverter.ambush = __webpack_require__(24);
+geometryConverter.block = __webpack_require__(25);
+geometryConverter.bypass = __webpack_require__(26);
+geometryConverter.canalize = __webpack_require__(27);
 //geometryConverter.circle = require("./geometryconverter/circle.js");
-geometryConverter.clear = __webpack_require__(29);
-geometryConverter.corridor = __webpack_require__(30);
-geometryConverter.cover = __webpack_require__(31);
-geometryConverter.delay = __webpack_require__(32);
+geometryConverter.clear = __webpack_require__(28);
+geometryConverter.corridor = __webpack_require__(29);
+geometryConverter.cover = __webpack_require__(30);
+geometryConverter.delay = __webpack_require__(31);
 geometryConverter[
   "FIRE SUPPORT AREA"
-] = __webpack_require__(1);
+] = __webpack_require__(32);
 geometryConverter.fix = __webpack_require__(33);
 geometryConverter.guard = __webpack_require__(34);
 geometryConverter.isolate = __webpack_require__(35);
 geometryConverter.mainAttack = __webpack_require__(36);
 geometryConverter[
   "NAMED AREA OF INTEREST"
-] = __webpack_require__(1);
-
-geometryConverter.occupy = __webpack_require__(37);
-geometryConverter.searchArea = __webpack_require__(38);
-geometryConverter.supportingAttack = __webpack_require__(39);
+] = __webpack_require__(37);
+geometryConverter.occupy = __webpack_require__(38);
+geometryConverter.searchArea = __webpack_require__(39);
+geometryConverter.supportingAttack = __webpack_require__(40);
+geometryConverter[
+  "TARGETED AREA OF INTEREST"
+] = __webpack_require__(41);
 
 module.exports = geometryConverter;
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -278,7 +237,7 @@ function graphic(feature) {
   }
 }
 
-graphic.prototype.getProperties = __webpack_require__(40);
+graphic.prototype.getProperties = __webpack_require__(42);
 graphic.prototype.isConverted = function() {
   return this.converted;
 };
@@ -287,7 +246,7 @@ module.exports = graphic;
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -311,15 +270,15 @@ function GraphicsLayer(data) {
   }
 }
 
-GraphicsLayer.prototype.asCesium = __webpack_require__(41);
+GraphicsLayer.prototype.asCesium = __webpack_require__(43);
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(42);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(44);
 
 module.exports = GraphicsLayer;
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -335,7 +294,7 @@ module.exports = function(sidc, STD2525) {
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -410,7 +369,7 @@ module.exports = function(properties, mapping) {
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -539,7 +498,7 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-G-SAA---'] = [];//TACGRP.C2GM.SPL.ARA.AHD
   //sidc['G-G-SAE---'] = [];//TACGRP.C2GM.SPL.ARA.ENCMT
   sidc["G-G-SAN---"] = ms.geometryConverter["NAMED AREA OF INTEREST"]; //TACGRP.C2GM.SPL.ARA.NAI
-  //sidc['G-G-SAT---'] = [];//TACGRP.C2GM.SPL.ARA.TAIS
+  sidc["G-G-SAT---"] = ms.geometryConverter["TARGETED AREA OF INTEREST"]; //TACGRP.C2GM.SPL.ARA.TAIS
   //sidc['G-M-------'] = [];//TACGRP.MOBSU
   //sidc['G-M-O-----'] = [];//TACGRP.MOBSU.OBST
   //sidc['G-M-OG----'] = [];//TACGRP.MOBSU.OBST.GNL
@@ -750,7 +709,7 @@ module.exports = function tacticalPoints(sidc, std2525) {
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {// Tactical graphics in APP6-B
@@ -923,7 +882,7 @@ module.exportS = function tacticalPoints(sidc, std2525) {
   //sidc['G-C-MSA---'] = [];//2.X.2.1.6.3
   //sidc['G-C-MSAO--'] = [];//2.X.2.1.6.3.1
   sidc["G-C-MSAN--"] = ms.geometryConverter["NAMED AREA OF INTEREST"]; //2.X.2.1.6.3.2
-  //sidc['G-C-MSAT--'] = [];//2.X.2.1.6.3.3
+  sidc["G-C-MSAT--"] = ms.geometryConverter["TARGETED AREA OF INTEREST"]; //2.X.2.1.6.3.3
   //sidc['G-C-B-----'] = [];//2.X.2.2
   //sidc['G-C-BO----'] = [];//2.X.2.2.1
   //sidc['G-C-BOG---'] = [];//2.X.2.2.1.1
@@ -1065,10 +1024,10 @@ module.exportS = function tacticalPoints(sidc, std2525) {
   //sidc['G-O-I-----'] = [];//2.X.3.4
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)(module)))
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports) {
 
 var addSIDCgraphics = function(parts, type) {
@@ -1087,7 +1046,7 @@ module.exports = addSIDCgraphics;
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -1159,7 +1118,7 @@ module.exports = function(properties, mapping) {
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -1187,7 +1146,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -1619,7 +1578,7 @@ if (true) {
 
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports) {
 
 function GeoJSON(data, mapping) {
@@ -1661,7 +1620,7 @@ module.exports = GeoJSON;
 
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports) {
 
 function NVG(data) {
@@ -2488,7 +2447,7 @@ module.exports = NVG;
 
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -2883,7 +2842,7 @@ if (true) {
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports) {
 
 // Calculates the bearing between two points in meter
@@ -2903,7 +2862,7 @@ module.exports = bearingBetween;
 
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -2924,7 +2883,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3006,7 +2965,7 @@ module.exports = corridor;
 
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports) {
 
 // Calculates the great circle distance between two points in meter
@@ -3035,7 +2994,7 @@ module.exports = distanceBetween;
 
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports) {
 
 // Calculates a point between two other points at any fractional distance f between them
@@ -3083,7 +3042,7 @@ module.exports = pointBetween;
 
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3096,7 +3055,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports) {
 
 // Calculates the bearing between two points in meter
@@ -3124,7 +3083,7 @@ module.exports = toDistanceBearing;
 
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3211,7 +3170,7 @@ module.exports = block;
 
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3238,7 +3197,7 @@ function block(feature){
 module.exports = block;
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3278,7 +3237,7 @@ function bypass(feature){
 module.exports = bypass;
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3316,7 +3275,7 @@ function canalize(feature){
 module.exports = canalize;
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3378,7 +3337,7 @@ module.exports = clear;
 
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3460,7 +3419,7 @@ module.exports = corridor;
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3520,7 +3479,7 @@ module.exports = cover;
 
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3576,6 +3535,51 @@ function delay(feature) {
 }
 
 module.exports = delay;
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
+// Draws a Fire Support Area
+module.exports = function(feature) {
+  var annotations = [{}];
+  var geometry;
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text =
+    "FSA " + (feature.properties.uniqueDesignation || "");
+  if (feature.properties.dtg)
+    annotations[0].properties.text += "\n" + feature.properties.dtg;
+  if (feature.properties.dtg1)
+    annotations[0].properties.text += "\n" + feature.properties.dtg1;
+
+  switch (feature.geometry.type) {
+    case "Point":
+      geometry = ms.geometry.circle(feature).geometry;
+      annotations[0].geometry.coordinates = feature.geometry.coordinates;
+      break;
+    case "LineString":
+      geometry = ms.geometry.rectangle(feature).geometry;
+      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+        feature.geometry.coordinates[0],
+        feature.geometry.coordinates[1],
+        0.5
+      );
+      break;
+    case "Polygon":
+      geometry = { type: feature.geometry.type };
+      geometry.coordinates = feature.geometry.coordinates;
+      // add annotation geometry
+      break;
+    default:
+      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  }
+  return { geometry: geometry, annotations: annotations };
+};
 
 
 /***/ }),
@@ -3904,6 +3908,49 @@ module.exports = mainAttack;
 
 var ms = __webpack_require__(0);
 
+// Draws a NAI
+module.exports = function(feature) {
+  var annotations = [{}];
+  var geometry;
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text = "NAI";
+  if (feature.properties.uniqueDesignation)
+    annotations[0].properties.text +=
+      "\n" + feature.properties.uniqueDesignation;
+
+  switch (feature.geometry.type) {
+    case "Point":
+      geometry = ms.geometry.circle(feature).geometry;
+      annotations[0].geometry.coordinates = feature.geometry.coordinates;
+      break;
+    case "LineString":
+      geometry = ms.geometry.rectangle(feature).geometry;
+      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+        feature.geometry.coordinates[0],
+        feature.geometry.coordinates[1],
+        0.5
+      );
+      break;
+    case "Polygon":
+      geometry = { type: feature.geometry.type };
+      geometry.coordinates = feature.geometry.coordinates;
+      // add annotation geometry
+      break;
+    default:
+      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  }
+  return { geometry: geometry, annotations: annotations };
+};
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
 // Draws a circle withe a radius in meters
 function occupy(feature) {
   var p = feature.geometry.coordinates;
@@ -3947,7 +3994,7 @@ module.exports = occupy;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -3957,7 +4004,7 @@ module.exports = searchArea;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4074,7 +4121,50 @@ module.exports = supportingAttack;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
+// Draws a NAI
+module.exports = function(feature) {
+  var annotations = [{}];
+  var geometry;
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text = "TAI";
+  if (feature.properties.uniqueDesignation)
+    annotations[0].properties.text +=
+      "\n" + feature.properties.uniqueDesignation;
+
+  switch (feature.geometry.type) {
+    case "Point":
+      geometry = ms.geometry.circle(feature).geometry;
+      annotations[0].geometry.coordinates = feature.geometry.coordinates;
+      break;
+    case "LineString":
+      geometry = ms.geometry.rectangle(feature).geometry;
+      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+        feature.geometry.coordinates[0],
+        feature.geometry.coordinates[1],
+        0.5
+      );
+      break;
+    case "Polygon":
+      geometry = { type: feature.geometry.type };
+      geometry.coordinates = feature.geometry.coordinates;
+      // add annotation geometry
+      break;
+    default:
+      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  }
+  return { geometry: geometry, annotations: annotations };
+};
+
+
+/***/ }),
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4163,7 +4253,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports) {
 
 function asCesium() {
@@ -4287,7 +4377,7 @@ module.exports = asCesium;
 
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports) {
 
 function asOpenLayers(crs) {
@@ -4378,7 +4468,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************
@@ -4386,28 +4476,28 @@ Creating the base of milgraphics by importing milsymbol
 *************************************************************************************** */
 var ms = __webpack_require__(0);
 
-ms.addSIDCgraphics = __webpack_require__(11);
+ms.addSIDCgraphics = __webpack_require__(10);
 
-ms.format = __webpack_require__(2);
-ms.geometry = __webpack_require__(3);
-ms.geometryConverter = __webpack_require__(4);
+ms.format = __webpack_require__(1);
+ms.geometry = __webpack_require__(2);
+ms.geometryConverter = __webpack_require__(3);
 
-ms.Graphic = __webpack_require__(5);
+ms.Graphic = __webpack_require__(4);
 
-ms.GraphicsLayer = __webpack_require__(6);
+ms.GraphicsLayer = __webpack_require__(5);
 
 /* ***************************************************************************************
 Letter based SIDC
 *************************************************************************************** */
-ms._getLetterPropertiesGraphic = __webpack_require__(8);
+ms._getLetterPropertiesGraphic = __webpack_require__(7);
 
-ms._getLetterSIDCgraphic = __webpack_require__(7);
+ms._getLetterSIDCgraphic = __webpack_require__(6);
+ms.addSIDCgraphics(__webpack_require__(8), "letter");
 ms.addSIDCgraphics(__webpack_require__(9), "letter");
-ms.addSIDCgraphics(__webpack_require__(10), "letter");
 /* ***************************************************************************************
 Number based SIDC
 *************************************************************************************** */
-ms._getNumberPropertiesGraphic = __webpack_require__(12);
+ms._getNumberPropertiesGraphic = __webpack_require__(11);
 
 /* ***************************************************************************************
 Export ms to the world
