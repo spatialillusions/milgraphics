@@ -3546,7 +3546,10 @@ module.exports = function(feature) {
   annotations[0].properties = {};
   annotations[0].properties.text =
     "FSA " + (feature.properties.uniqueDesignation || "");
-  //TODO add DTG
+  if (feature.properties.dtg)
+    annotations[0].properties.text += "\n" + feature.properties.dtg;
+  if (feature.properties.dtg1)
+    annotations[0].properties.text += "\n" + feature.properties.dtg1;
 
   switch (feature.geometry.type) {
     case "Point":

@@ -1,0 +1,26 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {"sidc":"GFGPSLA-------X"},
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            15.851211547851562,
+            58.23853710414432
+          ],
+          [
+            15.839881896972656,
+            58.23329584804805
+          ],
+          [
+            15.840911865234373,
+            58.24359689253174
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -60,7 +60,7 @@
       fileReader.onload = function (fileLoadedEvent) {
         var file = fileLoadedEvent.target.result;
         var openLayersFeaturesWithStyle = new ms.GraphicsLayer(new ms.format.GeoJSON(file)).asOpenLayers();
-        console.log(new ms.GraphicsLayer(new ms.format.GeoJSON(file)))
+        //console.log(new ms.GraphicsLayer(new ms.format.GeoJSON(file)))
 
         vectorSource.clear();
         vectorSource.addFeatures(openLayersFeaturesWithStyle);
