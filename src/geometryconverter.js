@@ -41,6 +41,9 @@ geometryConverter[
   "TARGET BUILD-UP AREA"
 ] = require("./geometryconverter/target-build-up-area.js");
 geometryConverter[
+  "TARGET VALUE AREA"
+] = require("./geometryconverter/target-value-area.js");
+geometryConverter[
   "TARGETED AREA OF INTEREST"
 ] = require("./geometryconverter/targeted-area-of-interest.js");
 geometryConverter[
