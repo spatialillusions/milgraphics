@@ -40,5 +40,8 @@ geometryConverter.supportingAttack = require("./geometryconverter/supportingatta
 geometryConverter[
   "TARGETED AREA OF INTEREST"
 ] = require("./geometryconverter/targeted-area-of-interest.js");
+geometryConverter[
+  "ZONE OF RESPONSIBILITY"
+] = require("./geometryconverter/zone-of-responsibility.js");
 
 module.exports = geometryConverter;

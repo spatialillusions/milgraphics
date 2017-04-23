@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 50);
+/******/ 	return __webpack_require__(__webpack_require__.s = 51);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -190,6 +190,9 @@ geometryConverter.supportingAttack = __webpack_require__(45);
 geometryConverter[
   "TARGETED AREA OF INTEREST"
 ] = __webpack_require__(46);
+geometryConverter[
+  "ZONE OF RESPONSIBILITY"
+] = __webpack_require__(47);
 
 module.exports = geometryConverter;
 
@@ -252,7 +255,7 @@ function graphic(feature) {
   }
 }
 
-graphic.prototype.getProperties = __webpack_require__(47);
+graphic.prototype.getProperties = __webpack_require__(48);
 graphic.prototype.isConverted = function() {
   return this.converted;
 };
@@ -285,9 +288,9 @@ function GraphicsLayer(data) {
   }
 }
 
-GraphicsLayer.prototype.asCesium = __webpack_require__(48);
+GraphicsLayer.prototype.asCesium = __webpack_require__(49);
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(49);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(50);
 
 module.exports = GraphicsLayer;
 
@@ -639,9 +642,9 @@ module.exports = function tacticalPoints(sidc, std2525) {
   sidc["G-F-ACDR--"] = ms.geometryConverter["DEAD SPACE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.DA.RTG
   sidc["G-F-ACDC--"] = ms.geometryConverter["DEAD SPACE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.DA.CIRCLR
   //sidc['G-F-ACZ---'] = [];//TACGRP.FSUPP.ARS.C2ARS.ZOR
-  //sidc['G-F-ACZI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.ZOR.IRR
-  //sidc['G-F-ACZR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.ZOR.RTG
-  sidc["G-F-ACZC--"] = []; //ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.C2ARS.ZOR.CIRCLR
+  sidc["G-F-ACZI--"] = ms.geometryConverter["ZONE OF RESPONSIBILITY"]; //TACGRP.FSUPP.ARS.C2ARS.ZOR.IRR
+  sidc["G-F-ACZR--"] = ms.geometryConverter["ZONE OF RESPONSIBILITY"]; //TACGRP.FSUPP.ARS.C2ARS.ZOR.RTG
+  sidc["G-F-ACZC--"] = ms.geometryConverter["ZONE OF RESPONSIBILITY"]; //TACGRP.FSUPP.ARS.C2ARS.ZOR.CIRCLR
   //sidc['G-F-ACB---'] = [];//TACGRP.FSUPP.ARS.C2ARS.TBA
   //sidc['G-F-ACBI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.TBA.IRR
   //sidc['G-F-ACBR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.TBA.RTG
@@ -4428,6 +4431,53 @@ module.exports = function(feature) {
 
 var ms = __webpack_require__(0);
 
+// Draws a Fire Support Area
+module.exports = function(feature) {
+  var annotations = [{}];
+  var geometry;
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text = "ZOR";
+  if (feature.properties.uniqueDesignation)
+    annotations[0].properties.text +=
+      "\n" + feature.properties.uniqueDesignation;
+  if (feature.properties.dtg)
+    annotations[0].properties.text += "\n" + feature.properties.dtg;
+  if (feature.properties.dtg1)
+    annotations[0].properties.text += "\n" + feature.properties.dtg1;
+
+  switch (feature.geometry.type) {
+    case "Point":
+      geometry = ms.geometry.circle(feature).geometry;
+      annotations[0].geometry.coordinates = feature.geometry.coordinates;
+      break;
+    case "LineString":
+      geometry = ms.geometry.rectangle(feature).geometry;
+      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+        feature.geometry.coordinates[0],
+        feature.geometry.coordinates[1],
+        0.5
+      );
+      break;
+    case "Polygon":
+      geometry = { type: feature.geometry.type };
+      geometry.coordinates = feature.geometry.coordinates;
+      // add annotation geometry
+      break;
+    default:
+      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  }
+  return { geometry: geometry, annotations: annotations };
+};
+
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
 module.exports = function() {
   var properties = {
     //    "activity"			: false,	//Is it an Activity
@@ -4512,7 +4562,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports) {
 
 function asCesium() {
@@ -4636,7 +4686,7 @@ module.exports = asCesium;
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports) {
 
 function asOpenLayers(crs) {
@@ -4727,7 +4777,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************
