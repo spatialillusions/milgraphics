@@ -11,6 +11,9 @@ geometryConverter.canalize = require("./geometryconverter/canalize.js");
 geometryConverter.clear = require("./geometryconverter/clear.js");
 geometryConverter.corridor = require("./geometryconverter/corridor.js");
 geometryConverter.cover = require("./geometryconverter/cover.js");
+geometryConverter[
+  "DEAD SPACE AREA"
+] = require("./geometryconverter/dead-space-area.js");
 geometryConverter.delay = require("./geometryconverter/delay.js");
 geometryConverter[
   "FIRE SUPPORT AREA"
