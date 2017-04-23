@@ -8,13 +8,13 @@ module.exports = function(feature) {
   annotations[0].geometry = { type: "Point" };
   annotations[0].properties = {};
   annotations[0].properties.text = "TGMF";
-  if (feature.properties.uniqueDesignation)
+  /*if (feature.properties.uniqueDesignation)
     annotations[0].properties.text +=
       "\n" + feature.properties.uniqueDesignation;
   if (feature.properties.dtg)
     annotations[0].properties.text += "\n" + feature.properties.dtg;
   if (feature.properties.dtg1)
-    annotations[0].properties.text += "\n" + feature.properties.dtg1;
+    annotations[0].properties.text += "\n" + feature.properties.dtg1;*/
 
   switch (feature.geometry.type) {
     case "Point":
