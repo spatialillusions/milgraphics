@@ -261,7 +261,8 @@ module.exports = function tacticalPoints(sidc, std2525) {
   sidc["G-F-ACVI--"] = ms.geometryConverter["TARGET VALUE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.TVAR.IRR
   sidc["G-F-ACVR--"] = ms.geometryConverter["TARGET VALUE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.TVAR.RTG
   sidc["G-F-ACVC--"] = ms.geometryConverter["TARGET VALUE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.TVAR.CIRCLR
-  //sidc['G-F-ACT---'] = [];//TACGRP.FSUPP.ARS.C2ARS.TGMF
+  sidc["G-F-ACT---"] =
+    ms.geometryConverter["TERMINALLY GUIDED MUNITION FOOTPRINT"]; //TACGRP.FSUPP.ARS.C2ARS.TGMF
   //sidc['G-F-AZ----'] = [];//TACGRP.FSUPP.ARS.TGTAQZ
   //sidc['G-F-AZI---'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.ATIZ
   //sidc['G-F-AZII--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.ATIZ.IRR

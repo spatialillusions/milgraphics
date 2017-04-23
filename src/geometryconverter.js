@@ -47,6 +47,9 @@ geometryConverter[
   "TARGETED AREA OF INTEREST"
 ] = require("./geometryconverter/targeted-area-of-interest.js");
 geometryConverter[
+  "TERMINALLY GUIDED MUNITION FOOTPRINT"
+] = require("./geometryconverter/terminally-guided-munition-footprint.js");
+geometryConverter[
   "ZONE OF RESPONSIBILITY"
 ] = require("./geometryconverter/zone-of-responsibility.js");
 
