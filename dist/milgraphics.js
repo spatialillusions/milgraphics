@@ -180,13 +180,15 @@ geometryConverter.delay = __webpack_require__(37);
 geometryConverter[
   "FIRE SUPPORT AREA"
 ] = __webpack_require__(38);
-geometryConverter.fix = __webpack_require__(39);
+geometryConverter["FIX"] = __webpack_require__(39);
 geometryConverter[
   "FREE FIRE AREA"
 ] = __webpack_require__(40);
 geometryConverter.guard = __webpack_require__(41);
-geometryConverter.isolate = __webpack_require__(42);
-geometryConverter.mainAttack = __webpack_require__(43);
+geometryConverter["ISOLATE"] = __webpack_require__(42);
+geometryConverter[
+  "MAIN ATTACK"
+] = __webpack_require__(43);
 geometryConverter[
   "NAMED AREA OF INTEREST"
 ] = __webpack_require__(44);
@@ -425,10 +427,10 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-T-KF----'] = [];//TACGRP.TSK.CATK.CATKF
   sidc["G-T-L-----"] = ms.geometryConverter.delay; //TACGRP.TSK.DLY
   //sidc['G-T-T-----'] = [];//TACGRP.TSK.DRT
-  sidc["G-T-F-----"] = ms.geometryConverter.fix; //TACGRP.TSK.FIX
+  sidc["G-T-F-----"] = ms.geometryConverter["FIX"]; //TACGRP.TSK.FIX
   //sidc['G-T-A-----'] = [];//TACGRP.TSK.FLWASS
   //sidc['G-T-AS----'] = [];//TACGRP.TSK.FLWASS.FLWSUP
-  sidc["G-T-E-----"] = ms.geometryConverter.isolate; //TACGRP.TSK.ISL
+  sidc["G-T-E-----"] = ms.geometryConverter["ISOLATE"]; //TACGRP.TSK.ISL
   sidc["G-T-O-----"] = ms.geometryConverter.occupy; //TACGRP.TSK.OCC
   //sidc['G-T-P-----'] = [];//TACGRP.TSK.PNE
   //sidc['G-T-R-----'] = [];//TACGRP.TSK.RIP
@@ -506,7 +508,7 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-G-OLAA--'] = [];//TACGRP.C2GM.OFF.LNE.AXSADV.ABN
   //sidc['G-G-OLAR--'] = [];//TACGRP.C2GM.OFF.LNE.AXSADV.ATK
   //sidc['G-G-OLAG--'] = [];//TACGRP.C2GM.OFF.LNE.AXSADV.GRD
-  sidc["G-G-OLAGM-"] = ms.geometryConverter.mainAttack; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.MANATK
+  sidc["G-G-OLAGM-"] = ms.geometryConverter["MAIN ATTACK"]; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.MANATK
   sidc["G-G-OLAGS-"] = ms.geometryConverter.supportingAttack; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.SUPATK
   //sidc['G-G-OLK---'] = [];//TACGRP.C2GM.OFF.LNE.DIRATK
   //sidc['G-G-OLKA--'] = [];//TACGRP.C2GM.OFF.LNE.DIRATK.AVN
@@ -770,10 +772,10 @@ module.exportS = function tacticalPoints(sidc, std2525) {
   //sidc['G-T-GL----'] = [];//2.X.1.1.8
   //sidc['G-T-GLT---'] = [];//2.X.1.1.8.1
   //sidc['G-T-GT----'] = [];//2.X.1.1.10
-  //sidc['G-T-GF----'] = [];//2.X.1.1.11
+  sidc["G-T-GF----"] = ms.geometryConverter["FIX"]; //2.X.1.1.11
   //sidc['G-T-GA----'] = [];//2.X.1.1.12
   //sidc['G-T-GAS---'] = [];//2.X.1.1.12.1
-  //sidc['G-T-GE----'] = [];//2.X.1.1.14
+  sidc["G-T-GE----"] = ms.geometryConverter["ISOLATE"]; //2.X.1.1.14
   //sidc['G-T-GO----'] = [];//2.X.1.1.16
   //sidc['G-T-GP----'] = [];//2.X.1.1.17
   //sidc['G-T-GR----'] = [];//2.X.1.1.18
@@ -878,7 +880,7 @@ module.exportS = function tacticalPoints(sidc, std2525) {
   //sidc['G-C-MOLAA-'] = [];//2.X.2.1.5.2.1.2
   //sidc['G-C-MOLAH-'] = [];//2.X.2.1.5.2.1.3
   //sidc['G-C-MOLAS-'] = [];//2.X.2.1.5.2.1.4
-  //sidc['G-C-MOLAM-'] = [];//2.X.2.1.5.2.1.5
+  sidc["G-C-MOLAM-"] = ms.geometryConverter["MAIN ATTACK"]; //2.X.2.1.5.2.1.5
   //sidc['G-C-MOLAO-'] = [];//2.X.2.1.5.2.1.6
   //sidc['G-C-MOLAE-'] = [];//2.X.2.1.5.2.1.7
   //sidc['G-C-MOLAT-'] = [];//2.X.2.1.5.2.1.8

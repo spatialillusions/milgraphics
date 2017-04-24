@@ -36,7 +36,9 @@ geometryConverter[
 ] = require("./geometryconverter/free-fire-area.js");
 geometryConverter.guard = require("./geometryconverter/guard.js");
 geometryConverter["ISOLATE"] = require("./geometryconverter/isolate.js");
-geometryConverter.mainAttack = require("./geometryconverter/mainattack.js");
+geometryConverter[
+  "MAIN ATTACK"
+] = require("./geometryconverter/main-attack.js");
 geometryConverter[
   "NAMED AREA OF INTEREST"
 ] = require("./geometryconverter/named-area-of-interest.js");
