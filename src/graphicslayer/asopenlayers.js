@@ -70,7 +70,9 @@ function asOpenLayers(crs) {
         fill: new ol.style.Fill({ color: "rgba(0,0,0,0)" }),
         text: new ol.style.Text({
           font: "bold 14px sans-serif",
-          text: feature.graphic.annotations[0].properties.text || ""
+          text: feature.graphic.annotations
+            ? feature.graphic.annotations[0].properties.text
+            : ""
         })
       });
       olFeature.setStyle(style);
