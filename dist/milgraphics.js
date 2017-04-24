@@ -200,7 +200,9 @@ geometryConverter.searchArea = __webpack_require__(47);
 geometryConverter[
   "SENSOR ZONE"
 ] = __webpack_require__(48);
-geometryConverter.supportingAttack = __webpack_require__(49);
+geometryConverter[
+  "SUPPORTING ATTACK"
+] = __webpack_require__(49);
 geometryConverter[
   "TARGET BUILD-UP AREA"
 ] = __webpack_require__(50);
@@ -509,7 +511,7 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-G-OLAR--'] = [];//TACGRP.C2GM.OFF.LNE.AXSADV.ATK
   //sidc['G-G-OLAG--'] = [];//TACGRP.C2GM.OFF.LNE.AXSADV.GRD
   sidc["G-G-OLAGM-"] = ms.geometryConverter["MAIN ATTACK"]; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.MANATK
-  sidc["G-G-OLAGS-"] = ms.geometryConverter.supportingAttack; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.SUPATK
+  sidc["G-G-OLAGS-"] = msgeometryConverter["SUPPORTING ATTACK"]; //TACGRP.C2GM.OFF.LNE.AXSADV.GRD.SUPATK
   //sidc['G-G-OLK---'] = [];//TACGRP.C2GM.OFF.LNE.DIRATK
   //sidc['G-G-OLKA--'] = [];//TACGRP.C2GM.OFF.LNE.DIRATK.AVN
   //sidc['G-G-OLKG--'] = [];//TACGRP.C2GM.OFF.LNE.DIRATK.GRD
@@ -879,7 +881,7 @@ module.exportS = function tacticalPoints(sidc, std2525) {
   //sidc['G-C-MOLAF-'] = [];//2.X.2.1.5.2.1.1
   //sidc['G-C-MOLAA-'] = [];//2.X.2.1.5.2.1.2
   //sidc['G-C-MOLAH-'] = [];//2.X.2.1.5.2.1.3
-  //sidc['G-C-MOLAS-'] = [];//2.X.2.1.5.2.1.4
+  sidc["G-C-MOLAS-"] = ms.geometryConverter["SUPPORTING ATTACK"]; //2.X.2.1.5.2.1.4
   sidc["G-C-MOLAM-"] = ms.geometryConverter["MAIN ATTACK"]; //2.X.2.1.5.2.1.5
   //sidc['G-C-MOLAO-'] = [];//2.X.2.1.5.2.1.6
   //sidc['G-C-MOLAE-'] = [];//2.X.2.1.5.2.1.7
