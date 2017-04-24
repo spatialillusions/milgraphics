@@ -233,14 +233,14 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-F-ACN---'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA
   //sidc['G-F-ACNI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA.IRR
   //sidc['G-F-ACNR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA.RTG
-  sidc["G-F-ACNC--"] = []; //TACGRP.FSUPP.ARS.C2ARS.NFA.CIRCLR
+  //sidc["G-F-ACNC--"] = []; //TACGRP.FSUPP.ARS.C2ARS.NFA.CIRCLR
   //sidc['G-F-ACR---'] = [];//TACGRP.FSUPP.ARS.C2ARS.RFA
   sidc["G-F-ACRI--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.IRR
   sidc["G-F-ACRR--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.RTG
   sidc["G-F-ACRC--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.CIRCLR
   //sidc['G-F-ACP---'] = [];//TACGRP.FSUPP.ARS.C2ARS.PAA
   //sidc['G-F-ACPR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.PAA.RTG
-  sidc["G-F-ACPC--"] = []; //TACGRP.FSUPP.ARS.C2ARS.PAA.CIRCLR
+  //sidc["G-F-ACPC--"] = []; //TACGRP.FSUPP.ARS.C2ARS.PAA.CIRCLR
   //sidc['G-F-ACE---'] = //TACGRP.FSUPP.ARS.C2ARS.SNSZ
   sidc["G-F-ACEI--"] = ms.geometryConverter["SENSOR ZONE"]; //TACGRP.FSUPP.ARS.C2ARS.SNSZ.IRR
   sidc["G-F-ACER--"] = ms.geometryConverter["SENSOR ZONE"]; //TACGRP.FSUPP.ARS.C2ARS.SNSZ.RTG
@@ -279,15 +279,15 @@ module.exports = function tacticalPoints(sidc, std2525) {
   sidc["G-F-AZFI--"] = ms.geometryConverter["CRITICAL FRIENDLY ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CFZ.IRR
   sidc["G-F-AZFR--"] = ms.geometryConverter["CRITICAL FRIENDLY ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CFZ.RTG
   //sidc['G-F-AX----'] = [];//TACGRP.FSUPP.ARS.WPNRF
-  sidc["G-F-AXC---"] = []; //ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.WPNRF.CIRCLR
+  //sidc["G-F-AXC---"] = []; //ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.WPNRF.CIRCLR
   //sidc['G-F-AXS---'] = [];//TACGRP.FSUPP.ARS.WPNRF.SCR
   //sidc['G-F-AK----'] = [];//TACGRP.FSUPP.ARS.KLBOX
   //sidc['G-F-AKB---'] = [];//TACGRP.FSUPP.ARS.KLBOX.BLUE
-  sidc["G-F-AKBC--"] = []; //ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.KLBOX.BLUE.CIRCLR
+  //sidc["G-F-AKBC--"] = []; //ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.KLBOX.BLUE.CIRCLR
   //sidc['G-F-AKBI--'] = [];//TACGRP.FSUPP.ARS.KLBOX.BLUE.IRR
   //sidc['G-F-AKBR--'] = [];//TACGRP.FSUPP.ARS.KLBOX.BLUE.RTG
   //sidc['G-F-AKP---'] = [];//TACGRP.FSUPP.ARS.KLBOX.PURPLE
-  sidc["G-F-AKPC--"] = []; //ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.KLBOX.PURPLE.CIRCLR
+  //sidc["G-F-AKPC--"] = []; //ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.KLBOX.PURPLE.CIRCLR
   //sidc['G-F-AKPI--'] = [];//TACGRP.FSUPP.ARS.KLBOX.PURPLE.IRR
   //sidc['G-F-AKPR--'] = [];//TACGRP.FSUPP.ARS.KLBOX.PURPLE.RTG
   //sidc['G-S-------'] = [];//TACGRP.CSS
@@ -324,14 +324,14 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-O-F-----'] = [];//TACGRP.OTH.FIX
 
   //2525B compatibility
-  sidc["G-F-ATC---"] = []; //ms.geometryConverter.circle;
-  sidc["G-F-AZIC--"] = []; //ms.geometryConverter.circle;
+  //sidc["G-F-ATC---"] = []; //ms.geometryConverter.circle;
+  //sidc["G-F-AZIC--"] = []; //ms.geometryConverter.circle;
 
   // Army XML compability
   //sidc['C-R-LE----'] = [];//ms.geometryConverter.circle;
 
   // Systematic SitaWare compatibility
   sidc["X---C-----"] = ms.geometryConverter.corridor;
-  sidc["X---I-----"] = []; //ms.geometryConverter.circle;
+  //sidc["X---I-----"] = []; //ms.geometryConverter.circle;
   sidc["X---A-----"] = ms.geometryConverter.supportingAttack;
 };
