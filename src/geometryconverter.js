@@ -50,7 +50,9 @@ geometryConverter.searchArea = require("./geometryconverter/search-area.js");
 geometryConverter[
   "SENSOR ZONE"
 ] = require("./geometryconverter/sensor-zone.js");
-geometryConverter.supportingAttack = require("./geometryconverter/supportingattack.js");
+geometryConverter[
+  "SUPPORTING ATTACK"
+] = require("./geometryconverter/supporting-attack.js");
 geometryConverter[
   "TARGET BUILD-UP AREA"
 ] = require("./geometryconverter/target-build-up-area.js");
