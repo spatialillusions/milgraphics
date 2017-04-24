@@ -9,6 +9,9 @@ geometryConverter[
 ] = require("./geometryconverter/artillery-target-intelligence-zone.js");
 geometryConverter.block = require("./geometryconverter/block.js");
 geometryConverter.bypass = require("./geometryconverter/bypass.js");
+geometryConverter[
+  "CALL FOR FIRE ZONE"
+] = require("./geometryconverter/call-for-fire-zone.js");
 geometryConverter.canalize = require("./geometryconverter/canalize.js");
 //geometryConverter.circle = require("./geometryconverter/circle.js");
 geometryConverter.clear = require("./geometryconverter/clear.js");

@@ -270,8 +270,8 @@ module.exports = function tacticalPoints(sidc, std2525) {
   sidc["G-F-AZIR--"] =
     ms.geometryConverter["ARTILLERY TARGET INTELLIGENCE ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.ATIZ.RTG
   //sidc['G-F-AZX---'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFFZ
-  //sidc['G-F-AZXI--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFFZ.IRR
-  //sidc['G-F-AZXR--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFFZ.RTG
+  sidc["G-F-AZXI--"] = ms.geometryConverter["CALL FOR FIRE ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CFFZ.IRR
+  sidc["G-F-AZXR--"] = ms.geometryConverter["CALL FOR FIRE ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CFFZ.RTG
   //sidc['G-F-AZC---'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CNS
   //sidc['G-F-AZCI--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CNS.IRR
   //sidc['G-F-AZCR--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CNS.RTG
