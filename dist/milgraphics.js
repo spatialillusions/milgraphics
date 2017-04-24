@@ -745,12 +745,12 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc["G-F-AZIC--"] = []; //ms.geometryConverter.circle;
 
   // Army XML compability
-  //sidc['C-R-LE----'] = [];//ms.geometryConverter.circle;
+  sidc["C-R-LE----"] = ms.geometry.circle;
 
   // Systematic SitaWare compatibility
   sidc["X---C-----"] = ms.geometryConverter.corridor;
-  //sidc["X---I-----"] = []; //ms.geometryConverter.circle;
-  sidc["X---A-----"] = ms.geometryConverter.supportingAttack;
+  sidc["X---I-----"] = ms.geometry.circle;
+  sidc["X---A-----"] = ms.geometryConverter["SUPPORTING ATTACK"];
 };
 
 
