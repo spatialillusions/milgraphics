@@ -30,7 +30,7 @@ geometryConverter.delay = require("./geometryconverter/delay.js");
 geometryConverter[
   "FIRE SUPPORT AREA"
 ] = require("./geometryconverter/fire-support-area.js");
-geometryConverter.fix = require("./geometryconverter/fix.js");
+geometryConverter["FIX"] = require("./geometryconverter/fix.js");
 geometryConverter[
   "FREE FIRE AREA"
 ] = require("./geometryconverter/free-fire-area.js");
