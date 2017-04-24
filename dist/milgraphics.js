@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 56);
+/******/ 	return __webpack_require__(__webpack_require__.s = 58);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -163,51 +163,57 @@ geometryConverter[
   "CALL FOR FIRE ZONE"
 ] = __webpack_require__(29);
 geometryConverter.canalize = __webpack_require__(30);
+geometryConverter[
+  "CENSOR ZONE"
+] = __webpack_require__(31);
 //geometryConverter.circle = require("./geometryconverter/circle.js");
-geometryConverter.clear = __webpack_require__(31);
-geometryConverter.corridor = __webpack_require__(32);
-geometryConverter.cover = __webpack_require__(33);
+geometryConverter.clear = __webpack_require__(32);
+geometryConverter.corridor = __webpack_require__(33);
+geometryConverter.cover = __webpack_require__(34);
+geometryConverter[
+  "CRITICAL FRIENDLY ZONE"
+] = __webpack_require__(35);
 geometryConverter[
   "DEAD SPACE AREA"
-] = __webpack_require__(34);
-geometryConverter.delay = __webpack_require__(35);
+] = __webpack_require__(36);
+geometryConverter.delay = __webpack_require__(37);
 geometryConverter[
   "FIRE SUPPORT AREA"
-] = __webpack_require__(36);
-geometryConverter.fix = __webpack_require__(37);
+] = __webpack_require__(38);
+geometryConverter.fix = __webpack_require__(39);
 geometryConverter[
   "FREE FIRE AREA"
-] = __webpack_require__(38);
-geometryConverter.guard = __webpack_require__(39);
-geometryConverter.isolate = __webpack_require__(40);
-geometryConverter.mainAttack = __webpack_require__(41);
+] = __webpack_require__(40);
+geometryConverter.guard = __webpack_require__(41);
+geometryConverter.isolate = __webpack_require__(42);
+geometryConverter.mainAttack = __webpack_require__(43);
 geometryConverter[
   "NAMED AREA OF INTEREST"
-] = __webpack_require__(42);
-geometryConverter.occupy = __webpack_require__(43);
+] = __webpack_require__(44);
+geometryConverter.occupy = __webpack_require__(45);
 geometryConverter[
   "RESTRICTIVE FIRE AREA"
-] = __webpack_require__(44);
-geometryConverter.searchArea = __webpack_require__(45);
+] = __webpack_require__(46);
+geometryConverter.searchArea = __webpack_require__(47);
 geometryConverter[
   "SENSOR ZONE"
-] = __webpack_require__(46);
-geometryConverter.supportingAttack = __webpack_require__(47);
+] = __webpack_require__(48);
+geometryConverter.supportingAttack = __webpack_require__(49);
 geometryConverter[
   "TARGET BUILD-UP AREA"
-] = __webpack_require__(48);
-geometryConverter[
-  "TARGET VALUE AREA"
-] = __webpack_require__(49);
-geometryConverter[
-  "TARGETED AREA OF INTEREST"
 ] = __webpack_require__(50);
 geometryConverter[
-  "TERMINALLY GUIDED MUNITION FOOTPRINT"
+  "TARGET VALUE AREA"
 ] = __webpack_require__(51);
 geometryConverter[
-  "ZONE OF RESPONSIBILITY"
+  "TARGETED AREA OF INTEREST"
 ] = __webpack_require__(52);
+geometryConverter[
+  "TERMINALLY GUIDED MUNITION FOOTPRINT"
+] = __webpack_require__(53);
+geometryConverter[
+  "ZONE OF RESPONSIBILITY"
+] = __webpack_require__(54);
 
 module.exports = geometryConverter;
 
@@ -270,7 +276,7 @@ function graphic(feature) {
   }
 }
 
-graphic.prototype.getProperties = __webpack_require__(53);
+graphic.prototype.getProperties = __webpack_require__(55);
 graphic.prototype.isConverted = function() {
   return this.converted;
 };
@@ -303,9 +309,9 @@ function GraphicsLayer(data) {
   }
 }
 
-GraphicsLayer.prototype.asCesium = __webpack_require__(54);
+GraphicsLayer.prototype.asCesium = __webpack_require__(56);
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(55);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(57);
 
 module.exports = GraphicsLayer;
 
@@ -680,11 +686,11 @@ module.exports = function tacticalPoints(sidc, std2525) {
   sidc["G-F-AZXI--"] = ms.geometryConverter["CALL FOR FIRE ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CFFZ.IRR
   sidc["G-F-AZXR--"] = ms.geometryConverter["CALL FOR FIRE ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CFFZ.RTG
   //sidc['G-F-AZC---'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CNS
-  //sidc['G-F-AZCI--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CNS.IRR
-  //sidc['G-F-AZCR--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CNS.RTG
+  sidc["G-F-AZCI--"] = ms.geometryConverter["CENSOR ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CNS.IRR
+  sidc["G-F-AZCR--"] = ms.geometryConverter["CENSOR ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CNS.RTG
   //sidc['G-F-AZF---'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFZ
-  //sidc['G-F-AZFI--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFZ.IRR
-  //sidc['G-F-AZFR--'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFZ.RTG
+  sidc["G-F-AZFI--"] = ms.geometryConverter["CRITICAL FRIENDLY ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CFZ.IRR
+  sidc["G-F-AZFR--"] = ms.geometryConverter["CRITICAL FRIENDLY ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CFZ.RTG
   //sidc['G-F-AX----'] = [];//TACGRP.FSUPP.ARS.WPNRF
   sidc["G-F-AXC---"] = []; //ms.geometryConverter.circle;//TACGRP.FSUPP.ARS.WPNRF.CIRCLR
   //sidc['G-F-AXS---'] = [];//TACGRP.FSUPP.ARS.WPNRF.SCR
@@ -3466,6 +3472,53 @@ module.exports = canalize;
 
 var ms = __webpack_require__(0);
 
+// Draws a Fire Support Area
+module.exports = function(feature) {
+  var annotations = [{}];
+  var geometry;
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text = "CENSOR ZONE";
+  if (feature.properties.uniqueDesignation)
+    annotations[0].properties.text +=
+      "\n" + feature.properties.uniqueDesignation;
+  if (feature.properties.dtg)
+    annotations[0].properties.text += "\n" + feature.properties.dtg;
+  if (feature.properties.dtg1)
+    annotations[0].properties.text += "\n" + feature.properties.dtg1;
+
+  switch (feature.geometry.type) {
+    case "Point":
+      geometry = ms.geometry.circle(feature).geometry;
+      annotations[0].geometry.coordinates = feature.geometry.coordinates;
+      break;
+    case "LineString":
+      geometry = ms.geometry.rectangle(feature).geometry;
+      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+        feature.geometry.coordinates[0],
+        feature.geometry.coordinates[1],
+        0.5
+      );
+      break;
+    case "Polygon":
+      geometry = { type: feature.geometry.type };
+      geometry.coordinates = feature.geometry.coordinates;
+      // add annotation geometry
+      break;
+    default:
+      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  }
+  return { geometry: geometry, annotations: annotations };
+};
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
 function clear(feature) {
   //var direction, width;
   var points = feature.geometry.coordinates;
@@ -3523,7 +3576,7 @@ module.exports = clear;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3605,7 +3658,7 @@ module.exports = corridor;
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3665,7 +3718,54 @@ module.exports = cover;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
+// Draws a Fire Support Area
+module.exports = function(feature) {
+  var annotations = [{}];
+  var geometry;
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text = "CF ZONE";
+  if (feature.properties.uniqueDesignation)
+    annotations[0].properties.text +=
+      "\n" + feature.properties.uniqueDesignation;
+  if (feature.properties.dtg)
+    annotations[0].properties.text += "\n" + feature.properties.dtg;
+  if (feature.properties.dtg1)
+    annotations[0].properties.text += "\n" + feature.properties.dtg1;
+
+  switch (feature.geometry.type) {
+    case "Point":
+      geometry = ms.geometry.circle(feature).geometry;
+      annotations[0].geometry.coordinates = feature.geometry.coordinates;
+      break;
+    case "LineString":
+      geometry = ms.geometry.rectangle(feature).geometry;
+      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+        feature.geometry.coordinates[0],
+        feature.geometry.coordinates[1],
+        0.5
+      );
+      break;
+    case "Polygon":
+      geometry = { type: feature.geometry.type };
+      geometry.coordinates = feature.geometry.coordinates;
+      // add annotation geometry
+      break;
+    default:
+      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  }
+  return { geometry: geometry, annotations: annotations };
+};
+
+
+/***/ }),
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3712,7 +3812,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3771,7 +3871,7 @@ module.exports = delay;
 
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3816,7 +3916,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3938,7 +4038,7 @@ module.exports = fix;
 
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3985,7 +4085,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -3995,7 +4095,7 @@ module.exports = guard;
 
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4040,7 +4140,7 @@ module.exports = isolate;
 
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4183,7 +4283,7 @@ module.exports = mainAttack;
 
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4226,7 +4326,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4274,7 +4374,7 @@ module.exports = occupy;
 
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4321,7 +4421,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -4331,7 +4431,7 @@ module.exports = searchArea;
 
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4378,7 +4478,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4495,7 +4595,7 @@ module.exports = supportingAttack;
 
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4542,7 +4642,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4589,7 +4689,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4632,7 +4732,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4679,7 +4779,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4726,7 +4826,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4815,7 +4915,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports) {
 
 function asCesium() {
@@ -4939,7 +5039,7 @@ module.exports = asCesium;
 
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports) {
 
 function asOpenLayers(crs) {
@@ -5030,7 +5130,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************

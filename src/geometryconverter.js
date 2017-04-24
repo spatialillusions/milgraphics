@@ -13,10 +13,16 @@ geometryConverter[
   "CALL FOR FIRE ZONE"
 ] = require("./geometryconverter/call-for-fire-zone.js");
 geometryConverter.canalize = require("./geometryconverter/canalize.js");
+geometryConverter[
+  "CENSOR ZONE"
+] = require("./geometryconverter/censor-zone.js");
 //geometryConverter.circle = require("./geometryconverter/circle.js");
 geometryConverter.clear = require("./geometryconverter/clear.js");
 geometryConverter.corridor = require("./geometryconverter/corridor.js");
 geometryConverter.cover = require("./geometryconverter/cover.js");
+geometryConverter[
+  "CRITICAL FRIENDLY ZONE"
+] = require("./geometryconverter/critical-friendly-zone.js");
 geometryConverter[
   "DEAD SPACE AREA"
 ] = require("./geometryconverter/dead-space-area.js");
