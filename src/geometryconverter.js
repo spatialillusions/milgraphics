@@ -4,6 +4,9 @@ geometryConverter[
   "AIRSPACE COORDINATION AREA"
 ] = require("./geometryconverter/airspace-coordination-area.js");
 geometryConverter["AMBUSH"] = require("./geometryconverter/ambush.js");
+geometryConverter[
+  "ARTILLERY TARGET INTELLIGENCE ZONE"
+] = require("./geometryconverter/artillery-target-intelligence-zone.js");
 geometryConverter.block = require("./geometryconverter/block.js");
 geometryConverter.bypass = require("./geometryconverter/bypass.js");
 geometryConverter.canalize = require("./geometryconverter/canalize.js");
