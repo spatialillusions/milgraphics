@@ -5124,7 +5124,12 @@ function asOpenLayers(crs) {
         styles.push(
           new ol.style.Style({
             text: new ol.style.Text({
-              font: "bold 14px sans-serif",
+              fill: new ol.style.Fill({ color: "black" }),
+              font: "bold 16px sans-serif",
+              stroke: new ol.style.Stroke({
+                color: "rgb(239, 239, 239)", // off-white
+                width: 4
+              }),
               text: feature.graphic.annotations[0].properties.text
             }),
             geometry: labelgeom
@@ -5146,7 +5151,12 @@ function asOpenLayers(crs) {
         }),
         fill: new ol.style.Fill({ color: "rgba(0,0,0,0)" }),
         text: new ol.style.Text({
-          font: "bold 14px sans-serif",
+          fill: new ol.style.Fill({ color: "black" }),
+          font: "bold 16px sans-serif",
+          stroke: new ol.style.Stroke({
+            color: "rgb(239, 239, 239)", // off-white
+            width: 4
+          }),
           text: feature.graphic.annotations
             ? feature.graphic.annotations[0].properties.text
             : ""
