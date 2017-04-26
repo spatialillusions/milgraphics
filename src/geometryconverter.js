@@ -26,7 +26,7 @@ geometryConverter[
 geometryConverter[
   "DEAD SPACE AREA"
 ] = require("./geometryconverter/dead-space-area.js");
-geometryConverter.delay = require("./geometryconverter/delay.js");
+geometryConverter["DELAY"] = require("./geometryconverter/delay.js");
 geometryConverter[
   "FIRE SUPPORT AREA"
 ] = require("./geometryconverter/fire-support-area.js");

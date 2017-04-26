@@ -176,7 +176,7 @@ geometryConverter[
 geometryConverter[
   "DEAD SPACE AREA"
 ] = __webpack_require__(36);
-geometryConverter.delay = __webpack_require__(37);
+geometryConverter["DELAY"] = __webpack_require__(37);
 geometryConverter[
   "FIRE SUPPORT AREA"
 ] = __webpack_require__(38);
@@ -427,7 +427,7 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-T-J-----'] = [];//TACGRP.TSK.CNT
   //sidc['G-T-K-----'] = [];//TACGRP.TSK.CATK
   //sidc['G-T-KF----'] = [];//TACGRP.TSK.CATK.CATKF
-  sidc["G-T-L-----"] = ms.geometryConverter.delay; //TACGRP.TSK.DLY
+  sidc["G-T-L-----"] = ms.geometryConverter["DELAY"]; //TACGRP.TSK.DLY
   //sidc['G-T-T-----'] = [];//TACGRP.TSK.DRT
   sidc["G-T-F-----"] = ms.geometryConverter["FIX"]; //TACGRP.TSK.FIX
   //sidc['G-T-A-----'] = [];//TACGRP.TSK.FLWASS
@@ -635,7 +635,7 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-F-ATS---'] = [];//TACGRP.FSUPP.ARS.ARATGT.SMK
   //sidc['G-F-ATB---'] = [];//TACGRP.FSUPP.ARS.ARATGT.BMARA
   //sidc['G-F-AC----'] = [];//TACGRP.FSUPP.ARS.C2ARS
-  //sidc['G-F-ACS---'] = [];//TACGRP.FSUPP.ARS.C2ARS.FSA
+  //TACGRP.FSUPP.ARS.C2ARS.FSA
   sidc["G-F-ACSI--"] = ms.geometryConverter["FIRE SUPPORT AREA"]; //TACGRP.FSUPP.ARS.C2ARS.FSA.IRR
   sidc["G-F-ACSR--"] = ms.geometryConverter["FIRE SUPPORT AREA"]; //TACGRP.FSUPP.ARS.C2ARS.FSA.RTG
   sidc["G-F-ACSC--"] = ms.geometryConverter["FIRE SUPPORT AREA"]; //TACGRP.FSUPP.ARS.C2ARS.FSA.CIRCLR
@@ -643,7 +643,7 @@ module.exports = function tacticalPoints(sidc, std2525) {
   sidc["G-F-ACAI--"] = ms.geometryConverter["AIRSPACE COORDINATION AREA"]; //TACGRP.FSUPP.ARS.C2ARS.ACA.IRR
   sidc["G-F-ACAR--"] = ms.geometryConverter["AIRSPACE COORDINATION AREA"]; //TACGRP.FSUPP.ARS.C2ARS.ACA.RTG
   sidc["G-F-ACAC--"] = ms.geometryConverter["AIRSPACE COORDINATION AREA"]; //TACGRP.FSUPP.ARS.C2ARS.ACA.CIRCLR
-  //sidc['G-F-ACF---'] = [];//TACGRP.FSUPP.ARS.C2ARS.FFA
+  //TACGRP.FSUPP.ARS.C2ARS.FFA
   sidc["G-F-ACFI--"] = ms.geometryConverter["FREE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.FFA.IRR
   sidc["G-F-ACFR--"] = ms.geometryConverter["FREE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.FFA.RTG
   sidc["G-F-ACFC--"] = ms.geometryConverter["FREE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
@@ -651,48 +651,48 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-F-ACNI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA.IRR
   //sidc['G-F-ACNR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA.RTG
   //sidc["G-F-ACNC--"] = []; //TACGRP.FSUPP.ARS.C2ARS.NFA.CIRCLR
-  //sidc['G-F-ACR---'] = [];//TACGRP.FSUPP.ARS.C2ARS.RFA
+  //TACGRP.FSUPP.ARS.C2ARS.RFA
   sidc["G-F-ACRI--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.IRR
   sidc["G-F-ACRR--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.RTG
   sidc["G-F-ACRC--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.CIRCLR
   //sidc['G-F-ACP---'] = [];//TACGRP.FSUPP.ARS.C2ARS.PAA
   //sidc['G-F-ACPR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.PAA.RTG
   //sidc["G-F-ACPC--"] = []; //TACGRP.FSUPP.ARS.C2ARS.PAA.CIRCLR
-  //sidc['G-F-ACE---'] = //TACGRP.FSUPP.ARS.C2ARS.SNSZ
+  //TACGRP.FSUPP.ARS.C2ARS.SNSZ
   sidc["G-F-ACEI--"] = ms.geometryConverter["SENSOR ZONE"]; //TACGRP.FSUPP.ARS.C2ARS.SNSZ.IRR
   sidc["G-F-ACER--"] = ms.geometryConverter["SENSOR ZONE"]; //TACGRP.FSUPP.ARS.C2ARS.SNSZ.RTG
   sidc["G-F-ACEC--"] = ms.geometryConverter["SENSOR ZONE"]; //TACGRP.FSUPP.ARS.C2ARS.SNSZ.CIRCLR
-  //sidc['G-F-ACD---'] = [];//TACGRP.FSUPP.ARS.C2ARS.DA
+  //TACGRP.FSUPP.ARS.C2ARS.DA
   sidc["G-F-ACDI--"] = ms.geometryConverter["DEAD SPACE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.DA.IRR
   sidc["G-F-ACDR--"] = ms.geometryConverter["DEAD SPACE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.DA.RTG
   sidc["G-F-ACDC--"] = ms.geometryConverter["DEAD SPACE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.DA.CIRCLR
-  //sidc['G-F-ACZ---'] = [];//TACGRP.FSUPP.ARS.C2ARS.ZOR
+  //TACGRP.FSUPP.ARS.C2ARS.ZOR
   sidc["G-F-ACZI--"] = ms.geometryConverter["ZONE OF RESPONSIBILITY"]; //TACGRP.FSUPP.ARS.C2ARS.ZOR.IRR
   sidc["G-F-ACZR--"] = ms.geometryConverter["ZONE OF RESPONSIBILITY"]; //TACGRP.FSUPP.ARS.C2ARS.ZOR.RTG
   sidc["G-F-ACZC--"] = ms.geometryConverter["ZONE OF RESPONSIBILITY"]; //TACGRP.FSUPP.ARS.C2ARS.ZOR.CIRCLR
-  //sidc['G-F-ACB---'] = [];//TACGRP.FSUPP.ARS.C2ARS.TBA
+  //TACGRP.FSUPP.ARS.C2ARS.TBA
   sidc["G-F-ACBI--"] = ms.geometryConverter["TARGET BUILD-UP AREA"]; //TACGRP.FSUPP.ARS.C2ARS.TBA.IRR
   sidc["G-F-ACBR--"] = ms.geometryConverter["TARGET BUILD-UP AREA"]; //TACGRP.FSUPP.ARS.C2ARS.TBA.RTG
   sidc["G-F-ACBC--"] = ms.geometryConverter["TARGET BUILD-UP AREA"]; //TACGRP.FSUPP.ARS.C2ARS.TBA.CIRCLR
-  //sidc['G-F-ACV---'] = [];//TACGRP.FSUPP.ARS.C2ARS.TVAR
+  //TACGRP.FSUPP.ARS.C2ARS.TVAR
   sidc["G-F-ACVI--"] = ms.geometryConverter["TARGET VALUE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.TVAR.IRR
   sidc["G-F-ACVR--"] = ms.geometryConverter["TARGET VALUE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.TVAR.RTG
   sidc["G-F-ACVC--"] = ms.geometryConverter["TARGET VALUE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.TVAR.CIRCLR
   sidc["G-F-ACT---"] =
     ms.geometryConverter["TERMINALLY GUIDED MUNITION FOOTPRINT"]; //TACGRP.FSUPP.ARS.C2ARS.TGMF
   //sidc['G-F-AZ----'] = [];//TACGRP.FSUPP.ARS.TGTAQZ
-  //sidc['G-F-AZI---'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.ATIZ
+  //TACGRP.FSUPP.ARS.TGTAQZ.ATIZ
   sidc["G-F-AZII--"] =
     ms.geometryConverter["ARTILLERY TARGET INTELLIGENCE ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.ATIZ.IRR
   sidc["G-F-AZIR--"] =
     ms.geometryConverter["ARTILLERY TARGET INTELLIGENCE ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.ATIZ.RTG
-  //sidc['G-F-AZX---'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFFZ
+  //TACGRP.FSUPP.ARS.TGTAQZ.CFFZ
   sidc["G-F-AZXI--"] = ms.geometryConverter["CALL FOR FIRE ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CFFZ.IRR
   sidc["G-F-AZXR--"] = ms.geometryConverter["CALL FOR FIRE ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CFFZ.RTG
-  //sidc['G-F-AZC---'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CNS
+  //TACGRP.FSUPP.ARS.TGTAQZ.CNS
   sidc["G-F-AZCI--"] = ms.geometryConverter["CENSOR ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CNS.IRR
   sidc["G-F-AZCR--"] = ms.geometryConverter["CENSOR ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CNS.RTG
-  //sidc['G-F-AZF---'] = [];//TACGRP.FSUPP.ARS.TGTAQZ.CFZ
+  //TACGRP.FSUPP.ARS.TGTAQZ.CFZ
   sidc["G-F-AZFI--"] = ms.geometryConverter["CRITICAL FRIENDLY ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CFZ.IRR
   sidc["G-F-AZFR--"] = ms.geometryConverter["CRITICAL FRIENDLY ZONE"]; //TACGRP.FSUPP.ARS.TGTAQZ.CFZ.RTG
   //sidc['G-F-AX----'] = [];//TACGRP.FSUPP.ARS.WPNRF
@@ -771,7 +771,7 @@ module.exportS = function tacticalPoints(sidc, std2525) {
   //sidc['G-T-GJ----'] = [];//2.X.1.1.6
   //sidc['G-T-GK----'] = [];//2.X.1.1.7
   //sidc['G-T-GKF---'] = [];//2.X.1.1.7.1
-  //sidc['G-T-GL----'] = [];//2.X.1.1.8
+  sidc["G-T-GL----"] = ms.geometryConverter["DELAY"]; //2.X.1.1.8
   //sidc['G-T-GLT---'] = [];//2.X.1.1.8.1
   //sidc['G-T-GT----'] = [];//2.X.1.1.10
   sidc["G-T-GF----"] = ms.geometryConverter["FIX"]; //2.X.1.1.11
@@ -3876,6 +3876,7 @@ module.exports = function(feature) {
 var ms = __webpack_require__(0);
 
 function delay(feature) {
+  var annotations = [{}];
   var directionFactor = -1;
   var points = feature.geometry.coordinates;
 
@@ -3922,7 +3923,20 @@ function delay(feature) {
   );
 
   geometry.coordinates = [geometry1, geometry2];
-  return { geometry: geometry };
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text = feature.properties.dtg
+    ? feature.properties.dtg + "\n"
+    : "";
+  annotations[0].properties.text += "D";
+  annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+    points[0],
+    points[1],
+    0.5
+  );
+
+  return { geometry: geometry, annotations: annotations };
 }
 
 module.exports = delay;

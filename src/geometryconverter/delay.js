@@ -1,6 +1,7 @@
 var ms = require("milsymbol");
 
 function delay(feature) {
+  var annotations = [{}];
   var directionFactor = -1;
   var points = feature.geometry.coordinates;
 
@@ -47,7 +48,20 @@ function delay(feature) {
   );
 
   geometry.coordinates = [geometry1, geometry2];
-  return { geometry: geometry };
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text = feature.properties.dtg
+    ? feature.properties.dtg + "\n"
+    : "";
+  annotations[0].properties.text += "D";
+  annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+    points[0],
+    points[1],
+    0.5
+  );
+
+  return { geometry: geometry, annotations: annotations };
 }
 
 module.exports = delay;
