@@ -7,7 +7,7 @@ geometryConverter["AMBUSH"] = require("./geometryconverter/ambush.js");
 geometryConverter[
   "ARTILLERY TARGET INTELLIGENCE ZONE"
 ] = require("./geometryconverter/artillery-target-intelligence-zone.js");
-geometryConverter.block = require("./geometryconverter/block.js");
+geometryConverter["BLOCK"] = require("./geometryconverter/block.js");
 geometryConverter.bypass = require("./geometryconverter/bypass.js");
 geometryConverter[
   "CALL FOR FIRE ZONE"

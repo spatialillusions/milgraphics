@@ -47,14 +47,32 @@ function asOpenLayers(crs) {
       (olFeature.getGeometry().getType() == "LineString" ||
         olFeature.getGeometry().getType() == "MultiLineString")
     ) {
-      var style = new ol.style.Style({
-        stroke: new ol.style.Stroke({
-          lineCap: "butt",
-          color: "#000000",
-          width: 2
+      var styles = [
+        new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            lineCap: "butt",
+            color: "#000000",
+            width: 2
+          })
         })
-      });
-      olFeature.setStyle(style);
+      ];
+      if (feature.graphic.annotations) {
+        var labelgeom = geoJSON
+          .readFeature(feature.graphic.annotations[0].geometry, {
+            featureProjection: ol.proj.get(crs)
+          })
+          .getGeometry();
+        styles.push(
+          new ol.style.Style({
+            text: new ol.style.Text({
+              font: "bold 14px sans-serif",
+              text: feature.graphic.annotations[0].properties.text
+            }),
+            geometry: labelgeom
+          })
+        );
+      }
+      olFeature.setStyle(styles);
     }
 
     if (

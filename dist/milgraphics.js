@@ -157,7 +157,7 @@ geometryConverter["AMBUSH"] = __webpack_require__(25);
 geometryConverter[
   "ARTILLERY TARGET INTELLIGENCE ZONE"
 ] = __webpack_require__(26);
-geometryConverter.block = __webpack_require__(27);
+geometryConverter["BLOCK"] = __webpack_require__(27);
 geometryConverter.bypass = __webpack_require__(28);
 geometryConverter[
   "CALL FOR FIRE ZONE"
@@ -419,7 +419,7 @@ var ms = __webpack_require__(0);
 
 // Tactical graphics in 2525C + some extra
 module.exports = function tacticalPoints(sidc, std2525) {
-  sidc["G-T-B-----"] = ms.geometryConverter.block; //TACGRP.TSK.BLK
+  sidc["G-T-B-----"] = ms.geometryConverter["BLOCK"]; //TACGRP.TSK.BLK
   //sidc['G-T-H-----'] = [];//TACGRP.TSK.BRH
   sidc["G-T-Y-----"] = ms.geometryConverter.bypass; //TACGRP.TSK.BYS
   sidc["G-T-C-----"] = ms.geometryConverter.canalize; //TACGRP.TSK.CNZ
@@ -763,7 +763,7 @@ module.exportS = function tacticalPoints(sidc, std2525) {
   //sidc['G---------'] = [];//2.X
   //sidc['G-T-------'] = [];//2.X.1
   //sidc['G-T-G-----'] = [];//2.X.1.1
-  //sidc['G-T-GB----'] = [];//2.X.1.1.1
+  sidc["G-T-GB----"] = ms.geometryConverter["BLOCK"]; //2.X.1.1.1
   //sidc['G-T-GH----'] = [];//2.X.1.1.2
   //sidc['G-T-GY----'] = [];//2.X.1.1.3
   //sidc['G-T-GC----'] = [];//2.X.1.1.4
@@ -3323,27 +3323,38 @@ module.exports = function(feature) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
- 
-function block(feature){
-  //var direction, width;
-  var points = feature.geometry.coordinates;
-  
-  var geometry = {"type": "MultiLineString"};
 
+function block(feature) {
+  //var direction, width;
+  var annotations = [{}];
+  var points = feature.geometry.coordinates;
+
+  var geometry = { type: "MultiLineString" };
   geometry.coordinates = [];
-  
+
   var geometry1 = [];
-  geometry1.push(points[0],points[1]);
-  
+  geometry1.push(points[0], points[1]);
+
   var geometry2 = [];
-  var midpoint = ms.geometry.pointBetween(points[0],points[1],0.5);
-  geometry2.push(points[2],midpoint);
-  
-  geometry.coordinates = [geometry1,geometry2];
-  return {geometry:geometry};
+  var midpoint = ms.geometry.pointBetween(points[0], points[1], 0.5);
+  geometry2.push(points[2], midpoint);
+
+  geometry.coordinates = [geometry1, geometry2];
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text = "B";
+  annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+    midpoint,
+    points[2],
+    0.5
+  );
+
+  return { geometry: geometry, annotations: annotations };
 }
 
 module.exports = block;
+
 
 /***/ }),
 /* 28 */
@@ -5095,14 +5106,32 @@ function asOpenLayers(crs) {
       (olFeature.getGeometry().getType() == "LineString" ||
         olFeature.getGeometry().getType() == "MultiLineString")
     ) {
-      var style = new ol.style.Style({
-        stroke: new ol.style.Stroke({
-          lineCap: "butt",
-          color: "#000000",
-          width: 2
+      var styles = [
+        new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            lineCap: "butt",
+            color: "#000000",
+            width: 2
+          })
         })
-      });
-      olFeature.setStyle(style);
+      ];
+      if (feature.graphic.annotations) {
+        var labelgeom = geoJSON
+          .readFeature(feature.graphic.annotations[0].geometry, {
+            featureProjection: ol.proj.get(crs)
+          })
+          .getGeometry();
+        styles.push(
+          new ol.style.Style({
+            text: new ol.style.Text({
+              font: "bold 14px sans-serif",
+              text: feature.graphic.annotations[0].properties.text
+            }),
+            geometry: labelgeom
+          })
+        );
+      }
+      olFeature.setStyle(styles);
     }
 
     if (
