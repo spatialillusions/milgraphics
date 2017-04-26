@@ -162,7 +162,7 @@ geometryConverter["BYPASS"] = __webpack_require__(28);
 geometryConverter[
   "CALL FOR FIRE ZONE"
 ] = __webpack_require__(29);
-geometryConverter.canalize = __webpack_require__(30);
+geometryConverter["CANALIZE"] = __webpack_require__(30);
 geometryConverter[
   "CENSOR ZONE"
 ] = __webpack_require__(31);
@@ -422,7 +422,7 @@ module.exports = function tacticalPoints(sidc, std2525) {
   sidc["G-T-B-----"] = ms.geometryConverter["BLOCK"]; //TACGRP.TSK.BLK
   //sidc['G-T-H-----'] = [];//TACGRP.TSK.BRH
   sidc["G-T-Y-----"] = ms.geometryConverter["BYPASS"]; //TACGRP.TSK.BYS
-  sidc["G-T-C-----"] = ms.geometryConverter.canalize; //TACGRP.TSK.CNZ
+  sidc["G-T-C-----"] = ms.geometryConverter["CANALIZE"]; //TACGRP.TSK.CNZ
   sidc["G-T-X-----"] = ms.geometryConverter.clear; //TACGRP.TSK.CLR
   //sidc['G-T-J-----'] = [];//TACGRP.TSK.CNT
   //sidc['G-T-K-----'] = [];//TACGRP.TSK.CATK
@@ -766,7 +766,7 @@ module.exportS = function tacticalPoints(sidc, std2525) {
   sidc["G-T-GB----"] = ms.geometryConverter["BLOCK"]; //2.X.1.1.1
   //sidc['G-T-GH----'] = [];//2.X.1.1.2
   sidc["G-T-GY----"] = ms.geometryConverter["BYPASS"]; //2.X.1.1.3
-  //sidc['G-T-GC----'] = [];//2.X.1.1.4
+  sidc["G-T-GC----"] = ms.geometryConverter["CANALIZE"]; //2.X.1.1.4
   //sidc['G-T-GX----'] = [];//2.X.1.1.5
   //sidc['G-T-GJ----'] = [];//2.X.1.1.6
   //sidc['G-T-GK----'] = [];//2.X.1.1.7
@@ -3465,37 +3465,53 @@ module.exports = function(feature) {
 
 var ms = __webpack_require__(0);
 
-function canalize(feature){
+function canalize(feature) {
   //var direction, width;
+  var annotations = [{}];
+
   var points = feature.geometry.coordinates;
-  var geometry = {"type": "MultiLineString"};
-  var scale = ms.geometry.distanceBetween(points[0],points[1]);
-  var pMid = ms.geometry.pointBetween(points[0],points[1], 0.5);
-  var length = ms.geometry.distanceBetween(pMid,points[2]);
-  var bearing = ms.geometry.bearingBetween(points[0],points[1]);
-  
+  var geometry = { type: "MultiLineString" };
+  var scale = ms.geometry.distanceBetween(points[0], points[1]);
+  var pMid = ms.geometry.pointBetween(points[0], points[1], 0.5);
+  var length = ms.geometry.distanceBetween(pMid, points[2]);
+  var bearing = ms.geometry.bearingBetween(points[0], points[1]);
+
   geometry.coordinates = [];
-  
+
   var geom = [points[0]];
-  geom.push(ms.geometry.toDistanceBearing(points[0], length, bearing+90));
-  geom.push(ms.geometry.toDistanceBearing(points[1], length, bearing+90));  
+  geom.push(ms.geometry.toDistanceBearing(points[0], length, bearing + 90));
+  geom.push(ms.geometry.toDistanceBearing(points[1], length, bearing + 90));
   geom.push(points[1]);
   geometry.coordinates.push(geom);
-  
+
   geom = [];
-  geom.push(ms.geometry.toDistanceBearing(points[0], scale*0.2, bearing+45));
-  geom.push(ms.geometry.toDistanceBearing(points[0], scale*0.2, bearing+45+180));  
+  geom.push(
+    ms.geometry.toDistanceBearing(points[0], scale * 0.2, bearing + 45)
+  );
+  geom.push(
+    ms.geometry.toDistanceBearing(points[0], scale * 0.2, bearing + 45 + 180)
+  );
   geometry.coordinates.push(geom);
-  
+
   geom = [];
-  geom.push(ms.geometry.toDistanceBearing(points[1], scale*0.2, bearing-45));
-  geom.push(ms.geometry.toDistanceBearing(points[1], scale*0.2, bearing-45+180));  
+  geom.push(
+    ms.geometry.toDistanceBearing(points[1], scale * 0.2, bearing - 45)
+  );
+  geom.push(
+    ms.geometry.toDistanceBearing(points[1], scale * 0.2, bearing - 45 + 180)
+  );
   geometry.coordinates.push(geom);
-  
-  return {geometry:geometry};
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text = "C";
+  annotations[0].geometry.coordinates = points[2];
+
+  return { geometry: geometry, annotations: annotations };
 }
 
 module.exports = canalize;
+
 
 /***/ }),
 /* 31 */

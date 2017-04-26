@@ -12,7 +12,7 @@ geometryConverter["BYPASS"] = require("./geometryconverter/bypass.js");
 geometryConverter[
   "CALL FOR FIRE ZONE"
 ] = require("./geometryconverter/call-for-fire-zone.js");
-geometryConverter.canalize = require("./geometryconverter/canalize.js");
+geometryConverter["CANALIZE"] = require("./geometryconverter/canalize.js");
 geometryConverter[
   "CENSOR ZONE"
 ] = require("./geometryconverter/censor-zone.js");
