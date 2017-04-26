@@ -2,6 +2,8 @@ var ms = require("milsymbol");
 
 function clear(feature) {
   //var direction, width;
+  var annotations = [{}];
+
   var points = feature.geometry.coordinates;
   var geometry = { type: "MultiLineString" };
   var scale = ms.geometry.distanceBetween(points[0], points[1]);
@@ -17,6 +19,15 @@ function clear(feature) {
 
   geom = [pMid, ms.geometry.toDistanceBearing(pMid, length, bearing + 90)];
   geometry.coordinates.push(geom);
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text = "C";
+  annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+    pMid,
+    geom[1],
+    0.5
+  );
 
   geom = [];
   geom.push(ms.geometry.toDistanceBearing(pMid, scale * 0.15, bearing + 60));
@@ -50,7 +61,7 @@ function clear(feature) {
   );
   geometry.coordinates.push(geom);
 
-  return { geometry: geometry };
+  return { geometry: geometry, annotations: annotations };
 }
 
 module.exports = clear;

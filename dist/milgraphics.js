@@ -167,7 +167,7 @@ geometryConverter[
   "CENSOR ZONE"
 ] = __webpack_require__(31);
 //geometryConverter.circle = require("./geometryconverter/circle.js");
-geometryConverter.clear = __webpack_require__(32);
+geometryConverter["CLEAR"] = __webpack_require__(32);
 geometryConverter.corridor = __webpack_require__(33);
 geometryConverter.cover = __webpack_require__(34);
 geometryConverter[
@@ -423,7 +423,7 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-T-H-----'] = [];//TACGRP.TSK.BRH
   sidc["G-T-Y-----"] = ms.geometryConverter["BYPASS"]; //TACGRP.TSK.BYS
   sidc["G-T-C-----"] = ms.geometryConverter["CANALIZE"]; //TACGRP.TSK.CNZ
-  sidc["G-T-X-----"] = ms.geometryConverter.clear; //TACGRP.TSK.CLR
+  sidc["G-T-X-----"] = ms.geometryConverter["CLEAR"]; //TACGRP.TSK.CLR
   //sidc['G-T-J-----'] = [];//TACGRP.TSK.CNT
   //sidc['G-T-K-----'] = [];//TACGRP.TSK.CATK
   //sidc['G-T-KF----'] = [];//TACGRP.TSK.CATK.CATKF
@@ -767,7 +767,7 @@ module.exportS = function tacticalPoints(sidc, std2525) {
   //sidc['G-T-GH----'] = [];//2.X.1.1.2
   sidc["G-T-GY----"] = ms.geometryConverter["BYPASS"]; //2.X.1.1.3
   sidc["G-T-GC----"] = ms.geometryConverter["CANALIZE"]; //2.X.1.1.4
-  //sidc['G-T-GX----'] = [];//2.X.1.1.5
+  sidc["G-T-GX----"] = ms.geometryConverter["CLEAR"]; //2.X.1.1.5
   //sidc['G-T-GJ----'] = [];//2.X.1.1.6
   //sidc['G-T-GK----'] = [];//2.X.1.1.7
   //sidc['G-T-GKF---'] = [];//2.X.1.1.7.1
@@ -3568,6 +3568,8 @@ var ms = __webpack_require__(0);
 
 function clear(feature) {
   //var direction, width;
+  var annotations = [{}];
+
   var points = feature.geometry.coordinates;
   var geometry = { type: "MultiLineString" };
   var scale = ms.geometry.distanceBetween(points[0], points[1]);
@@ -3583,6 +3585,15 @@ function clear(feature) {
 
   geom = [pMid, ms.geometry.toDistanceBearing(pMid, length, bearing + 90)];
   geometry.coordinates.push(geom);
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text = "C";
+  annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+    pMid,
+    geom[1],
+    0.5
+  );
 
   geom = [];
   geom.push(ms.geometry.toDistanceBearing(pMid, scale * 0.15, bearing + 60));
@@ -3616,7 +3627,7 @@ function clear(feature) {
   );
   geometry.coordinates.push(geom);
 
-  return { geometry: geometry };
+  return { geometry: geometry, annotations: annotations };
 }
 
 module.exports = clear;
