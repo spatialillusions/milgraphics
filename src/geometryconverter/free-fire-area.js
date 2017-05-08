@@ -16,26 +16,11 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };

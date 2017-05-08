@@ -2,6 +2,7 @@ var geometry = {};
 
 geometry.bearingBetween = require("./geometry/bearingbetween.js");
 geometry.circle = require("./geometry/circle.js");
+geometry.circleCorridorPolygon = require("./geometry/circlecorridorpolygon.js");
 geometry.corridor = require("./geometry/corridor.js");
 geometry.distanceBetween = require("./geometry/distancebetween.js");
 geometry.pointBetween = require("./geometry/pointbetween.js");

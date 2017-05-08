@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 58);
+/******/ 	return __webpack_require__(__webpack_require__.s = 59);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -135,11 +135,12 @@ var geometry = {};
 
 geometry.bearingBetween = __webpack_require__(17);
 geometry.circle = __webpack_require__(18);
-geometry.corridor = __webpack_require__(19);
-geometry.distanceBetween = __webpack_require__(20);
-geometry.pointBetween = __webpack_require__(21);
-geometry.rectangle = __webpack_require__(22);
-geometry.toDistanceBearing = __webpack_require__(23);
+geometry.circleCorridorPolygon = __webpack_require__(19);
+geometry.corridor = __webpack_require__(20);
+geometry.distanceBetween = __webpack_require__(21);
+geometry.pointBetween = __webpack_require__(22);
+geometry.rectangle = __webpack_require__(23);
+geometry.toDistanceBearing = __webpack_require__(24);
 
 module.exports = geometry;
 
@@ -152,72 +153,72 @@ var geometryConverter = {};
 
 geometryConverter[
   "AIRSPACE COORDINATION AREA"
-] = __webpack_require__(24);
-geometryConverter["AMBUSH"] = __webpack_require__(25);
+] = __webpack_require__(25);
+geometryConverter["AMBUSH"] = __webpack_require__(26);
 geometryConverter[
   "ARTILLERY TARGET INTELLIGENCE ZONE"
-] = __webpack_require__(26);
-geometryConverter["BLOCK"] = __webpack_require__(27);
-geometryConverter["BYPASS"] = __webpack_require__(28);
+] = __webpack_require__(27);
+geometryConverter["BLOCK"] = __webpack_require__(28);
+geometryConverter["BYPASS"] = __webpack_require__(29);
 geometryConverter[
   "CALL FOR FIRE ZONE"
-] = __webpack_require__(29);
-geometryConverter["CANALIZE"] = __webpack_require__(30);
+] = __webpack_require__(30);
+geometryConverter["CANALIZE"] = __webpack_require__(31);
 geometryConverter[
   "CENSOR ZONE"
-] = __webpack_require__(31);
+] = __webpack_require__(32);
 //geometryConverter.circle = require("./geometryconverter/circle.js");
-geometryConverter["CLEAR"] = __webpack_require__(32);
-geometryConverter.corridor = __webpack_require__(33);
-geometryConverter.cover = __webpack_require__(34);
+geometryConverter["CLEAR"] = __webpack_require__(33);
+geometryConverter.corridor = __webpack_require__(34);
+geometryConverter.cover = __webpack_require__(35);
 geometryConverter[
   "CRITICAL FRIENDLY ZONE"
-] = __webpack_require__(35);
+] = __webpack_require__(36);
 geometryConverter[
   "DEAD SPACE AREA"
-] = __webpack_require__(36);
-geometryConverter["DELAY"] = __webpack_require__(37);
+] = __webpack_require__(37);
+geometryConverter["DELAY"] = __webpack_require__(38);
 geometryConverter[
   "FIRE SUPPORT AREA"
-] = __webpack_require__(38);
-geometryConverter["FIX"] = __webpack_require__(39);
+] = __webpack_require__(39);
+geometryConverter["FIX"] = __webpack_require__(40);
 geometryConverter[
   "FREE FIRE AREA"
-] = __webpack_require__(40);
-geometryConverter.guard = __webpack_require__(41);
-geometryConverter["ISOLATE"] = __webpack_require__(42);
+] = __webpack_require__(41);
+geometryConverter.guard = __webpack_require__(42);
+geometryConverter["ISOLATE"] = __webpack_require__(43);
 geometryConverter[
   "MAIN ATTACK"
-] = __webpack_require__(43);
+] = __webpack_require__(44);
 geometryConverter[
   "NAMED AREA OF INTEREST"
-] = __webpack_require__(44);
-geometryConverter.occupy = __webpack_require__(45);
+] = __webpack_require__(45);
+geometryConverter.occupy = __webpack_require__(46);
 geometryConverter[
   "RESTRICTIVE FIRE AREA"
-] = __webpack_require__(46);
-geometryConverter.searchArea = __webpack_require__(47);
+] = __webpack_require__(47);
+geometryConverter.searchArea = __webpack_require__(48);
 geometryConverter[
   "SENSOR ZONE"
-] = __webpack_require__(48);
-geometryConverter[
-  "SUPPORTING ATTACK"
 ] = __webpack_require__(49);
 geometryConverter[
-  "TARGET BUILD-UP AREA"
+  "SUPPORTING ATTACK"
 ] = __webpack_require__(50);
 geometryConverter[
-  "TARGET VALUE AREA"
+  "TARGET BUILD-UP AREA"
 ] = __webpack_require__(51);
 geometryConverter[
-  "TARGETED AREA OF INTEREST"
+  "TARGET VALUE AREA"
 ] = __webpack_require__(52);
 geometryConverter[
-  "TERMINALLY GUIDED MUNITION FOOTPRINT"
+  "TARGETED AREA OF INTEREST"
 ] = __webpack_require__(53);
 geometryConverter[
-  "ZONE OF RESPONSIBILITY"
+  "TERMINALLY GUIDED MUNITION FOOTPRINT"
 ] = __webpack_require__(54);
+geometryConverter[
+  "ZONE OF RESPONSIBILITY"
+] = __webpack_require__(55);
 
 module.exports = geometryConverter;
 
@@ -280,7 +281,7 @@ function graphic(feature) {
   }
 }
 
-graphic.prototype.getProperties = __webpack_require__(55);
+graphic.prototype.getProperties = __webpack_require__(56);
 graphic.prototype.isConverted = function() {
   return this.converted;
 };
@@ -313,9 +314,9 @@ function GraphicsLayer(data) {
   }
 }
 
-GraphicsLayer.prototype.asCesium = __webpack_require__(56);
+GraphicsLayer.prototype.asCesium = __webpack_require__(57);
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(57);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(58);
 
 module.exports = GraphicsLayer;
 
@@ -437,7 +438,7 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-T-P-----'] = [];//TACGRP.TSK.PNE
   //sidc['G-T-R-----'] = [];//TACGRP.TSK.RIP
   //sidc['G-T-Q-----'] = [];//TACGRP.TSK.RTN
-  sidc["G-T-M-----"] = ms.geometryConverter.delay; //TACGRP.TSK.RTM
+  //sidc["G-T-M-----"] = ms.geometryConverter.delay; //TACGRP.TSK.RTM
   //sidc['G-T-S-----'] = [];//TACGRP.TSK.SCE
   //sidc['G-T-U-----'] = [];//TACGRP.TSK.SEC
   //sidc['G-T-US----'] = [];//TACGRP.TSK.SEC.SCN
@@ -2934,6 +2935,42 @@ module.exports = function(feature) {
 
 var ms = __webpack_require__(0);
 
+module.exports = function(feature) {
+  var annotation = {};
+  var geometry;
+
+  switch (feature.geometry.type) {
+    case "Point":
+      geometry = ms.geometry.circle(feature).geometry;
+      annotation.geometry.coordinates = feature.geometry.coordinates;
+      break;
+    case "LineString":
+      geometry = ms.geometry.rectangle(feature).geometry;
+      annotation.geometry.coordinates = ms.geometry.pointBetween(
+        feature.geometry.coordinates[0],
+        feature.geometry.coordinates[1],
+        0.5
+      );
+      break;
+    case "Polygon":
+      geometry = { type: feature.geometry.type };
+      geometry.coordinates = feature.geometry.coordinates;
+      // add annotation geometry
+      break;
+    default:
+      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  }
+
+  return { annotation: annotation, geometry: geometry };
+};
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
 // Draws a corridor with a widht in meters
 function corridor(feature) {
   var direction;
@@ -3011,7 +3048,7 @@ module.exports = corridor;
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 // Calculates the great circle distance between two points in meter
@@ -3040,7 +3077,7 @@ module.exports = distanceBetween;
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports) {
 
 // Calculates a point between two other points at any fractional distance f between them
@@ -3088,7 +3125,7 @@ module.exports = pointBetween;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3101,7 +3138,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 // Calculates the bearing between two points in meter
@@ -3129,7 +3166,7 @@ module.exports = toDistanceBearing;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3159,33 +3196,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n- " + feature.properties.dtg1;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3272,7 +3294,7 @@ module.exports = block;
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3293,33 +3315,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;*/
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3357,7 +3364,7 @@ module.exports = block;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3413,7 +3420,7 @@ module.exports = bypass;
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3434,33 +3441,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;*/
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3514,7 +3506,7 @@ module.exports = canalize;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3535,33 +3527,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3634,7 +3611,7 @@ module.exports = clear;
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3716,7 +3693,7 @@ module.exports = corridor;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3776,7 +3753,7 @@ module.exports = cover;
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3797,33 +3774,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3844,33 +3806,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3943,7 +3890,7 @@ module.exports = delay;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3962,33 +3909,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4110,7 +4042,7 @@ module.exports = fix;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4131,33 +4063,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -4167,7 +4084,7 @@ module.exports = guard;
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4212,7 +4129,7 @@ module.exports = isolate;
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4355,7 +4272,7 @@ module.exports = mainAttack;
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4372,33 +4289,18 @@ module.exports = function(feature) {
     annotations[0].properties.text +=
       "\n" + feature.properties.uniqueDesignation;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4446,7 +4348,7 @@ module.exports = occupy;
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4467,33 +4369,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -4503,7 +4390,7 @@ module.exports = searchArea;
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4524,33 +4411,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4667,7 +4539,7 @@ module.exports = supportingAttack;
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4688,33 +4560,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4735,33 +4592,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4778,33 +4620,18 @@ module.exports = function(feature) {
     annotations[0].properties.text +=
       "\n" + feature.properties.uniqueDesignation;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4825,33 +4652,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;*/
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4872,33 +4684,18 @@ module.exports = function(feature) {
   if (feature.properties.dtg1)
     annotations[0].properties.text += "\n" + feature.properties.dtg1;
 
-  switch (feature.geometry.type) {
-    case "Point":
-      geometry = ms.geometry.circle(feature).geometry;
-      annotations[0].geometry.coordinates = feature.geometry.coordinates;
-      break;
-    case "LineString":
-      geometry = ms.geometry.rectangle(feature).geometry;
-      annotations[0].geometry.coordinates = ms.geometry.pointBetween(
-        feature.geometry.coordinates[0],
-        feature.geometry.coordinates[1],
-        0.5
-      );
-      break;
-    case "Polygon":
-      geometry = { type: feature.geometry.type };
-      geometry.coordinates = feature.geometry.coordinates;
-      // add annotation geometry
-      break;
-    default:
-      console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+  var polygon = ms.geometry.circleCorridorPolygon(feature);
+  geometry = polygon.geometry;
+  if (polygon.annotation.hasOwnProperty("geometry")) {
+    annotations[0].geometry = polygon.annotation.geometry;
   }
+
   return { geometry: geometry, annotations: annotations };
 };
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4987,7 +4784,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports) {
 
 function asCesium() {
@@ -5111,7 +4908,7 @@ module.exports = asCesium;
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports) {
 
 function asOpenLayers(crs) {
@@ -5232,7 +5029,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************
