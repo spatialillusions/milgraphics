@@ -3,6 +3,7 @@ var ms = require("milsymbol");
 module.exports = function(feature) {
   var annotation = {};
   var geometry;
+  annotation.geometry = { type: "Point" };
 
   switch (feature.geometry.type) {
     case "Point":
