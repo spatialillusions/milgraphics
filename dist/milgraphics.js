@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 59);
+/******/ 	return __webpack_require__(__webpack_require__.s = 60);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -159,66 +159,67 @@ geometryConverter[
   "ARTILLERY TARGET INTELLIGENCE ZONE"
 ] = __webpack_require__(27);
 geometryConverter["BLOCK"] = __webpack_require__(28);
-geometryConverter["BYPASS"] = __webpack_require__(29);
+geometryConverter["BREACH"] = __webpack_require__(29);
+geometryConverter["BYPASS"] = __webpack_require__(30);
 geometryConverter[
   "CALL FOR FIRE ZONE"
-] = __webpack_require__(30);
-geometryConverter["CANALIZE"] = __webpack_require__(31);
+] = __webpack_require__(31);
+geometryConverter["CANALIZE"] = __webpack_require__(32);
 geometryConverter[
   "CENSOR ZONE"
-] = __webpack_require__(32);
+] = __webpack_require__(33);
 //geometryConverter.circle = require("./geometryconverter/circle.js");
-geometryConverter["CLEAR"] = __webpack_require__(33);
-geometryConverter.corridor = __webpack_require__(34);
-geometryConverter.cover = __webpack_require__(35);
+geometryConverter["CLEAR"] = __webpack_require__(34);
+geometryConverter.corridor = __webpack_require__(35);
+geometryConverter.cover = __webpack_require__(36);
 geometryConverter[
   "CRITICAL FRIENDLY ZONE"
-] = __webpack_require__(36);
+] = __webpack_require__(37);
 geometryConverter[
   "DEAD SPACE AREA"
-] = __webpack_require__(37);
-geometryConverter["DELAY"] = __webpack_require__(38);
+] = __webpack_require__(38);
+geometryConverter["DELAY"] = __webpack_require__(39);
 geometryConverter[
   "FIRE SUPPORT AREA"
-] = __webpack_require__(39);
-geometryConverter["FIX"] = __webpack_require__(40);
+] = __webpack_require__(40);
+geometryConverter["FIX"] = __webpack_require__(41);
 geometryConverter[
   "FREE FIRE AREA"
-] = __webpack_require__(41);
-geometryConverter.guard = __webpack_require__(42);
-geometryConverter["ISOLATE"] = __webpack_require__(43);
+] = __webpack_require__(42);
+geometryConverter.guard = __webpack_require__(43);
+geometryConverter["ISOLATE"] = __webpack_require__(44);
 geometryConverter[
   "MAIN ATTACK"
-] = __webpack_require__(44);
+] = __webpack_require__(45);
 geometryConverter[
   "NAMED AREA OF INTEREST"
-] = __webpack_require__(45);
-geometryConverter.occupy = __webpack_require__(46);
+] = __webpack_require__(46);
+geometryConverter.occupy = __webpack_require__(47);
 geometryConverter[
   "RESTRICTIVE FIRE AREA"
-] = __webpack_require__(47);
-geometryConverter.searchArea = __webpack_require__(48);
+] = __webpack_require__(48);
+geometryConverter.searchArea = __webpack_require__(49);
 geometryConverter[
   "SENSOR ZONE"
-] = __webpack_require__(49);
-geometryConverter[
-  "SUPPORTING ATTACK"
 ] = __webpack_require__(50);
 geometryConverter[
-  "TARGET BUILD-UP AREA"
+  "SUPPORTING ATTACK"
 ] = __webpack_require__(51);
 geometryConverter[
-  "TARGET VALUE AREA"
+  "TARGET BUILD-UP AREA"
 ] = __webpack_require__(52);
 geometryConverter[
-  "TARGETED AREA OF INTEREST"
+  "TARGET VALUE AREA"
 ] = __webpack_require__(53);
 geometryConverter[
-  "TERMINALLY GUIDED MUNITION FOOTPRINT"
+  "TARGETED AREA OF INTEREST"
 ] = __webpack_require__(54);
 geometryConverter[
-  "ZONE OF RESPONSIBILITY"
+  "TERMINALLY GUIDED MUNITION FOOTPRINT"
 ] = __webpack_require__(55);
+geometryConverter[
+  "ZONE OF RESPONSIBILITY"
+] = __webpack_require__(56);
 
 module.exports = geometryConverter;
 
@@ -281,7 +282,7 @@ function graphic(feature) {
   }
 }
 
-graphic.prototype.getProperties = __webpack_require__(56);
+graphic.prototype.getProperties = __webpack_require__(57);
 graphic.prototype.isConverted = function() {
   return this.converted;
 };
@@ -314,9 +315,9 @@ function GraphicsLayer(data) {
   }
 }
 
-GraphicsLayer.prototype.asCesium = __webpack_require__(57);
+GraphicsLayer.prototype.asCesium = __webpack_require__(58);
 
-GraphicsLayer.prototype.asOpenLayers = __webpack_require__(58);
+GraphicsLayer.prototype.asOpenLayers = __webpack_require__(59);
 
 module.exports = GraphicsLayer;
 
@@ -421,7 +422,7 @@ var ms = __webpack_require__(0);
 // Tactical graphics in 2525C + some extra
 module.exports = function tacticalPoints(sidc, std2525) {
   sidc["G-T-B-----"] = ms.geometryConverter["BLOCK"]; //TACGRP.TSK.BLK
-  //sidc['G-T-H-----'] = [];//TACGRP.TSK.BRH
+  sidc["G-T-H-----"] = ms.geometryConverter["BREACH"]; //TACGRP.TSK.BRH
   sidc["G-T-Y-----"] = ms.geometryConverter["BYPASS"]; //TACGRP.TSK.BYS
   sidc["G-T-C-----"] = ms.geometryConverter["CANALIZE"]; //TACGRP.TSK.CNZ
   sidc["G-T-X-----"] = ms.geometryConverter["CLEAR"]; //TACGRP.TSK.CLR
@@ -765,7 +766,7 @@ module.exportS = function tacticalPoints(sidc, std2525) {
   //sidc['G-T-------'] = [];//2.X.1
   //sidc['G-T-G-----'] = [];//2.X.1.1
   sidc["G-T-GB----"] = ms.geometryConverter["BLOCK"]; //2.X.1.1.1
-  //sidc['G-T-GH----'] = [];//2.X.1.1.2
+  sidc["G-T-GH----"] = ms.geometryConverter["BYPASS"]; //2.X.1.1.2
   sidc["G-T-GY----"] = ms.geometryConverter["BYPASS"]; //2.X.1.1.3
   sidc["G-T-GC----"] = ms.geometryConverter["CANALIZE"]; //2.X.1.1.4
   sidc["G-T-GX----"] = ms.geometryConverter["CLEAR"]; //2.X.1.1.5
@@ -2938,6 +2939,7 @@ var ms = __webpack_require__(0);
 module.exports = function(feature) {
   var annotation = {};
   var geometry;
+  annotation.geometry = { type: "Point" };
 
   switch (feature.geometry.type) {
     case "Point":
@@ -3369,6 +3371,60 @@ module.exports = block;
 
 var ms = __webpack_require__(0);
 
+function canalize(feature) {
+  //var direction, width;
+  var annotations = [{}];
+
+  var points = feature.geometry.coordinates;
+  var geometry = { type: "MultiLineString" };
+  var scale = ms.geometry.distanceBetween(points[0], points[1]);
+  var pMid = ms.geometry.pointBetween(points[0], points[1], 0.5);
+  var length = ms.geometry.distanceBetween(pMid, points[2]);
+  var bearing = ms.geometry.bearingBetween(points[0], points[1]);
+
+  geometry.coordinates = [];
+
+  var geom = [points[0]];
+  geom.push(ms.geometry.toDistanceBearing(points[0], length, bearing + 90));
+  geom.push(ms.geometry.toDistanceBearing(points[1], length, bearing + 90));
+  geom.push(points[1]);
+  geometry.coordinates.push(geom);
+
+  geom = [];
+  geom.push(
+    ms.geometry.toDistanceBearing(points[0], scale * 0.2, bearing - 45)
+  );
+  geom.push(
+    ms.geometry.toDistanceBearing(points[0], scale * 0.2, bearing - 45 + 180)
+  );
+  geometry.coordinates.push(geom);
+
+  geom = [];
+  geom.push(
+    ms.geometry.toDistanceBearing(points[1], scale * 0.2, bearing + 45)
+  );
+  geom.push(
+    ms.geometry.toDistanceBearing(points[1], scale * 0.2, bearing + 45 + 180)
+  );
+  geometry.coordinates.push(geom);
+
+  annotations[0].geometry = { type: "Point" };
+  annotations[0].properties = {};
+  annotations[0].properties.text = "B";
+  annotations[0].geometry.coordinates = points[2];
+
+  return { geometry: geometry, annotations: annotations };
+}
+
+module.exports = canalize;
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ms = __webpack_require__(0);
+
 function bypass(feature) {
   //var direction, width;
   var annotations = [{}];
@@ -3420,7 +3476,7 @@ module.exports = bypass;
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3452,7 +3508,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3506,7 +3562,7 @@ module.exports = canalize;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3538,7 +3594,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3611,7 +3667,7 @@ module.exports = clear;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3693,7 +3749,7 @@ module.exports = corridor;
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3753,7 +3809,7 @@ module.exports = cover;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3785,7 +3841,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3817,7 +3873,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3890,7 +3946,7 @@ module.exports = delay;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -3920,7 +3976,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4042,7 +4098,7 @@ module.exports = fix;
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4074,7 +4130,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -4084,7 +4140,7 @@ module.exports = guard;
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4129,7 +4185,7 @@ module.exports = isolate;
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4272,7 +4328,7 @@ module.exports = mainAttack;
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4300,7 +4356,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4348,7 +4404,7 @@ module.exports = occupy;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4380,7 +4436,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports) {
 
 // Draws a circle withe a radius in meters
@@ -4390,7 +4446,7 @@ module.exports = searchArea;
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4422,7 +4478,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4539,7 +4595,7 @@ module.exports = supportingAttack;
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4571,7 +4627,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4603,7 +4659,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4631,7 +4687,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4663,7 +4719,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4695,7 +4751,7 @@ module.exports = function(feature) {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ms = __webpack_require__(0);
@@ -4784,7 +4840,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports) {
 
 function asCesium() {
@@ -4908,7 +4964,7 @@ module.exports = asCesium;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports) {
 
 function asOpenLayers(crs) {
@@ -5029,7 +5085,7 @@ module.exports = asOpenLayers;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* ***************************************************************************************
