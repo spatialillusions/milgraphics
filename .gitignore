@@ -4,3 +4,7 @@ node_modules/
 dev/
 
 examples/slf-cesium/cesium/
+
+.editorconfig
+
+.eslintrc.js
