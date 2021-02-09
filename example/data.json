@@ -1,41 +1,28 @@
-
 {
     "type": "FeatureCollection",
     "features": [
         {
             "type": "Feature",
             "properties": {
-                "sidc": "G-F-AZXR------X",
-                "distance": 5000,
-                "uniqueDesignation": "Q36"
+                "sidc": "G-T-L---------X",
+                "dtg": "272100Z SEP"
             },
             "geometry": {
                 "type": "LineString",
                 "coordinates": [
                     [
-                        0.6008148193359375,
-                        47.38672820892124
+                        8.66769790649414,
+                        50.195253786387475
                     ],
                     [
-                        0.6488800048828125,
-                        47.40810885284093
+                        8.680744171142576,
+                        50.201297520859185
+                    ],
+                    [
+                        8.676109313964844,
+                        50.204593780814676
                     ]
                 ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "sidc": "GFTPD-------X"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    
-                    0.6484800048828125,
-                    47.40000885284093
-                    
-            ]
             }
         }
     ]
