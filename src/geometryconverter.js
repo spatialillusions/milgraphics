@@ -14,6 +14,7 @@ geometryConverter[
   "CALL FOR FIRE ZONE"
 ] = require("./geometryconverter/call-for-fire-zone.js");
 geometryConverter["CANALIZE"] = require("./geometryconverter/canalize.js");
+geometryConverter["FLOT"] = require("./geometryconverter/flot.js");
 geometryConverter[
   "CENSOR ZONE"
 ] = require("./geometryconverter/censor-zone.js");

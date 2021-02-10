@@ -52,7 +52,7 @@ module.exports = function() {
   if (properties.numberSIDC) {
     //This is for new number based SIDCs
 
-    if (typeof ms.Symbol.prototype.getMetadata  === "function") {
+    if (typeof ms.Symbol.prototype.getMetadata === "function") {
       properties = ms._getNumberPropertiesGraphic.call(
         this,
         properties,
@@ -66,7 +66,7 @@ module.exports = function() {
   } else {
     //This would be old letter based SIDCs
 
-    if (typeof ms.Symbol.prototype.getMetadata  === "function") {
+    if (typeof ms.Symbol.prototype.getMetadata === "function") {
       properties = ms._getLetterPropertiesGraphic.call(
         this,
         properties,
