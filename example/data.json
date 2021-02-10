@@ -5,6 +5,7 @@
             "type": "Feature",
             "properties": {
                 "sidc": "G-G-GLF-------X"
+
             },
             "geometry": {
                 "type": "LineString",
@@ -14,6 +15,7 @@
                         50.19767137199048
                     ],
                     [
+
                         8.712921081542969,
                         50.192967765585604
                     ],
