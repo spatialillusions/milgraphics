@@ -7,4 +7,4 @@ examples/slf-cesium/cesium/
 
 .editorconfig
 
-.eslintrc.js
+.eslintrc.js.DS_Store
