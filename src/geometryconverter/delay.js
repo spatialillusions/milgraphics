@@ -38,11 +38,16 @@ function delay(feature) {
 
   geometry1.push(points[2]);
 
+
+  // Geometry 2 - The head of the arrow:
   var geometry2 = [];
+  // Right end:
   geometry2.push(
     ms.geometry.toDistanceBearing(points[0], width * 0.4, bearing + 45)
   );
+  // Tip of the arrow:
   geometry2.push(points[0]);
+  // Left end:
   geometry2.push(
     ms.geometry.toDistanceBearing(points[0], width * 0.4, bearing - 45)
   );

@@ -8,3 +8,4 @@ examples/slf-cesium/cesium/
 .editorconfig
 
 .eslintrc.js.DS_Store
+.idea
