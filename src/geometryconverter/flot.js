@@ -11,16 +11,12 @@ function flot(feature) {
   var geometry = {type: "MultiLineString"};
   geometry.coordinates = [];
 
+  // Geometry 1 - bearing line of n points
   var geometry1 = [];
-  geometry1 = flotify(geometry1, points[0], points[1], 5)
-  geometry1 = flotify(geometry1, points[1], points[2], 0)
-  geometry1 = flotify(geometry1, points[2], points[3], 0)
-  //geometry1.push(points[0], points[1], points[2], points[3]); // TODO - implement for more input points
+  for (var i = 1; i < points.length; i += 1) {
+    geometry1 = flotify(geometry1, points[i - 1], points[i], 5)
+  }
 
-  /*  var geometry2 = [];
-    var midpoint = ms.geometry.pointBetween(points[0], points[1], 0.5);
-    geometry2.push(points[2], points[3], midpoint);
-  */
   geometry.coordinates = [geometry1];
 
   annotations[0].geometry = {type: "Point"};
@@ -37,9 +33,10 @@ function flot(feature) {
 
 function flotify(geo, pointa, pointb, degree = 0) {
 
-  console.log("FLOT DEG ", degree)
-  console.log("geo: ", geo)
-  console.log("A: ", pointa, "| B: ", pointb)
+  // Logging - TODO remove when no longer necessary
+  // console.log("FLOT DEG ", degree)
+  // console.log("geo: ", geo)
+  // console.log("A: ", pointa, "| B: ", pointb)
 
   if (degree <= 0) {
     geo.push(pointa, pointb)
@@ -63,7 +60,6 @@ function flotify(geo, pointa, pointb, degree = 0) {
     }
   } else {
     geo = flotify(geo, pointa, midpoint, degree - 1)
-    // TODO add midpoint?
     geo = flotify(geo, midpoint, pointb, degree - 1)
   }
   return geo;
