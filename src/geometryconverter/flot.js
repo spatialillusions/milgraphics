@@ -24,7 +24,7 @@ function flot(feature) {
   annotations[0].properties.text = "FLOT";
   annotations[0].geometry.coordinates = ms.geometry.pointBetween(
     points[1],
-    points[2],
+    points[points.length-1],
     0.5
   );
 
