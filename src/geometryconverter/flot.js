@@ -13,7 +13,15 @@ function flot(feature) {
 
   // Geometry 1 - bearing line of n points
   var geometry1 = [];
+  var distance = 0;
   for (var i = 1; i < points.length; i += 1) {
+    // measure distance between each two points
+    distance = ms.geometry.distanceBetween(points[i - 1], points[i])
+    // TODO calculate how many bearings can fit
+    
+    // TODO visualize that many bearings
+
+    // Making each segment into a bearing line with 2^5 = 32 bearings
     geometry1 = flotify(geometry1, points[i - 1], points[i], 5)
   }
 
@@ -22,7 +30,7 @@ function flot(feature) {
   annotations[0].geometry = {type: "Point"};
   annotations[0].properties = {};
   annotations[0].properties.text = "FLOT";
-  annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+  annotations[0].geometry.coordinates = ms.geometry.pointBetween(// TODO change to point if odd number
     points[parseInt(points.length / 2) - 1],
     points[parseInt(points.length / 2)],
     0.5
