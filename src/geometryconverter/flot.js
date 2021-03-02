@@ -55,7 +55,8 @@ function flotify(geo, pointa, pointb, degree = 0) {
   const midpoint = ms.geometry.pointBetween(pointa, pointb, 0.5);
   const curveBearing = ms.geometry.bearingBetween(pointa, pointb);
 
-
+  // TODO try to implement gaps between bearings
+  // TODO implement absolute unchanging width
   if (degree === 1) {
     for (var i = 0; i < 180; i += 10) {
       geo.push(
