@@ -8,6 +8,6 @@ geometry.distanceBetween = require("./geometry/distancebetween.js");
 geometry.pointBetween = require("./geometry/pointbetween.js");
 geometry.rectangle = require("./geometry/rectangle.js");
 geometry.toDistanceBearing = require("./geometry/todistancebearing.js");
-geometry.testBearing = require("./geometry/testBearing.js");
+geometry.testGeometry = require("./geometry/testGeometry.js");
 
 module.exports = geometry;
