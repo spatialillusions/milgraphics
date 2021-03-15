@@ -57,11 +57,12 @@ function asOpenLayers(crs) {
         })
       ];
       if (feature.graphic.annotations) {
-        var labelgeom = geoJSON
-          .readFeature(feature.graphic.annotations[0].geometry, {
-            featureProjection: ol.proj.get(crs)
-          })
-          .getGeometry();
+        for(y=0;y<feature.graphic.annotations.length;y++){ 
+          var labelgeom = geoJSON.readFeature(feature.graphic.annotations[y].geometry,
+            {
+              featureProjection: ol.proj.get(crs)
+            }).getGeometry();
+  
         styles.push(
           new ol.style.Style({
             text: new ol.style.Text({
@@ -71,13 +72,15 @@ function asOpenLayers(crs) {
                 color: "rgb(239, 239, 239)", // off-white
                 width: 4
               }),
-              text: feature.graphic.annotations[0].properties.text
+              text: feature.graphic.annotations[y].properties.text
             }),
             geometry: labelgeom
           })
         );
+     
       }
       olFeature.setStyle(styles);
+    }
     }
 
     if (
@@ -91,6 +94,7 @@ function asOpenLayers(crs) {
           width: 2
         }),
         fill: new ol.style.Fill({ color: "rgba(0,0,0,0)" }),
+        
         text: new ol.style.Text({
           fill: new ol.style.Fill({ color: "black" }),
           font: "bold 16px sans-serif",
