@@ -1,8 +1,9 @@
 var ms = require("milsymbol");
+var annotations = [{},{},{}];
+
 
 function lateralBoundary(feature) {
   //var direction, width;
-  var annotations = [{},{},{}];
   var points = feature.geometry.coordinates;
 
   var geometry = {type: "MultiLineString"};
@@ -21,21 +22,9 @@ function lateralBoundary(feature) {
   }
   geometry.coordinates = [geometry1];
     
-  annotations[0].geometry = {type: "Point"};
-  annotations[0].properties = {};
-  annotations[0].geometry.coordinates = points[0];
-  annotations[0].properties.text = "(PL NAME)";
-
-  annotations[1].geometry = {type: "Point"};
-  annotations[1].properties = {};
-  annotations[1].geometry.coordinates = points[3];
-  annotations[1].properties.text = "Something";
-
-  annotations[2].geometry = {type: "Point"};
-  annotations[2].properties = {};
-  annotations[2].geometry.coordinates = points[7];
-  annotations[2].properties.text = "(PL NAME)";
-
+addAnotation(0,points[0],"(PL NAME)");
+addAnotation(1,points[4],"(SOMETHING)");
+addAnotation(2,points[7],"(PL NAME)");
 
   console.log(annotations);
 
@@ -54,5 +43,12 @@ function laundery(geo, pointa, pointb, degree = 0) {
 
 }
 
+function addAnotation(annotationNumber, annotationPoint, annotationText){
+  
+  annotations[annotationNumber].geometry = {type: "Point"};
+  annotations[annotationNumber].properties = {};
+  annotations[annotationNumber].geometry.coordinates = annotationPoint;
+  annotations[annotationNumber].properties.text = annotationText;
+}
 module.exports = lateralBoundary;
 
