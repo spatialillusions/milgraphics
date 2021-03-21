@@ -1,7 +1,7 @@
 var geometryConverter = {};
 
-geometryConverter["LTRBND"] = require("./geometryconverter/lateral_boundary.js"); //just for developer purpose - unknown sidc 
-
+geometryConverter["PHASELINE"] = require("./geometryconverter/phase-line.js");
+geometryConverter["BOUNDARIES"] = require("./geometryconverter/boundaries.js"); //just for developer purpose - unknown sidc 
 geometryConverter[
   "AIRSPACE COORDINATION AREA"
 ] = require("./geometryconverter/airspace-coordination-area.js");

@@ -2,8 +2,6 @@ var ms = require("milsymbol");
 
 // Tactical graphics in 2525C + some extra
 module.exports = function tacticalPoints(sidc, std2525) {
-  sidc["G-L-B-----"] = ms.geometryConverter["LTRBND"]; // unspecified sicd - created just for developer purposes
-
   sidc["G-T-B-----"] = ms.geometryConverter["BLOCK"]; //TACGRP.TSK.BLK
   sidc["G-T-H-----"] = ms.geometryConverter["BREACH"]; //TACGRP.TSK.BRH
   sidc["G-T-Y-----"] = ms.geometryConverter["BYPASS"]; //TACGRP.TSK.BYS
@@ -38,10 +36,10 @@ module.exports = function tacticalPoints(sidc, std2525) {
   //sidc['G-G-GPUU--'] = [];//TACGRP.C2GM.GNL.PNT.USW.UH2
   //sidc['G-G-GPW---'] = [];//TACGRP.C2GM.GNL.PNT.WPN
   //sidc['G-G-GL----'] = [];//TACGRP.C2GM.GNL.LNE
-  //sidc['G-G-GLB---'] = [];//TACGRP.C2GM.GNL.LNE.BNDS
+  sidc['G-G-GLB---'] = ms.geometryConverter["BOUNDARIES"];//TACGRP.C2GM.GNL.LNE.BNDS
   sidc['G-G-GLF---'] = ms.geometryConverter["FLOT"];//TACGRP.C2GM.GNL.LNE.FLOT
   //sidc['G-G-GLC---'] = [];//TACGRP.C2GM.GNL.LNE.LOC
-  //sidc['G-G-GLP---'] = [];//TACGRP.C2GM.GNL.LNE.PHELNE
+  sidc['G-G-GLP---'] = ms.geometryConverter["PHASELINE"];//TACGRP.C2GM.GNL.LNE.PHELNE
   //sidc['G-G-GLL---'] = [];//TACGRP.C2GM.GNL.LNE.LITLNE
   //sidc['G-G-GA----'] = [];//TACGRP.C2GM.GNL.ARS
   //sidc['G-G-GAG---'] = [];//TACGRP.C2GM.GNL.ARS.GENARA

@@ -2,16 +2,14 @@ var ms = require("milsymbol");
 var annotations = [{},{},{}];
 
 
-function lateralBoundary(feature) {
+function phaseLine(feature) {
   //var direction, width;
   var points = feature.geometry.coordinates;
 
   var geometry = {type: "MultiLineString"};
   geometry.coordinates = [];
-
-  // Geometry 1 - bearing line of n points
   var geometry1 = [];
-  var distance = 0;
+
   for (var i = 1; i < points.length; i += 1) {
     // measure distance between each two points
     distance = ms.geometry.distanceBetween(points[i - 1], points[i])
@@ -50,5 +48,5 @@ function addAnotation(annotationNumber, annotationPoint, annotationText){
   annotations[annotationNumber].geometry.coordinates = annotationPoint;
   annotations[annotationNumber].properties.text = annotationText;
 }
-module.exports = lateralBoundary;
+module.exports = phaseLine;
 
