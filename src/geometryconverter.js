@@ -1,7 +1,7 @@
 var geometryConverter = {};
 
 geometryConverter["PHASELINE"] = require("./geometryconverter/phase-line.js");
-geometryConverter["BOUNDARIES"] = require("./geometryconverter/boundaries.js"); //just for developer purpose - unknown sidc 
+geometryConverter["BOUNDARIES"] = require("./geometryconverter/boundaries.js"); //just for developer purpose - unknown sidc
 geometryConverter[
   "AIRSPACE COORDINATION AREA"
 ] = require("./geometryconverter/airspace-coordination-area.js");
@@ -21,6 +21,7 @@ geometryConverter[
   "CENSOR ZONE"
 ] = require("./geometryconverter/censor-zone.js");
 //geometryConverter.circle = require("./geometryconverter/circle.js");
+geometryConverter["CONTAIN"] = require("./geometryconverter/contain.js");
 geometryConverter["CLEAR"] = require("./geometryconverter/clear.js");
 geometryConverter.corridor = require("./geometryconverter/corridor.js");
 geometryConverter.cover = require("./geometryconverter/cover.js");
