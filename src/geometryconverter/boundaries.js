@@ -1,5 +1,7 @@
 var ms = require("milsymbol");
-var annotations = [{},{},{},{},{},{},{},{}];
+var annotations = [{},{},{}];
+//Converting lines to dashed lines
+//const convertToDashes = require("../geometry/converttodashes");
 
 
 function boundaries(feature) {
@@ -15,27 +17,20 @@ function boundaries(feature) {
     distance = ms.geometry.distanceBetween(points[i], points[i])
 
     // Making each segment straight
-    geometry1 = laundery(geometry1, points[i], points[i], 0, 0)
+    geometry1 = flotify(geometry1, points[i], points[i], 0, 0)
     addAnotation(i,points[i], "Point");
   }
   geometry.coordinates = [geometry1];
-    /**
-addAnotation(0,points[0],"(PL NAME)");
-addAnotation(1,points[1],"(SOMETHING)");
-addAnotation(2,points[2],"(PL NAME)");
-addAnotation(3,points[3],"(PL NAME)");
-addAnotation(4,points[4],"(SOMETHING)");
-addAnotation(5,points[5],"(PL NAME)");
-addAnotation(6,points[6],"(PL NAME)");
-addAnotation(7,points[7],"(SOMETHING)");
-*/
 
-  console.log(annotations);
+  //console.log(annotations);
 
+  //Converting lines to dashed lines
+  //geometry.coordinates = convertToDashes(geometry1, 1 / 64);
+  
   return {geometry: geometry, annotations: annotations};
 }
 
-function laundery(geo, pointa, pointb, degree = 0) {
+function flotify(geo, pointa, pointb, degree = 0) {
 
   if (degree <= 0) {
     geo.push(pointa, pointb)
