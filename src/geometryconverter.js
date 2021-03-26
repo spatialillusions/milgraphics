@@ -22,6 +22,7 @@ geometryConverter[
 ] = require("./geometryconverter/censor-zone.js");
 //geometryConverter.circle = require("./geometryconverter/circle.js");
 geometryConverter["CONTAIN"] = require("./geometryconverter/contain.js");
+geometryConverter["COUNTERATTACK"] = require("./geometryconverter/counterattack.js");
 geometryConverter["CLEAR"] = require("./geometryconverter/clear.js");
 geometryConverter.corridor = require("./geometryconverter/corridor.js");
 geometryConverter.cover = require("./geometryconverter/cover.js");
