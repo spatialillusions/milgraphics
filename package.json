@@ -46,6 +46,7 @@
     "react-dom": "^17.0.1"
   },
   "dependencies": {
+    "requirejs": "^2.3.6",
     "webpack-custom-var-library-name-append-plugin": "^2.1.3"
   }
 }

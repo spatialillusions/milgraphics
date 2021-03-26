@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
   <meta name="description" content="milgraphics">
   <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css">
+
   <title>milgraphics</title>
 </head>
 <style type="text/css">
@@ -27,9 +29,11 @@
     font-size: 16px;
     border: none;
     cursor: pointer;
+
   }
 
-  .dropbtn:hover, .dropbtn:focus {
+  .dropbtn:hover,
+  .dropbtn:focus {
     background-color: #2980B9;
   }
 
@@ -63,71 +67,82 @@
     display: block;
   }
 
-  #showingTitle{
-    display: inline-block
+  #showingTitle {
+    display: inline-block;
+    position: fixed;
   }
-
-
-
 </style>
+
 <body onload="addElementsToDropdown()">
 
-<div class="header-bar">
-  <div class="dropdown">
-    <button onclick="dropdownToggle()" class="dropbtn">Select file</button>
-    <div id="myDropdown" class="dropdown-content">
-      <a>data.json</a>
+  <div class="header-bar">
+    <div class="dropdown">
+      <button onclick="dropdownToggle()" class="dropbtn">Select file</button>
+      <div id="myDropdown" class="dropdown-content">
+      </div>
+    </div>
+    <div id="showingTitle">
+      <p id="showingText"><b>Showing file:</b> <a id="showingFile">TBD</a></p>
     </div>
   </div>
-  <div id="showingTitle">
-    <p id="showingText"><b>Showing file:</b> <a id="showingFile">TBD</a></p>
-  </div>
-</div>
-
-<script>
-  /* When the user clicks on the dropdown button,
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+    /* When the user clicks on the dropdown button,
   toggle between hiding and showing the dropdown content */
 
 
-  function dropdownToggle() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
+    function dropdownToggle() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
 
-  // Close the dropdown if the user clicks outside of it
-  window.onclick = function (event) {
-    if (!event.target.matches('.dropbtn')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
+    // Close the dropdown if the user clicks outside of it
+
+    window.onclick = function (event) {
+
+
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
         }
       }
+
     }
-  }
 
+    function GetSelectedValue() {
+      //TODO - display selected file name in "#showingFile"
+      var textGet = $("#myDropdown :selected").nodeValue;
+      console.log(textGet);
+    }
 
-  function addElementsToDropdown() {
-    // var fs = require('fs');
-    // var files = fs.readdirSync('./');
-    // console.log("Files: ",files)
-    // files.forEach(addElementToDropdown())
-    // TODO fix adding available JSON files
-    addElementToDropdown("new2.json")
-  }
+    function addElementsToDropdown() {
 
-  function addElementToDropdown(name) {
-    var elem = document.createElement("a");
-    var node = document.createTextNode(name);
-    elem.appendChild(node);
-    var element = document.getElementById("myDropdown");
-    element.appendChild(elem);
-  }
-</script>
+      $.getJSON('./example-data/tacticaljson', data => {
+        for (i = 0; i < data.length; i++) {
+          addElementToDropdown(data[i]);
+          //console.log(data[i]);
+        }
+        //console.log(data);  should be display filenames in folder ../example-data/tacticaljson
+      });
 
-<div id="map" class="mymap"></div>
-<div class="root"></div>
+    }
+
+    function addElementToDropdown(name) {
+      var elem = document.createElement("a");
+      var node = document.createTextNode(name);
+      elem.appendChild(node);
+      elem.onclick = GetSelectedValue;
+      var element = document.getElementById("myDropdown");
+      element.appendChild(elem);
+    }
+  </script>
+
+  <div id="map" class="mymap"></div>
+  <div class="root"></div>
 </body>
 
 </html>
