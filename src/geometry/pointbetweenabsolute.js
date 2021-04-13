@@ -4,7 +4,7 @@ function pointBetweenAbsolute(p1, p2, l) {
   // This can be optimized for performance by using the math directly, but this works the same and was quicker to implement
 
   // Calculate fraction of length
-  frac = (length/ms.geometry.distanceBetween(p1,p2))
+  frac = (l/ms.geometry.distanceBetween(p1,p2))
 
   // Designate the particular point using the fractional based function
   p3 = ms.geometry.pointBetween(p1,p2,frac)
