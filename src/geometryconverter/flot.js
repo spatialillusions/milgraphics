@@ -10,21 +10,23 @@ function flot(feature, relative = false) {
   geometry.coordinates = [];
 
   // Geometry 1 - bearing line of n points
-  var geometry1 = [];
+  var bearingGeos = [];
   var distance = 0;
   // loop to repeat for every segment of the polygon that was input
   for (var i = 1; i < points.length; i += 1) {
-    // visualize that many bearings with absolute width
-    geometry1 = flotifyAbsolute(geometry1, points[i - 1], points[i])
-
-    // Alternative - old implementation based on relative sizes of bearings
-    // Making each segment into a bearing line with 2^5 = 32 bearings
-    // geometry1 = flotifyRelative(geometry1, points[i - 1], points[i], 5)
+    if (relative === false) {
+      // visualize that many bearings with absolute width
+      bearingGeos = flotifyAbsolute(bearingGeos, points[i - 1], points[i])
+    } else {
+      // Alternative - old implementation based on relative sizes of bearings
+      // Making each segment into a bearing line with 2^5 = 32 bearings
+      bearingGeos = flotifyRelative(bearingGeos, points[i - 1], points[i], 5)
+    }
   }
 
   // visualise individual bearings
-  for (var i = 0; i < geometry1.length; i += 1) {
-    geometry.coordinates.push(geometry1[i]);
+  for (var i = 0; i < bearingGeos.length; i += 1) {
+    geometry.coordinates.push(bearingGeos[i]);
   }
 
   annotations[0].geometry = {type: "Point"};
@@ -50,8 +52,8 @@ function flot(feature, relative = false) {
 // old implementation, creates a bearing line with 2^(degree-1) bearings, each segment has bearings of different size
 // example: degree = 5, then number of bearings is 2^4 = 16 in each segment
 // if degree is zero, it draws a straight line
-// no gaps or spacing is implemented in this version
-function flotifyRelative(geo, pointa, pointb, degree = 0) {
+//  gaps or spacing is implemented in this version
+function flotifyRelative(geo, pointa, pointb, degree = 0, bearingSpacing = 4) {
 
   if (degree <= 0) {
     geo.push(pointa, pointb)
@@ -63,18 +65,20 @@ function flotifyRelative(geo, pointa, pointb, degree = 0) {
   const curveBearing = ms.geometry.bearingBetween(pointa, pointb);
 
   if (degree === 1) {
-    for (var i = 0; i < 180; i += 10) {
-      geo.push(
+    var bearingGeo = [];
+    for (var i = 0; i <= 180; i += 10) {
+      bearingGeo.push(
         ms.geometry.toDistanceBearing(
           midpoint,
-          width / 2,
+          width / 2 -bearingSpacing/2,
           curveBearing + i + 180
         )
       );
     }
+    geo.push(bearingGeo)
   } else {
-    geo = flotify(geo, pointa, midpoint, degree - 1)
-    geo = flotify(geo, midpoint, pointb, degree - 1)
+    geo = flotifyRelative(geo, pointa, midpoint, degree - 1)
+    geo = flotifyRelative(geo, midpoint, pointb, degree - 1)
   }
   return geo;
 }
