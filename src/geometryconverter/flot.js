@@ -1,6 +1,6 @@
 var ms = require("milsymbol");
 
-function flot(feature) {
+function flot(feature, relative = false) {
 
   //var direction, width;
   var annotations = [{}];
@@ -19,7 +19,7 @@ function flot(feature) {
 
     // Alternative - old implementation based on relative sizes of bearings
     // Making each segment into a bearing line with 2^5 = 32 bearings
-    // geometry1 = flotify(geometry1, points[i - 1], points[i], 5)
+    // geometry1 = flotifyRelative(geometry1, points[i - 1], points[i], 5)
   }
 
   geometry.coordinates = [geometry1];
@@ -27,21 +27,28 @@ function flot(feature) {
   annotations[0].geometry = {type: "Point"};
   annotations[0].properties = {};
   annotations[0].properties.text = "FLOT";
-  annotations[0].geometry.coordinates = ms.geometry.pointBetween(// TODO change to point if odd number
-    points[parseInt(points.length / 2) - 1],
-    points[parseInt(points.length / 2)],
-    0.5
-  );
+  // if odd number of vertices, put on central vertex
+  if (points.length % 2 !== 0) {
+    // takes the central vertex by automatic rounding down and indexing from zero
+    annotations[0].geometry.coordinates = points[parseInt(points.length / 2)];
+  }
+  // otherwise even number of vertices mean odd number of sides, put on central side
+  else {
+    annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+      points[parseInt(points.length / 2) - 1],
+      points[parseInt(points.length / 2)],
+      0.5
+    );
+  }
 
   return {geometry: geometry, annotations: annotations};
 }
 
-function flotify(geo, pointa, pointb, degree = 0) {
-
-  // Logging - TODO remove when no longer necessary
-  // console.log("FLOT DEG ", degree)
-  // console.log("geo: ", geo)
-  // console.log("A: ", pointa, "| B: ", pointb)
+// old implementation, creates a bearing line with 2^(degree-1) bearings, each segment has bearings of different size
+// example: degree = 5, then number of bearings is 2^4 = 16 in each segment
+// if degree is zero, it draws a straight line
+// no gaps or spacing is implemented in this version
+function flotifyRelative(geo, pointa, pointb, degree = 0) {
 
   if (degree <= 0) {
     geo.push(pointa, pointb)
@@ -52,7 +59,6 @@ function flotify(geo, pointa, pointb, degree = 0) {
   const midpoint = ms.geometry.pointBetween(pointa, pointb, 0.5);
   const curveBearing = ms.geometry.bearingBetween(pointa, pointb);
 
-  // TODO try to implement gaps between bearings
   if (degree === 1) {
     for (var i = 0; i < 180; i += 10) {
       geo.push(
