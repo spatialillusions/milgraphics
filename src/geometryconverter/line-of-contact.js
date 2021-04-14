@@ -83,7 +83,7 @@ function lineOfContactRelative(geo, pointa, pointb, degree = 0, bearingSpacing =
   return geo;
 }
 
-function lineOfContactAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSpacing = 4) {
+function lineOfContactAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSpacing = 4, locWidth = 1) {
 
   // measure distance between each two points
   let distance = ms.geometry.distanceBetween(pointa, pointb);
@@ -110,7 +110,14 @@ function lineOfContactAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSp
   // loop for number of bearings, move the starting point and create the bearing
   for (var i = 1; i <= numBearings; i += 1) {
 
-    var bearingGeo = [];
+    var bearingGeo1 = [];
+    var bearingGeo2 = [];
+
+    // TODO add second line of bearings turned
+
+    // TODO shift all bearings
+
+    // TODO add width of LOC
 
     // draw bearings of constant size along the dedicated segment, starting at a point offset by the internal padding
     let leftAnchor = ms.geometry.pointBetweenAbsolute(
@@ -125,15 +132,25 @@ function lineOfContactAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSp
     );
     // actually visualising the bearing
     for (var j = 0; j <= 180; j += 10) {
-      bearingGeo.push(
+      bearingGeo1.push(
         ms.geometry.toDistanceBearing(
-          midpoint,
+          ms.geometry.toDistanceBearing(midpoint, bearingWidth / 2, curveBearing + 90),
           bearingWidth / 2,
           curveBearing + j + 180
         )
       )
     }
-    geo.push(bearingGeo)
+    for (var j = 180; j <= 360; j += 10) {
+      bearingGeo2.push(
+        ms.geometry.toDistanceBearing(
+          ms.geometry.toDistanceBearing(midpoint, bearingWidth / 2, curveBearing - 90),
+          bearingWidth / 2,
+          curveBearing + j + 180
+        )
+      )
+    }
+    geo.push(bearingGeo1)
+    geo.push(bearingGeo2)
   }
 
   return geo;
