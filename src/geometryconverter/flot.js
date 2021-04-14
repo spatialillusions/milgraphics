@@ -14,7 +14,7 @@ function flot(feature, relative = false) {
   var distance = 0;
   // loop to repeat for every segment of the polygon that was input
   for (var i = 1; i < points.length; i += 1) {
-    // visualize that many bearings
+    // visualize that many bearings with absolute width
     geometry1 = flotifyAbsolute(geometry1, points[i - 1], points[i])
 
     // Alternative - old implementation based on relative sizes of bearings
@@ -22,7 +22,10 @@ function flot(feature, relative = false) {
     // geometry1 = flotifyRelative(geometry1, points[i - 1], points[i], 5)
   }
 
-  geometry.coordinates = [geometry1];
+  // visualise individual bearings
+  for (var i = 0; i < geometry1.length; i += 1) {
+    geometry.coordinates.push(geometry1[i]);
+  }
 
   annotations[0].geometry = {type: "Point"};
   annotations[0].properties = {};
@@ -100,15 +103,11 @@ function flotifyAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSpacing 
   // calculate padding on the sides of the segment
   let padding = ((distance - widthMeasure) / 2)
 
-  console.log("distance: ", distance)
-  console.log("numBearings: ", numBearings)
-  console.log("padding: ", padding)
-
-  // add first point before padding
-  geo.push(pointa)
-
   // loop for number of bearings, move the starting point and create the bearing
   for (var i = 1; i <= numBearings; i += 1) {
+
+    var bearingGeo = [];
+
     // draw bearings of constant size along the dedicated segment, starting at a point offset by the internal padding
     let leftAnchor = ms.geometry.pointBetweenAbsolute(
       pointa, pointb, (padding + ((i * bearingWidth) - bearingWidth) + (i - 1) * bearingSpacing)
@@ -122,7 +121,7 @@ function flotifyAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSpacing 
     );
     // actually visualising the bearing
     for (var j = 0; j <= 180; j += 10) {
-      geo.push(
+      bearingGeo.push(
         ms.geometry.toDistanceBearing(
           midpoint,
           bearingWidth / 2,
@@ -130,10 +129,8 @@ function flotifyAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSpacing 
         )
       )
     }
+    geo.push(bearingGeo)
   }
-  // add last point before padding
-  geo.push(pointb)
-  // possible TODO: try to implement real gaps between bearings
 
   return geo;
 }
