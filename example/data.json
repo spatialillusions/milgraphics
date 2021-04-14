@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {
-        "sidc": "G-G-GLF-------X"
+        "sidc": "G-G-GLC-------X"
       },
       "geometry": {
         "type": "LineString",
