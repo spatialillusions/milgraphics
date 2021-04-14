@@ -76,14 +76,29 @@ function flotifyRelative(geo, pointa, pointb, degree = 0) {
   return geo;
 }
 
-function flotifyAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSpacing = 2) {// TODO Add spacing if relevant
+function flotifyAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSpacing = 4) {
 
   // measure distance between each two points
   let distance = ms.geometry.distanceBetween(pointa, pointb);
   // calculate how many bearings can fit
-  let numBearings = Math.floor(distance / bearingWidth)
-  // calculate padding
-  let padding = ((distance - (numBearings * bearingWidth)) / 2)
+  let widthMeasure = 0;
+  let numBearings = 0;
+  // if segment is longer than at least one bearing, calculate number and length of bearing line
+  if (bearingWidth < distance) {
+    numBearings = 1;
+    widthMeasure = widthMeasure + bearingWidth;
+    if (widthMeasure <= distance) {
+      while (widthMeasure <= distance) {
+        widthMeasure = widthMeasure + bearingSpacing + bearingWidth;
+        numBearings = numBearings + 1;
+      }
+      // correction due to overshoot in while loop
+      numBearings = numBearings - 1;
+      widthMeasure = widthMeasure - bearingSpacing - bearingWidth;
+    }
+  }
+  // calculate padding on the sides of the segment
+  let padding = ((distance - widthMeasure) / 2)
 
   console.log("distance: ", distance)
   console.log("numBearings: ", numBearings)
@@ -95,10 +110,17 @@ function flotifyAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSpacing 
   // loop for number of bearings, move the starting point and create the bearing
   for (var i = 1; i <= numBearings; i += 1) {
     // draw bearings of constant size along the dedicated segment, starting at a point offset by the internal padding
-    let leftAnchor = ms.geometry.pointBetweenAbsolute(pointa, pointb, (padding + ((i * bearingWidth) - bearingWidth)));
-    let rightAnchor = ms.geometry.pointBetweenAbsolute(pointa, pointb, (padding + ((i * bearingWidth))));
+    let leftAnchor = ms.geometry.pointBetweenAbsolute(
+      pointa, pointb, (padding + ((i * bearingWidth) - bearingWidth) + (i - 1) * bearingSpacing)
+    );
+    let rightAnchor = ms.geometry.pointBetweenAbsolute(
+      pointa, pointb, (padding + ((i * bearingWidth)) + (i - 1) * bearingSpacing)
+    );
     let curveBearing = ms.geometry.bearingBetween(leftAnchor, rightAnchor);
-    midpoint = ms.geometry.pointBetweenAbsolute(pointa, pointb, (padding + ((i * bearingWidth) - bearingWidth / 2)));
+    midpoint = ms.geometry.pointBetweenAbsolute(
+      pointa, pointb, (padding + ((i * bearingWidth) - bearingWidth / 2) + (i - 1) * bearingSpacing)
+    );
+    // actually visualising the bearing
     for (var j = 0; j <= 180; j += 10) {
       geo.push(
         ms.geometry.toDistanceBearing(
@@ -111,7 +133,7 @@ function flotifyAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSpacing 
   }
   // add last point before padding
   geo.push(pointb)
-  // possible TODO: try to implement gaps between bearings
+  // possible TODO: try to implement real gaps between bearings
 
   return geo;
 }
