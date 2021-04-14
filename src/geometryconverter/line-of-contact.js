@@ -70,7 +70,7 @@ function lineOfContactRelative(geo, pointa, pointb, degree = 0, bearingSpacing =
       bearingGeo.push(
         ms.geometry.toDistanceBearing(
           midpoint,
-          width / 2 -bearingSpacing/2,
+          width / 2 - bearingSpacing / 2,
           curveBearing + i + 180
         )
       );
@@ -83,7 +83,7 @@ function lineOfContactRelative(geo, pointa, pointb, degree = 0, bearingSpacing =
   return geo;
 }
 
-function lineOfContactAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSpacing = 4, locWidth = 1) {
+function lineOfContactAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSpacing = 4, locWidth = 3) {
 
   // measure distance between each two points
   let distance = ms.geometry.distanceBetween(pointa, pointb);
@@ -129,7 +129,8 @@ function lineOfContactAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSp
     for (var j = 0; j <= 180; j += 10) {
       bearingGeo1.push(
         ms.geometry.toDistanceBearing(
-          ms.geometry.toDistanceBearing(midpoint, bearingWidth / 2, curveBearing + 90),
+          // shift all bearings towards center of line TODO add width of LOC
+          ms.geometry.toDistanceBearing(midpoint, (bearingWidth + locWidth) / 2, curveBearing + 90),
           bearingWidth / 2,
           curveBearing + j + 180
         )
@@ -139,8 +140,8 @@ function lineOfContactAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSp
     for (var j = 180; j <= 360; j += 10) {
       bearingGeo2.push(
         ms.geometry.toDistanceBearing(
-          // shift all bearings TODO add width of LOC
-          ms.geometry.toDistanceBearing(midpoint, bearingWidth / 2, curveBearing - 90),
+          // shift all bearings towards center of line, TODO add width of LOC
+          ms.geometry.toDistanceBearing(midpoint, (bearingWidth + locWidth) / 2, curveBearing - 90),
           bearingWidth / 2,
           curveBearing + j + 180
         )
