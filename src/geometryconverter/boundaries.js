@@ -1,7 +1,7 @@
 var ms = require("milsymbol");
 var annotations = [{},{},{}];
 //Converting lines to dashed lines
-//const convertToDashes = require("../geometry/converttodashes");
+const convertToDashes = require("../geometry/converttodashes");
 
 
 function boundaries(feature) {
@@ -18,14 +18,14 @@ function boundaries(feature) {
 
     // Making each segment straight
     geometry1 = flotify(geometry1, points[i], points[i], 0, 0)
-    addAnotation(i,points[i], "Point");
+    addAnotation(i,points[i], "III");
   }
   geometry.coordinates = [geometry1];
 
   //console.log(annotations);
 
   //Converting lines to dashed lines
-  //geometry.coordinates = convertToDashes(geometry1, 1 / 64);
+  geometry.coordinates = convertToDashes(geometry1, 1 / 64);
   
   return {geometry: geometry, annotations: annotations};
 }

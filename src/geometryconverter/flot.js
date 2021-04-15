@@ -83,7 +83,7 @@ function flotifyRelative(geo, pointa, pointb, degree = 0, bearingSpacing = 4) {
   return geo;
 }
 
-function flotifyAbsolute(geo, pointa, pointb, bearingWidth = 50, bearingSpacing = 4) {
+function flotifyAbsolute(geo, pointa, pointb, bearingWidth = 20000, bearingSpacing = 4) {
 
   // measure distance between each two points
   let distance = ms.geometry.distanceBetween(pointa, pointb);
