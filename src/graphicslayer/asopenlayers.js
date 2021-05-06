@@ -1,15 +1,17 @@
+var GeoJSON = require('ol/format/GeoJSON');
+var proj = require('ol/proj');
+var style = require('ol/style');
+
 function asOpenLayers(crs) {
   crs = crs || "EPSG:3857";
   //var ua = window.navigator.userAgent;
   //var isIE = ( ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/')  > 0) ? true : false;
   var ratio = window.devicePixelRatio || 1;
-  var geoJSON = new ol.format.GeoJSON();
   var features = [];
-
   for (var i = 0; i < this.data.features.length; i++) {
     var feature = this.data.features[i];
-    var olFeature = geoJSON.readFeature(feature, {
-      featureProjection: ol.proj.get(crs)
+    var olFeature = GeoJSON.default.prototype.readFeature(feature, {
+      featureProjection: proj.get(crs)
     });
 
     if (
@@ -22,8 +24,8 @@ function asOpenLayers(crs) {
         var milsymbol = this.data.features[i].symbol;
         //var image = isIE ? mysymbol.asCanvas() : mysymbol.toDataURL();
         olFeature.setStyle(
-          new ol.style.Style({
-            image: new ol.style.Icon({
+          new style.Style({
+            image: new style.Icon({
               scale: 1 / ratio,
               anchor: [
                 milsymbol.getAnchor().x * ratio,
@@ -48,8 +50,8 @@ function asOpenLayers(crs) {
         olFeature.getGeometry().getType() == "MultiLineString")
     ) {
       var styles = [
-        new ol.style.Style({
-          stroke: new ol.style.Stroke({
+        new style.Style({
+          stroke: new style.Stroke({
             lineCap: "butt",
             color: "#000000",
             width: 2
@@ -58,17 +60,17 @@ function asOpenLayers(crs) {
       ];
       if (feature.graphic.annotations) {
         for(y=0;y<feature.graphic.annotations.length;y++){ 
-          var labelgeom = geoJSON.readFeature(feature.graphic.annotations[y].geometry,
+          var labelgeom = GeoJSON.default.prototype.readFeature(feature.graphic.annotations[y].geometry,
             {
-              featureProjection: ol.proj.get(crs)
+              featureProjection: proj.get(crs)
             }).getGeometry();
   
         styles.push(
-          new ol.style.Style({
-            text: new ol.style.Text({
-              fill: new ol.style.Fill({ color: "black" }),
+          new style.Style({
+            text: new style.Text({
+              fill: new style.Fill({ color: "black" }),
               font: "bold 16px sans-serif",
-              stroke: new ol.style.Stroke({
+              stroke: new style.Stroke({
                 color: "rgb(239, 239, 239)", // off-white
                 width: 4
               }),
@@ -87,18 +89,18 @@ function asOpenLayers(crs) {
       feature.graphic.isConverted() &&
       olFeature.getGeometry().getType() == "Polygon"
     ) {
-      style = new ol.style.Style({
-        stroke: new ol.style.Stroke({
+      style = new style.Style({
+        stroke: new style.Stroke({
           lineCap: "butt",
           color: "#000000",
           width: 2
         }),
-        fill: new ol.style.Fill({ color: "rgba(0,0,0,0)" }),
+        fill: new style.Fill({ color: "rgba(0,0,0,0)" }),
         
-        text: new ol.style.Text({
-          fill: new ol.style.Fill({ color: "black" }),
+        text: new style.Text({
+          fill: new style.Fill({ color: "black" }),
           font: "bold 16px sans-serif",
-          stroke: new ol.style.Stroke({
+          stroke: new style.Stroke({
             color: "rgb(239, 239, 239)", // off-white
             width: 4
           }),
