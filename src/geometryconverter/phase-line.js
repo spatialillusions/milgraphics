@@ -24,8 +24,6 @@ addAnotation(0,points[0],"(PL NAME)");
 addAnotation(1,points[4],"(SOMETHING)");
 addAnotation(2,points[7],"(PL NAME)");
 
-  console.log(annotations);
-
   return {geometry: geometry, annotations: annotations};
 }
 

@@ -21,6 +21,6 @@ module.exports = function(feature) {
   if (polygon.annotation.hasOwnProperty("geometry")) {
     annotations[0].geometry = polygon.annotation.geometry;
   }
-  console.log(annotations);
+
   return { geometry: geometry, annotations: annotations };
 };
