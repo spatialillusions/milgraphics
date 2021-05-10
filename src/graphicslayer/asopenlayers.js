@@ -1,5 +1,4 @@
 var GeoJSON = require('ol/format/GeoJSON');
-var proj = require('ol/proj');
 var style = require('ol/style');
 
 function asOpenLayers(crs) {
@@ -11,7 +10,8 @@ function asOpenLayers(crs) {
   for (var i = 0; i < this.data.features.length; i++) {
     var feature = this.data.features[i];
     var olFeature = GeoJSON.default.prototype.readFeature(feature, {
-      featureProjection: proj.get(crs)
+      dataProjection: 'EPSG:4326',
+      featureProjection: crs
     });
 
     if (
@@ -62,9 +62,9 @@ function asOpenLayers(crs) {
         for(y=0;y<feature.graphic.annotations.length;y++){ 
           var labelgeom = GeoJSON.default.prototype.readFeature(feature.graphic.annotations[y].geometry,
             {
-              featureProjection: proj.get(crs)
+              dataProjection: 'EPSG:4326',
+              featureProjection: crs
             }).getGeometry();
-  
         styles.push(
           new style.Style({
             text: new style.Text({
