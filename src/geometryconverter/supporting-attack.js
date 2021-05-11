@@ -5,9 +5,7 @@ function supportingAttack(feature) {
   var points = feature.geometry.coordinates;
   var arrowHead = points.pop();
   var widthHeadRatio = 0.7;
-
-  var geometry = { type: "LineString" };
-  geometry.coordinates = [];
+  var geometry = { type: "LineString", coordinates: [] };
 
   var geometry1 = [];
 
@@ -61,12 +59,10 @@ function supportingAttack(feature) {
       arrowHead,
       width * (1 - widthHeadRatio),
       direction + 90
-    )
-  );
-  geometry1.push(arrowHead);
-  geometry1.push(points[0]);
-  geometry1.push(arrowHead2);
-  geometry1.push(
+    ),
+    arrowHead,
+    points[0],
+    arrowHead2,
     ms.geometry.toDistanceBearing(
       arrowHead2,
       width * (1 - widthHeadRatio),

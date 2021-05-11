@@ -1,26 +1,23 @@
 var ms = require("milsymbol");
 
-// Draws a Fire Support Area
 module.exports = function(feature) {
-  var annotations = [{}];
-  var geometry;
+  var annotations = {
+    geometry: { type: "Point" },
+    properties: { text: "CFF ZONE" }
+  };
 
-  annotations[0].geometry = { type: "Point" };
-  annotations[0].properties = {};
-  annotations[0].properties.text = "CFF ZONE";
   if (feature.properties.uniqueDesignation)
-    annotations[0].properties.text +=
+    annotations.properties.text +=
       "\n" + feature.properties.uniqueDesignation;
   /*if (feature.properties.dtg)
-    annotations[0].properties.text += "\n" + feature.properties.dtg;
+    annotations.properties.text += "\n" + feature.properties.dtg;
   if (feature.properties.dtg1)
-    annotations[0].properties.text += "\n" + feature.properties.dtg1;*/
+    annotations.properties.text += "\n" + feature.properties.dtg1;*/
 
   var polygon = ms.geometry.circleCorridorPolygon(feature);
-  geometry = polygon.geometry;
   if (polygon.annotation.hasOwnProperty("geometry")) {
-    annotations[0].geometry = polygon.annotation.geometry;
+    annotations.geometry = polygon.annotation.geometry;
   }
 
-  return { geometry: geometry, annotations: annotations };
+  return { geometry: polygon.geometry, annotations: [annotations] };
 };

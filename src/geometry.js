@@ -11,5 +11,6 @@ geometry.pointBetweenAbsolute = require("./geometry/pointbetweenabsolute.js");
 geometry.rectangle = require("./geometry/rectangle.js");
 geometry.toDistanceBearing = require("./geometry/todistancebearing.js");
 geometry.testGeometry = require("./geometry/testGeometry.js");
+geometry.addAnotation = require("./geometry/anotations.js");
 
 module.exports = geometry;

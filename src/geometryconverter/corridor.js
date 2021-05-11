@@ -2,12 +2,10 @@ var ms = require("milsymbol");
 
 // Draws a corridor with a widht in meters
 function corridor(feature) {
-  var direction;
   var points = feature.geometry.coordinates;
   var width = feature.properties.distance;
-  var geometry = { type: "Polygon" };
-  geometry.coordinates = [[]];
-  direction = (ms.geometry.bearingBetween(points[0], points[1]) + 360) % 360;
+  var geometry = { type: "Polygon", coordinates: [[]] };
+  var direction = (ms.geometry.bearingBetween(points[0], points[1]) + 360) % 360;
   geometry.coordinates[0].push(
     ms.geometry.toDistanceBearing(points[0], width / 2, direction - 90)
   );

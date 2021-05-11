@@ -7,8 +7,7 @@ function mainAttack(feature) {
   var arrowHead = points.pop();
   var widthHeadRatio = 0.7;
 
-  var geometry = { type: "MultiLineString" };
-  geometry.coordinates = [];
+  var geometry = { type: "MultiLineString", coordinates: [] };
 
   var geometry1 = [];
   var geometry2 = [];
@@ -65,11 +64,7 @@ function mainAttack(feature) {
       direction + 90
     )
   );
-  geometry1.push(arrowHead);
-  geometry1.push(points[0]);
-  geometry1.push(arrowHead2);
-  geometry1.push(
-    ms.geometry.toDistanceBearing(
+  geometry1.push(arrowHead, points[0], arrowHead2, ms.geometry.toDistanceBearing(
       arrowHead2,
       width * (1 - widthHeadRatio),
       direction - 90
@@ -81,18 +76,14 @@ function mainAttack(feature) {
       arrowHead,
       width * (1 - widthHeadRatio),
       direction + 90
-    )
-  );
-  geometry2.push(
+    ),
     ms.geometry.toDistanceBearing(
       points[0],
       width *
         (1 - widthHeadRatio) *
         Math.abs(1 / Math.tan(deltaDirection * (Math.PI / 180))),
       direction - 180
-    )
-  );
-  geometry2.push(
+    ),
     ms.geometry.toDistanceBearing(
       arrowHead2,
       width * (1 - widthHeadRatio),

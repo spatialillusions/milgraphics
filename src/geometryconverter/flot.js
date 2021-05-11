@@ -1,17 +1,12 @@
 var ms = require("milsymbol");
 
 function flot(feature, relative = false) {
-
-  //var direction, width;
-  var annotations = [{}];
   var points = feature.geometry.coordinates;
-
-  var geometry = {type: "MultiLineString"};
-  geometry.coordinates = [];
+  var geometry = { type: "MultiLineString", coordinates: [] };
 
   // Geometry 1 - bearing line of n points
   var bearingGeos = [];
-  var distance = 0;
+
   // loop to repeat for every segment of the polygon that was input
   for (var i = 1; i < points.length; i += 1) {
     if (relative === false) {
@@ -29,24 +24,25 @@ function flot(feature, relative = false) {
     geometry.coordinates.push(bearingGeos[i]);
   }
 
-  annotations[0].geometry = {type: "Point"};
-  annotations[0].properties = {};
-  annotations[0].properties.text = "FLOT";
+  var annotations = {
+    geometry: { type: "Point" },
+    properties: { text: "FLOT" }
+  };
   // if odd number of vertices, put on central vertex
   if (points.length % 2 !== 0) {
     // takes the central vertex by automatic rounding down and indexing from zero
-    annotations[0].geometry.coordinates = points[parseInt(points.length / 2)];
+    annotations.geometry.coordinates = points[parseInt(points.length / 2)];
   }
   // otherwise even number of vertices mean odd number of sides, put on central side
   else {
-    annotations[0].geometry.coordinates = ms.geometry.pointBetween(
+    annotations.geometry.coordinates = ms.geometry.pointBetween(
       points[parseInt(points.length / 2) - 1],
       points[parseInt(points.length / 2)],
       0.5
     );
   }
 
-  return {geometry: geometry, annotations: annotations};
+  return { geometry: geometry, annotations: [annotations] };
 }
 
 // old implementation, creates a bearing line with 2^(degree-1) bearings, each segment has bearings of different size

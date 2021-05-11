@@ -89,14 +89,13 @@ function asOpenLayers(crs) {
       feature.graphic.isConverted() &&
       olFeature.getGeometry().getType() == "Polygon"
     ) {
-      style = new style.Style({
+      styles = new style.Style({
         stroke: new style.Stroke({
           lineCap: "butt",
           color: "#000000",
           width: 2
         }),
         fill: new style.Fill({ color: "rgba(0,0,0,0)" }),
-        
         text: new style.Text({
           fill: new style.Fill({ color: "black" }),
           font: "bold 16px sans-serif",
@@ -109,7 +108,7 @@ function asOpenLayers(crs) {
             : ""
         })
       });
-      olFeature.setStyle(style);
+      olFeature.setStyle(styles);
     }
 
     features.push(olFeature);
