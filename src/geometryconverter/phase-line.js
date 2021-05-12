@@ -2,6 +2,7 @@ var ms = require("milsymbol");
 
 function phaseLine(feature) {
   //var direction, width;
+  console.log(feature);
   var points = feature.geometry.coordinates;
   var annotations = [];
   var geometry = { type: "MultiLineString" };
@@ -16,8 +17,7 @@ function phaseLine(feature) {
   geometry.coordinates = [geometry1];
     
   annotations.push(ms.geometry.addAnotation(points[0],"(PL NAME)"));
-  annotations.push(ms.geometry.addAnotation(points[4],"(SOMETHING)"));
-  annotations.push(ms.geometry.addAnotation(points[7],"(PL NAME)"));
+  annotations.push(ms.geometry.addAnotation(points.slice(-1)[0],"(PL NAME)"));
 
   return {geometry: geometry, annotations: annotations};
 }
