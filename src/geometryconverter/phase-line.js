@@ -4,6 +4,7 @@ function phaseLine(feature) {
   //var direction, width;
   console.log(feature);
   var points = feature.geometry.coordinates;
+  var name = feature.properties.name;
   var annotations = [];
   var geometry = { type: "MultiLineString" };
   var geometry1 = [];
@@ -16,8 +17,8 @@ function phaseLine(feature) {
   }
   geometry.coordinates = [geometry1];
     
-  annotations.push(ms.geometry.addAnotation(points[0],"(PL NAME)"));
-  annotations.push(ms.geometry.addAnotation(points.slice(-1)[0],"(PL NAME)"));
+  annotations.push(ms.geometry.addAnotation(points[0],name));
+  annotations.push(ms.geometry.addAnotation(points.slice(-1)[0],name));
 
   return {geometry: geometry, annotations: annotations};
 }
