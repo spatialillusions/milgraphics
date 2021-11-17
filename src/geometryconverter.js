@@ -1,30 +1,56 @@
 var geometryConverter = {};
-geometryConverter["POSITION AREA FOR ARTILLERY"] = require("./geometryconverter/paa.js");
-geometryConverter["PHASELINE"] = require("./geometryconverter/phase-line.js");
-geometryConverter["BOUNDARIES"] = require("./geometryconverter/boundaries.js"); //just for developer purpose - unknown sidc
+geometryConverter[
+    "POSITION AREA FOR ARTILLERY"
+] = require("./geometryconverter/paa.js");
+geometryConverter[
+    "PHASELINE"
+] = require("./geometryconverter/phase-line.js");
+geometryConverter[
+    "BOUNDARIES"
+] = require("./geometryconverter/boundaries.js"); //just for developer purpose - unknown sidc
 geometryConverter[
     "AIRSPACE COORDINATION AREA"
 ] = require("./geometryconverter/airspace-coordination-area.js");
-geometryConverter["AMBUSH"] = require("./geometryconverter/ambush.js");
+geometryConverter[
+    "AMBUSH"
+] = require("./geometryconverter/ambush.js");
 geometryConverter[
     "ARTILLERY TARGET INTELLIGENCE ZONE"
 ] = require("./geometryconverter/artillery-target-intelligence-zone.js");
-geometryConverter["BLOCK"] = require("./geometryconverter/block.js");
-geometryConverter["BREACH"] = require("./geometryconverter/breach.js");
-geometryConverter["BYPASS"] = require("./geometryconverter/bypass.js");
+geometryConverter[
+    "BLOCK"
+] = require("./geometryconverter/block.js");
+geometryConverter[
+    "BREACH"
+] = require("./geometryconverter/breach.js");
+geometryConverter[
+    "BYPASS"
+] = require("./geometryconverter/bypass.js");
 geometryConverter[
     "CALL FOR FIRE ZONE"
 ] = require("./geometryconverter/call-for-fire-zone.js");
-geometryConverter["CANALIZE"] = require("./geometryconverter/canalize.js");
-geometryConverter["FLOT"] = require("./geometryconverter/flot.js");
-geometryConverter["LINE OF CONTACT"] = require("./geometryconverter/line-of-contact.js");
+geometryConverter[
+    "CANALIZE"
+] = require("./geometryconverter/canalize.js");
+geometryConverter[
+    "FLOT"
+] = require("./geometryconverter/flot.js");
+geometryConverter[
+    "LINE OF CONTACT"
+] = require("./geometryconverter/line-of-contact.js");
 geometryConverter[
     "CENSOR ZONE"
 ] = require("./geometryconverter/censor-zone.js");
 //geometryConverter.circle = require("./geometryconverter/circle.js");
-geometryConverter["CONTAIN"] = require("./geometryconverter/contain.js");
-geometryConverter["COUNTERATTACK"] = require("./geometryconverter/counterattack.js");
-geometryConverter["CLEAR"] = require("./geometryconverter/clear.js");
+geometryConverter[
+    "CONTAIN"
+] = require("./geometryconverter/contain.js");
+geometryConverter[
+    "COUNTERATTACK"
+] = require("./geometryconverter/counterattack.js");
+geometryConverter[
+    "CLEAR"
+] = require("./geometryconverter/clear.js");
 geometryConverter.corridor = require("./geometryconverter/corridor.js");
 geometryConverter.cover = require("./geometryconverter/cover.js");
 geometryConverter[
@@ -33,16 +59,22 @@ geometryConverter[
 geometryConverter[
     "DEAD SPACE AREA"
 ] = require("./geometryconverter/dead-space-area.js");
-geometryConverter["DELAY"] = require("./geometryconverter/delay.js");
+geometryConverter[
+    "DELAY"
+] = require("./geometryconverter/delay.js");
 geometryConverter[
     "FIRE SUPPORT AREA"
 ] = require("./geometryconverter/fire-support-area.js");
-geometryConverter["FIX"] = require("./geometryconverter/fix.js");
+geometryConverter[
+    "FIX"
+] = require("./geometryconverter/fix.js");
 geometryConverter[
     "FREE FIRE AREA"
 ] = require("./geometryconverter/free-fire-area.js");
 geometryConverter.guard = require("./geometryconverter/guard.js");
-geometryConverter["ISOLATE"] = require("./geometryconverter/isolate.js");
+geometryConverter[
+    "ISOLATE"
+] = require("./geometryconverter/isolate.js");
 geometryConverter[
     "MAIN ATTACK"
 ] = require("./geometryconverter/main-attack.js");

@@ -4,8 +4,9 @@
         "type": "Feature",
         "properties": {
             "sidc": "G-F-ACPR------X",
-            "distance": 200,
-            "uniqueDesignation": "Q36"
+            "distance": 300,
+            "name": "PAA",
+            "shape": "rectangular"
         },
         "geometry": {
             "type": "LineString",
