@@ -64,6 +64,9 @@ function asOpenLayers(crs) {
         new style.Fill({ color: "rgba(0,0,0,0)" })
       );
       if (feature.graphic.annotations) {
+        if (!feature.graphic.annotations[0].geometry.coordinates) {
+          styles[0].setText(getText(feature.graphic.annotations[0].properties.text));
+        }
         styles = styles.concat(createAnnotationsStyle(feature.graphic.annotations, crs));
       }
       olFeature.setStyle(styles);
@@ -78,27 +81,32 @@ function asOpenLayers(crs) {
 function createAnnotationsStyle(annotations, crs) {
   var add_styles = [];
   for (var a = 0; a < annotations.length; a++) {
-    var labelgeom = GeoJSON.default.prototype.readFeature(annotations[a].geometry, {
-      dataProjection: 'EPSG:4326',
-      featureProjection: crs
-    }).getGeometry();
-
-    add_styles.push(
-      new style.Style({
-        text: new style.Text({
-          fill: new style.Fill({ color: "black" }),
-          font: "bold 16px sans-serif",
-          stroke: new style.Stroke({
-            color: "rgb(239, 239, 239)", // off-white
-            width: 4
-          }),
-          text: annotations[a].properties.text
-        }),
-        geometry: labelgeom
-      })
-    );
+    if (annotations[a].geometry.coordinates) {
+      var labelgeom = GeoJSON.default.prototype.readFeature(annotations[a].geometry, {
+        dataProjection: 'EPSG:4326',
+        featureProjection: crs
+      }).getGeometry();
+      add_styles.push(
+        new style.Style({
+          text: getText(annotations[a].properties.text),
+          geometry: labelgeom
+        })
+      );
+    }    
   }
   return add_styles;
+}
+
+function getText(text) {
+  return new style.Text({
+    fill: new style.Fill({ color: "black" }),
+    font: "bold 16px sans-serif",
+    stroke: new style.Stroke({
+      color: "rgb(239, 239, 239)", // off-white
+      width: 4
+    }),
+    text: text
+  });
 }
 
 module.exports = asOpenLayers;
