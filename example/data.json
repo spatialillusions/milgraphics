@@ -6,7 +6,7 @@
             "sidc": "G-F-ACPR------X",
             "distance": 300,
             "name": "PAA",
-            "shape": "rectangular"
+            "shape": "circle"
         },
         "geometry": {
             "type": "LineString",

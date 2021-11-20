@@ -1,17 +1,32 @@
 var ms = require("milsymbol");
+const toDistanceBearing = require("../geometry/todistancebearing");
 
 module.exports = function(feature) {
-    var points = feature.geometry.coordinates;
     var annotations = [];
-    var geometry = { type: "LineString" };
+    var points = feature.geometry.coordinates;
+    var annotationText = feature.properties.name;
+    var distance = feature.properties.distance; //distance in meters
+    var centerPoint = ms.geometry.pointBetween(points[0], points[1], 0.5);
+    var topPoint = ms.geometry.toDistanceBearing(centerPoint, distance / 2, 360);
+    var bottomPoint = ms.geometry.toDistanceBearing(centerPoint, distance / 2, 180);
 
+    annotations.push(ms.geometry.addAnotation(topPoint, annotationText));
+    annotations.push(ms.geometry.addAnotation(bottomPoint, annotationText));
+    annotations.push(ms.geometry.addAnotation(points[0], annotationText));
+    annotations.push(ms.geometry.addAnotation(points[1], annotationText));
+    console.log(topPoint);
 
-    annotations.push(ms.geometry.addAnotation(points[0], "PAA 1"));
-
-    //annotations.push(ms.geometry.addAnotation(points[1], "PAA ZONE 2"));
-
-    var polygon = ms.geometry.corridor(feature);
-
+    switch (feature.properties.shape) {
+        case "rectangular":
+            var shape = ms.geometry.corridor(feature);
+        case "circle":
+            var shape = ms.geometry.circle(feature);
+        case "polygon":
+            var shape = ms.geometry.circleCorridorPolygon(feature);
+            break;
+        default:
+            console.warn("Invalid feature type in SIDC: " + feature.properties.sidc);
+    }
 
     //console.log(annotations);
 
@@ -31,5 +46,5 @@ module.exports = function(feature) {
         annotations.geometry = polygon.annotation.geometry;
     }*/
 
-    return { geometry: polygon.geometry, annotations: annotations };
+    return { geometry: shape.geometry, annotations: annotations };
 };

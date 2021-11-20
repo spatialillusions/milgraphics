@@ -17,9 +17,9 @@ module.exports = function(feature) {
             annotation.geometry.coordinates = ms.geometry.pointBetween(
                 feature.geometry.coordinates[0],
                 feature.geometry.coordinates[1],
-                0.9
+                0.5
             );
-            console.log(annotation);
+            //console.log(annotation);
             break;
         case "Polygon":
             geometry = { type: feature.geometry.type };
