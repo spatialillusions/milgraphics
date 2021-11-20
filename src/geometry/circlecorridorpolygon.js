@@ -9,7 +9,7 @@ module.exports = function(feature) {
     switch (feature.geometry.type) {
         case "Point":
             geometry = ms.geometry.circle(feature).geometry;
-            annotation.geometry.coordinates = feature.geometry.coordinates;
+            //annotation.geometry.coordinates = feature.geometry.coordinates;
             break;
         case "LineString":
             geometry = ms.geometry.rectangle(feature).geometry;
