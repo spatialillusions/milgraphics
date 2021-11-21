@@ -1,7 +1,10 @@
 var geometryConverter = {};
 geometryConverter[
+    "NO FIRE AREA"
+] = require("./geometryconverter/no-fire-area.js");
+geometryConverter[
     "POSITION AREA FOR ARTILLERY"
-] = require("./geometryconverter/paa.js");
+] = require("./geometryconverter/position-area-for-artillery.js");
 geometryConverter[
     "PHASELINE"
 ] = require("./geometryconverter/phase-line.js");

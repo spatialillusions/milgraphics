@@ -3,9 +3,9 @@
     "features": [{
         "type": "Feature",
         "properties": {
-            "sidc": "G-F-ACNC------X",
+            "sidc": "G-F-ACPR------X",
             "distance": 300,
-            "name": "NFA"
+            "name": "PAA"
             },
         "geometry": {
             "type": "Point",
@@ -20,9 +20,9 @@
     {
         "type": "Feature",
         "properties": {
-            "sidc": "G-F-ACNR------X",
+            "sidc": "G-F-ACPR------X",
             "distance": 300,
-            "name": "NFA"
+            "name": "PAA"
             },
         "geometry": {
             "type": "LineString",
@@ -41,9 +41,9 @@
     }, {
         "type": "Feature",
         "properties": {
-            "sidc": "G-F-ACNI------X",
+            "sidc": "G-F-ACPR------X",
             "distance": 200,
-            "name": "NFA"
+            "name": "PAA"
         },
         "geometry": {
             "type": "Polygon",

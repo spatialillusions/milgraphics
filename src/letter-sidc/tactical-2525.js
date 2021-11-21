@@ -230,10 +230,10 @@ module.exports = function tacticalPoints(sidc, std2525) {
     sidc["G-F-ACFI--"] = ms.geometryConverter["FREE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.FFA.IRR
     sidc["G-F-ACFR--"] = ms.geometryConverter["FREE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.FFA.RTG
     sidc["G-F-ACFC--"] = ms.geometryConverter["FREE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.FFA.CIRCLR
-    //sidc['G-F-ACN---'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA
-    //sidc['G-F-ACNI--'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA.IRR
-    //sidc['G-F-ACNR--'] = [];//TACGRP.FSUPP.ARS.C2ARS.NFA.RTG
-    //sidc["G-F-ACNC--"] = []; //TACGRP.FSUPP.ARS.C2ARS.NFA.CIRCLR
+    sidc['G-F-ACN---'] = ms.geometryConverter["NO FIRE AREA"];//TACGRP.FSUPP.ARS.C2ARS.NFA
+    sidc['G-F-ACNI--'] = ms.geometryConverter["NO FIRE AREA"];//TACGRP.FSUPP.ARS.C2ARS.NFA.IRR
+    sidc['G-F-ACNR--'] = ms.geometryConverter["NO FIRE AREA"];//TACGRP.FSUPP.ARS.C2ARS.NFA.RTG
+    sidc["G-F-ACNC--"] = ms.geometryConverter["NO FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.NFA.CIRCLR
     //TACGRP.FSUPP.ARS.C2ARS.RFA
     sidc["G-F-ACRI--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.IRR
     sidc["G-F-ACRR--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.RTG
