@@ -1,6 +1,6 @@
 var ms = require("milsymbol");
 
-function phaseLine(feature) {
+module.exports = function(feature) {
     //var direction, width;
     console.log(feature);
     var points = feature.geometry.coordinates;
@@ -28,5 +28,3 @@ function laundery(geo, pointa, pointb, degree = 0) {
         return geo;
     }
 }
-
-module.exports = phaseLine;

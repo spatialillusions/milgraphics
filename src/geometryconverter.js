@@ -1,5 +1,14 @@
 var geometryConverter = {};
 geometryConverter[
+    "FIRE SUPPORT COORDINATION LINE"
+] = require("./geometryconverter/fire-support-coordination-line.js");
+geometryConverter[
+    "RESTRICTIVE FIRE LINE"
+] = require("./geometryconverter/restrictive-fire-line.js");
+geometryConverter[
+    "NO FIRE LINE"
+] = require("./geometryconverter/no-fire-line.js");
+geometryConverter[
     "NO FIRE AREA"
 ] = require("./geometryconverter/no-fire-area.js");
 geometryConverter[

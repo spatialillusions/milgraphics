@@ -2,7 +2,7 @@ var ms = require("milsymbol");
 const convertToDashes = require("../geometry/converttodashes");
 
 // Draws a corridor with a widht in meters
-function counterattack(feature) {
+module.exports = function(feature) {
     var direction, width;
     var points = [...feature.geometry.coordinates];
     var arrowHead = points.pop();
@@ -102,6 +102,4 @@ function counterattack(feature) {
     geometry.coordinates = convertToDashes(geometry1, 1 / 64);
 
     return { geometry: geometry, annotations: annotations, props: { dashes: true } };
-}
-
-module.exports = counterattack;
+};

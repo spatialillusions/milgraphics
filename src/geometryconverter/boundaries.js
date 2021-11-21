@@ -1,6 +1,6 @@
 var ms = require("milsymbol");
 
-function boundaries(feature) {
+module.exports = function(feature) {
     var points = feature.geometry.coordinates;
     var geometry = { type: "MultiLineString", coordinates: [] };
 
@@ -21,7 +21,4 @@ function boundaries(feature) {
     geometry.coordinates = [points];
 
     return { geometry: geometry, annotations: [annotations] };
-}
-
-
-module.exports = boundaries;
+};
