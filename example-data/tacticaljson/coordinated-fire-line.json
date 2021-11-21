@@ -4,9 +4,7 @@
         "type": "Feature",
         "properties": {
             "sidc": "G-F-LCC-------X",
-            "name": "CFL",
-            "administrator": "4RDB",
-            "nationality": "CZE"
+            "name": "CFL"
         },
         "geometry": {
             "type": "LineString",
@@ -42,10 +40,6 @@
                 [
                     8.780282647705078,
                     50.19267137199048
-                ],
-                [
-                    8.790282647705078,
-                    50.19967137199048
                 ]
             ]
         }

@@ -1,5 +1,8 @@
 var geometryConverter = {};
 geometryConverter[
+    "COORDINATED FIRE LINE"
+] = require("./geometryconverter/coordinated-fire-line.js");
+geometryConverter[
     "FIRE SUPPORT COORDINATION LINE"
 ] = require("./geometryconverter/fire-support-coordination-line.js");
 geometryConverter[
