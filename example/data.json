@@ -3,7 +3,7 @@
     "features": [{
         "type": "Feature",
         "properties": {
-            "sidc": "G-F-ACPR------X",
+            "sidc": "G-F-ACPC------X",
             "distance": 300,
             "name": "PAA"
             },
@@ -41,7 +41,7 @@
     }, {
         "type": "Feature",
         "properties": {
-            "sidc": "G-F-ACPR------X",
+            "sidc": "G-F-ACP-------X",
             "distance": 200,
             "name": "PAA"
         },

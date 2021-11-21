@@ -7,14 +7,7 @@ module.exports = function (feature) {
   var annotationText = feature.properties.name;
   var distance = feature.properties.distance; //distance in meters
 
-  //variables for annotation coordinations
   var centerPoint;
-  var topAnn;
-  var bottomAnn;
-  var sideAnn1;
-  var sideAnn2;
-
-
 
   if (feature.geometry.type == "Point") {
     centerPoint = points;
@@ -24,16 +17,16 @@ module.exports = function (feature) {
   } else if (feature.geometry.type = "Polygon"){
     centerPoint = points[0];
 
-    //console.log(points);
-   //console.log(Math.max(getLatLong(points).latitudes));
-
+   //console.log(points);
+   //Variables for northernmost, southernmost, easternmost and westernmost coordinates for annotations in polygon
     var maxLatitudes = Math.max.apply(null, getLatLong(points).latitudes);
     var maxLongitudes =  Math.max.apply(null, getLatLong(points).longitudes);
     var minLatitudes = Math.min.apply(null, getLatLong(points).latitudes);
     var minLongitudes =  Math.min.apply(null, getLatLong(points).longitudes);
 
     for(var a = 0; a < points[0].length; a++){
-        if(points[0][a][0] == minLatitudes){
+
+       if(points[0][a][0] == minLatitudes){
             annotations.push(ms.geometry.addAnotation(points[0][a], annotationText));
         }else if(points[0][a][0] == maxLatitudes){
             annotations.push(ms.geometry.addAnotation(points[0][a], annotationText));
@@ -42,18 +35,15 @@ module.exports = function (feature) {
         }else if(points[0][a][1] == maxLongitudes){
             annotations.push(ms.geometry.addAnotation(points[0][a], annotationText));
         }
+
     }
 
   }
-  topAnn = ms.geometry.toDistanceBearing(centerPoint, distance, 360);
-  bottomAnn = ms.geometry.toDistanceBearing(centerPoint, distance, 180);
-  sideAnn2 = ms.geometry.toDistanceBearing(centerPoint, distance, 90);
-  sideAnn1 = ms.geometry.toDistanceBearing(centerPoint, distance, -90);
 
-  annotations.push(ms.geometry.addAnotation(topAnn, annotationText));
-  annotations.push(ms.geometry.addAnotation(bottomAnn, annotationText));
-  annotations.push(ms.geometry.addAnotation(sideAnn1, annotationText));
-  annotations.push(ms.geometry.addAnotation(sideAnn2, annotationText));
+  annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(centerPoint, distance, 360), annotationText));
+  annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(centerPoint, distance, 180), annotationText));
+  annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(centerPoint, distance, -90), annotationText));
+  annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(centerPoint, distance, 90), annotationText));
 
   var shape = ms.geometry.circleCorridorPolygon(feature);
 

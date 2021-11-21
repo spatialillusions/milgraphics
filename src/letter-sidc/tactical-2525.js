@@ -238,9 +238,9 @@ module.exports = function tacticalPoints(sidc, std2525) {
     sidc["G-F-ACRI--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.IRR
     sidc["G-F-ACRR--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.RTG
     sidc["G-F-ACRC--"] = ms.geometryConverter["RESTRICTIVE FIRE AREA"]; //TACGRP.FSUPP.ARS.C2ARS.RFA.CIRCLR
-    //sidc['G-F-ACP---'] = [];//TACGRP.FSUPP.ARS.C2ARS.PAA
+    sidc['G-F-ACP---'] = ms.geometryConverter["POSITION AREA FOR ARTILLERY"];//TACGRP.FSUPP.ARS.C2ARS.PAA
     sidc['G-F-ACPR--'] = ms.geometryConverter["POSITION AREA FOR ARTILLERY"]; //TACGRP.FSUPP.ARS.C2ARS.PAA.RTG
-    //sidc["G-F-ACPC--"] = []; //TACGRP.FSUPP.ARS.C2ARS.PAA.CIRCLR
+    sidc["G-F-ACPC--"] = ms.geometryConverter["POSITION AREA FOR ARTILLERY"]; //TACGRP.FSUPP.ARS.C2ARS.PAA.CIRCLR
     //TACGRP.FSUPP.ARS.C2ARS.SNSZ
     sidc["G-F-ACEI--"] = ms.geometryConverter["SENSOR ZONE"]; //TACGRP.FSUPP.ARS.C2ARS.SNSZ.IRR
     sidc["G-F-ACER--"] = ms.geometryConverter["SENSOR ZONE"]; //TACGRP.FSUPP.ARS.C2ARS.SNSZ.RTG
