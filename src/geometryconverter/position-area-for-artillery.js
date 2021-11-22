@@ -39,7 +39,7 @@ module.exports = function (feature) {
     }
 
   }
-
+  
   annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(centerPoint, distance, 360), annotationText));
   annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(centerPoint, distance, 180), annotationText));
   annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(centerPoint, distance, -90), annotationText));

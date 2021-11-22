@@ -7,20 +7,27 @@ module.exports = function(feature) {
     var geometry = { type: "MultiLineString", coordinates: [] };
 
     var annotations = [];
-    var annotationText = feature.properties.name;
+    var annotationTop = feature.properties.name;
+    var annotationUnder = "";
 
 
     if (feature.properties.administrator)
-        annotationText +=
+        annotationTop +=
         " " + feature.properties.administrator;
     if (feature.properties.dtg)
-        annotationText += "\n\n" + feature.properties.dtg;
+        annotationUnder += feature.properties.dtg;
     if (feature.properties.dtg1)
-        annotationText += "\n\n" + feature.properties.dtg1;
+        annotationUnder += " -\n" + feature.properties.dtg1;
 
     geometry.coordinates = [points];
-    annotations.push(ms.geometry.addAnotation(points[0], annotationText));
-    annotations.push(ms.geometry.addAnotation(points.slice(-1)[0], annotationText));
+    annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(points[0], 30, 45), annotationTop));
+    annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(points.slice(-1)[0], 30, -45), annotationTop));
+
+    annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(points[0], -30, -45), annotationUnder));
+    annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(points.slice(-1)[0], -30, 45), annotationUnder));
+
+    annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(points[0], 40, -90), "PL "+feature.properties.t1));
+    annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(points.slice(-1)[0], 40, 90), "PL "+feature.properties.t1));
 
     return { geometry: geometry, annotations: annotations };
 };

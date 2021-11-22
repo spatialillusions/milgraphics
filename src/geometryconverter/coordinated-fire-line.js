@@ -15,7 +15,7 @@ module.exports = function(feature) {
     }
 
     var annotations = {
-        geometry: { type: "Point", coordinates: points.slice(-2)[0] },
+        geometry: { type: "Point" },
         properties: { text: annotationText }
     };
 
