@@ -1,5 +1,8 @@
 var geometryConverter = {};
 geometryConverter[
+    "MUNITION FLIGHT PATH"
+] = require("./geometryconverter/munition-flight-path.js");
+geometryConverter[
     "COORDINATED FIRE LINE"
 ] = require("./geometryconverter/coordinated-fire-line.js");
 geometryConverter[

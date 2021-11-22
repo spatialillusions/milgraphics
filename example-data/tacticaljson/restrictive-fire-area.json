@@ -5,7 +5,7 @@
             "type": "Feature",
             "properties": {
                 "sidc": "G-F-ACRI------X",
-                "uniqueDesignation": "I"
+                "administrator": "X CORPS"
             },
             "geometry": {
                 "type": "Polygon",
@@ -60,7 +60,7 @@
             "properties": {
                 "sidc": "G-F-ACRR------X",
                 "distance": 5000,
-                "uniqueDesignation": "II"
+                "administrator": "X CORPS"
             },
             "geometry": {
                 "type": "LineString",
@@ -83,7 +83,7 @@
                 "distance": 5000,
                 "dtg": "10095900ZJAN92",
                 "dtg1": "11095900ZJAN92",
-                "uniqueDesignation": "III"
+                "administrator": "X CORPS"
             },
             "geometry": {
                 "type": "Point",
