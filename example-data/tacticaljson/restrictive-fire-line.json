@@ -5,10 +5,10 @@
         "properties": {
             "sidc": "G-F-LCR-------X",
             "name": "RFL",
-            "administrator": "4RDB",
+            "administrator": "XCORPS",
             "t1":"DELTA",
-            "dtg": "10095900ZJAN92",
-            "dtg1": "10095900ZJAN92"
+            "w": "NO WP SMOKE",
+            "w1": ""
         },
         "geometry": {
             "type": "LineString",
@@ -19,7 +19,7 @@
                 ],
                 [
                     8.719921081542969,
-                    50.197967765585604
+                    50.19997137199048
                 ]
             ]
         }

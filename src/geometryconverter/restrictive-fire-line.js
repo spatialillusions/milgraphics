@@ -14,10 +14,10 @@ module.exports = function(feature) {
     if (feature.properties.administrator)
         annotationTop +=
         " " + feature.properties.administrator;
-    if (feature.properties.dtg)
-        annotationUnder += feature.properties.dtg;
-    if (feature.properties.dtg1)
-        annotationUnder += " -\n" + feature.properties.dtg1;
+    if (feature.properties.w)
+        annotationUnder += feature.properties.w;
+    if (feature.properties.w1)
+        annotationUnder += " -\n" + feature.properties.w1;
 
     geometry.coordinates = [points];
     annotations.push(ms.geometry.addAnotation(ms.geometry.toDistanceBearing(points[0], 30, 45), annotationTop));
