@@ -5,6 +5,7 @@
             "properties": {
                 "sidc": "G-F-ACNC------X",
                 "distance": 300,
+                "fill": "dashes",
                 "name": "NFA"
             },
             "geometry": {
@@ -21,6 +22,7 @@
             "properties": {
                 "sidc": "G-F-ACNR------X",
                 "distance": 300,
+                "fill": "dashes",
                 "name": "NFA"
             },
             "geometry": {
@@ -42,6 +44,7 @@
             "properties": {
                 "sidc": "G-F-ACNI------X",
                 "distance": 200,
+                "fill": "dashes",
                 "name": "NFA"
             },
             "geometry": {

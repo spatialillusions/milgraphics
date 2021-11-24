@@ -5,22 +5,20 @@
         "properties": {
             "sidc": "G-G-ALC-------X",
             "name": "AC",
-            "distance":500
+            "distance":500,
+            "administrator": "OAK",
+            "type": "1BTY"
         },
         "geometry": {
             "type": "LineString",
             "coordinates": [
                 [
-                    4.87,
+                    4.85,
                     52.40
                   ],
                   [
-                    4.92,
+                    4.90,
                     52.40
-                  ],
-                  [
-                    4.95,
-                    52.42
                   ]
             ]
         }
