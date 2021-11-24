@@ -1,4 +1,5 @@
 var GeoJSON = require('ol/format/GeoJSON');
+const { default: UrlTile } = require('ol/source/UrlTile');
 var style = require('ol/style');
 
 function asOpenLayers(crs) {
@@ -60,9 +61,18 @@ function asOpenLayers(crs) {
     }
 
     if (feature.graphic.isConverted() && olFeature.getGeometry().getType() == "Polygon") {
-      styles[0].setFill(
-        new style.Fill({ color: "rgba(0,0,0,0)" })
-      );
+      if(feature.properties.fill == "dashes"){
+
+        styles[0].setFill(
+          new style.Fill({ color: "rgba(255,0,6,0.5)" })
+        );
+
+      }else{
+        styles[0].setFill(
+          new style.Fill({ color: "rgba(0,0,0,0)" })
+        );
+      }
+      
       if (feature.graphic.annotations) {
         if (!feature.graphic.annotations[0].geometry.coordinates) {
           styles[0].setText(getText(feature.graphic.annotations[0].properties.text));
@@ -71,6 +81,7 @@ function asOpenLayers(crs) {
       }
       olFeature.setStyle(styles);
     }
+    
 
     features.push(olFeature);
   }
