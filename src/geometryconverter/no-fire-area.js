@@ -39,7 +39,7 @@ module.exports = function(feature) {
         }
         centerPoint = ms.geometry.pointBetween(southernmost, northernmost, 0.5);
 
-        console.log(maxLongitudes, minLongitudes);
+        //console.log(maxLongitudes, minLongitudes);
     }
 
 

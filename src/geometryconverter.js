@@ -1,5 +1,8 @@
 var geometryConverter = {};
 geometryConverter[
+    "TEST"
+] = require("./geometryconverter/test.js");
+geometryConverter[
     "AIR CORRIDOR"
 ] = require("./geometryconverter/air-corridor.js");
 geometryConverter[

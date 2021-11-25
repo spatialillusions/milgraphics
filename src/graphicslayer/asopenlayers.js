@@ -1,5 +1,7 @@
 var GeoJSON = require('ol/format/GeoJSON');
-const { default: UrlTile } = require('ol/source/UrlTile');
+const {
+  default: UrlTile
+} = require('ol/source/UrlTile');
 var style = require('ol/style');
 
 function asOpenLayers(crs) {
@@ -20,7 +22,7 @@ function asOpenLayers(crs) {
       if (properties.sidc.charAt(0) != "X") {
         //TODO handle sitaware custom graphics
         var milsymbol = this.data.features[i].symbol;
-        //var image = isIE ? mysymbol.asCanvas() : mysymbol.toDataURL();
+        var image = isIE ? mysymbol.asCanvas() : mysymbol.toDataURL();
         olFeature.setStyle(
           new style.Style({
             image: new style.Icon({
@@ -53,7 +55,7 @@ function asOpenLayers(crs) {
     ];
 
     if (feature.graphic.isConverted() && (olFeature.getGeometry().getType() == "LineString" ||
-      olFeature.getGeometry().getType() == "MultiLineString")) {
+        olFeature.getGeometry().getType() == "MultiLineString")) {
       if (feature.graphic.annotations) {
         styles = styles.concat(createAnnotationsStyle(feature.graphic.annotations, crs));
       }
@@ -61,18 +63,47 @@ function asOpenLayers(crs) {
     }
 
     if (feature.graphic.isConverted() && olFeature.getGeometry().getType() == "Polygon") {
-      if(feature.properties.fill == "dashes"){
+      if (feature.properties.fill == "dashes") {
 
-        styles[0].setFill(
-          new style.Fill({ color: "rgba(255,0,6,0.5)" })
-        );
+        var cnv = document.createElement('canvas');
+        var ctx = cnv.getContext('2d');
+        var x0 = 36;
+        var x1 = -4;
+        var y0 = -2;
+        var y1 = 18;
+        var offset = 32;
+        ctx.strokeStyle = "#FF0000";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x0, y0);
+        ctx.lineTo(x1, y1);
+        ctx.moveTo(x0 - offset, y0);
+        ctx.lineTo(x1 - offset, y1);
+        ctx.moveTo(x0 + offset, y0);
+        ctx.lineTo(x1 + offset, y1);
 
-      }else{
+        ctx.stroke();
+
+
+
+        cnv.onload = function () {
+          var pattern = ctx.createPattern(cnv, 'repeat');
+
+          styles[0].setFill(
+            new style.Fill({
+              color: pattern
+            })
+          );
+        }
+
+      } else {
         styles[0].setFill(
-          new style.Fill({ color: "rgba(0,0,0,0)" })
+          new style.Fill({
+            color: "rgba(0,0,0,0)"
+          })
         );
       }
-      
+
       if (feature.graphic.annotations) {
         if (!feature.graphic.annotations[0].geometry.coordinates) {
           styles[0].setText(getText(feature.graphic.annotations[0].properties.text));
@@ -81,7 +112,7 @@ function asOpenLayers(crs) {
       }
       olFeature.setStyle(styles);
     }
-    
+
 
     features.push(olFeature);
   }
@@ -103,14 +134,16 @@ function createAnnotationsStyle(annotations, crs) {
           geometry: labelgeom
         })
       );
-    }    
+    }
   }
   return add_styles;
 }
 
 function getText(text) {
   return new style.Text({
-    fill: new style.Fill({ color: "black" }),
+    fill: new style.Fill({
+      color: "black"
+    }),
     font: "bold 16px sans-serif",
     stroke: new style.Stroke({
       color: "rgb(239, 239, 239)", // off-white
