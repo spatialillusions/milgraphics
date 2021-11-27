@@ -4,8 +4,10 @@
         "type": "Feature",
         "properties": {
             "sidc": "T-S-T---------X",
-            "name": "ARTILLERY FIRING POSITION",
-            "firNum": "11"
+            "name": "AC",
+            "distance":500,
+            "administrator": "OAK",
+            "type": "1BTY"
         },
         "geometry": {
             "type": "LineString",
