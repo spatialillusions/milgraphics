@@ -7,11 +7,8 @@ const NODE_MODULES_DIR = path.join(ROOT, 'node_modules');
 
 module.exports = {
   mode: 'development',
-  cache: true,
   devtool: 'inline-source-map',
   entry: [
-    'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:8080',
     path.join(EXAMPLES_DIR, 'index.js')
   ],
   output: {
@@ -33,7 +30,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(EXAMPLES_DIR, 'index.html')
     })
@@ -50,8 +46,6 @@ module.exports = {
   devServer: {
     compress: true,
     historyApiFallback: true,
-    hot: true,
-    noInfo: true,
     port: 8080
   }
 };
