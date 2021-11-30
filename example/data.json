@@ -1,26 +1,40 @@
 {
-    "type": "FeatureCollection",
-    "features": [{
-        "type": "Feature",
-        "properties": {
-            "sidc": "T-S-T---------X",
-            "name": "AC",
-            "distance":500,
-            "administrator": "OAK",
-            "type": "1BTY"
-        },
-        "geometry": {
-            "type": "LineString",
-            "coordinates": [
-                [
-                    4.85,
-                    52.40
-                  ],
-                  [
-                    4.90,
-                    52.40
-                  ]
-            ]
-        }
-    }]
+  "type": "FeatureCollection",
+  "features": [{
+      "type": "Feature",
+      "properties": {
+        "sidc": "T-S-T---------X",
+        "name": "AC",
+        "distance": 500,
+        "administrator": "OAK",
+        "type": "1BTY"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            4.85,
+            52.40
+          ],
+          [
+            4.90,
+            52.40
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.85, 52.40]
+      },
+      "properties": {
+        "sidc": "SFGPUCI----F***",
+        "name": "17.Hvbat",
+        "fullname": "17.Hvbat/MRM/INSS",
+        "command": "MRM"
+      }
+    }
+  ]
 }

@@ -1,13 +1,13 @@
 var GeoJSON = require('ol/format/GeoJSON');
-const {
-  default: UrlTile
-} = require('ol/source/UrlTile');
+// const {
+//   default: UrlTile
+// } = require('ol/source/UrlTile');
 var style = require('ol/style');
 
 function asOpenLayers(crs) {
   crs = crs || "EPSG:3857";
   //var ua = window.navigator.userAgent;
-  //var isIE = ( ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/')  > 0) ? true : false;
+  // var isIE = ( ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/')  > 0) ? true : false;
   var ratio = window.devicePixelRatio || 1;
   var features = [];
   for (var i = 0; i < this.data.features.length; i++) {
@@ -22,7 +22,8 @@ function asOpenLayers(crs) {
       if (properties.sidc.charAt(0) != "X") {
         //TODO handle sitaware custom graphics
         var milsymbol = this.data.features[i].symbol;
-        var image = isIE ? mysymbol.asCanvas() : mysymbol.toDataURL();
+        // var image = isIE ? mysymbol.asCanvas() : mysymbol.toDataURL();
+        var image = 'data:image/svg+xml,' + milsymbol.asSVG().toString();
         olFeature.setStyle(
           new style.Style({
             image: new style.Icon({
@@ -37,7 +38,7 @@ function asOpenLayers(crs) {
                 Math.floor(milsymbol.getSize().width * ratio),
                 Math.floor(milsymbol.getSize().height * ratio)
               ],
-              img: milsymbol.asCanvas(ratio)
+              src: image
             })
           })
         );
@@ -94,7 +95,7 @@ function asOpenLayers(crs) {
               color: pattern
             })
           );
-        }
+        };
 
       } else {
         styles[0].setFill(
