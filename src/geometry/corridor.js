@@ -4,9 +4,12 @@ var ms = require("milsymbol");
 module.exports = function(feature) {
     var points = feature.geometry.coordinates;
     var width = feature.properties.distance;
-    var geometry = { type: "Polygon", coordinates: [
+    var geometry = {
+        type: "Polygon",
+        coordinates: [
             []
-        ] };
+        ]
+    };
     var direction = (ms.geometry.bearingBetween(points[0], points[1]) + 360) % 360;
     geometry.coordinates[0].push(
         ms.geometry.toDistanceBearing(points[0], width / 2, direction - 90)
@@ -65,9 +68,6 @@ module.exports = function(feature) {
     direction = (ms.geometry.bearingBetween(points[0], points[1]) + 360) % 360;
     geometry.coordinates[0].push(
         ms.geometry.toDistanceBearing(points[0], width / 2, direction + 90)
-    );
-    geometry.coordinates[0].push(
-        ms.geometry.toDistanceBearing(points[0], width / 2, direction - 90)
     ); //Close line
     return { geometry: geometry };
 };
