@@ -8,7 +8,6 @@ function asOpenLayers(crs) {
     crs = crs || "EPSG:3857";
     //var ua = window.navigator.userAgent;
     // var isIE = ( ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0 || ua.indexOf('Edge/')  > 0) ? true : false;
-    var ratio = window.devicePixelRatio || 1;
     var features = [];
     for (var i = 0; i < this.data.features.length; i++) {
         var feature = this.data.features[i];
@@ -27,18 +26,16 @@ function asOpenLayers(crs) {
                 olFeature.setStyle(
                     new style.Style({
                         image: new style.Icon({
-                            scale: 1 / ratio,
                             anchor: [
-                                milsymbol.getAnchor().x * ratio,
-                                milsymbol.getAnchor().y * ratio
+                                milsymbol.getAnchor().x,
+                                milsymbol.getAnchor().y
                             ],
                             anchorXUnits: "pixels",
                             anchorYUnits: "pixels",
                             imgSize: [
-                                Math.floor(milsymbol.getSize().width * ratio),
-                                Math.floor(milsymbol.getSize().height * ratio)
+                                Math.floor(milsymbol.getSize().width),
+                                Math.floor(milsymbol.getSize().height)
                             ],
-
                             src: image
                         })
                     })
