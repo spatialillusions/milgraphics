@@ -1,48 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import DATA from './data.json';
-import ms from '../src';
-import Map from 'ol/Map';
-import OSM from 'ol/source/OSM';
-import TileLayer from 'ol/layer/Tile';
-import VectorLayer from 'ol/layer/Vector';
-import VectorSource from 'ol/source/Vector';
-import View from 'ol/View';
-import * as control from 'ol/control';
+import Map from './map';
+import files from '../tacticaljson/import_files.js';
 
-function OpenLayersMap() {
-  var vectorSource = new VectorSource();
-  var vectorLayer = new VectorLayer({
-    source: vectorSource
-  });
+const OpenLayersMap = ({ data }) => {
+  return <Map style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }} data={data}/>
+};
 
-  var map = new Map({
-    layers: [
-      new TileLayer({
-        source: new OSM()
-      }),
-      vectorLayer
-    ],
-    target: 'map',
-    controls: control.defaults({
-      attributionOptions: ({
-        collapsible: false
-      })
-    }),
-    view: new View({
-      center: [0, 0],
-      zoom: 2
-    })
-  });
-  var openLayersFeaturesWithStyle = new ms.GraphicsLayer(new ms.format.GeoJSON(DATA)).asOpenLayers();
-  vectorSource.clear();
-  vectorSource.addFeatures(openLayersFeaturesWithStyle);
-  var extent = vectorSource.getExtent(openLayersFeaturesWithStyle);
-  map.getView().fit(extent, map.getSize());
-  return null;
-}
+const APP = () => {
+  const [selected, onSelect] = useState('air-corridor');
+  return (
+    <>
+      <div style={{ position: 'fixed', zIndex: 100, right: 0 }}>
+        <select style={{ fontSize: 20 }}onChange={(e) => onSelect(e.target.value)}>
+          {Object.keys(files).map(key =>
+            <option key={`option_${key}`} value={key}>{key}</option>
+          )}</select>
+      </div>
+      <OpenLayersMap data={files[selected]}/>
+    </>   
+  );
+};
 
 ReactDOM.render(
-    <OpenLayersMap />,
+    <APP />,
   document.querySelector(".root")
 )
