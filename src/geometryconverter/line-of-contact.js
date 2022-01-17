@@ -8,13 +8,15 @@ function lineOfContact(feature, relative = false) {
     // Geometry 1 - bearing line of n points
     var bearingGeos = [];
     var bearingWidth = (feature.properties.bearingWidth) ? feature.properties.bearingWidth : 400;
+    var bearingSpacing = (feature.properties.bearingSpacing) ? feature.properties.bearingSpacing : 5;
+    var locWidth = (feature.properties.locWidth) ? feature.properties.locWidth : 10;
 
     console.log(feature.properties);
     // loop to repeat for every segment of the polygon that was input
     for (var i = 1; i < points.length; i += 1) {
         if (relative === false) {
             // visualize that many bearings with absolute width
-            bearingGeos = lineOfContactAbsolute(bearingGeos, points[i - 1], points[i], bearingWidth)
+            bearingGeos = lineOfContactAbsolute(bearingGeos, points[i - 1], points[i], bearingWidth, bearingSpacing, locWidth)
         } else {
             // Alternative - old implementation based on relative sizes of bearings
             // Making each segment into a bearing line with 2^5 = 32 bearings
@@ -96,7 +98,7 @@ function lineOfContactRelative(geo, pointa, pointb, degree = 0, bearingSpacing =
     return geo;
 }
 
-function lineOfContactAbsolute(geo, pointa, pointb, bearingWidth, bearingSpacing = 4, locWidth = 3) {
+function lineOfContactAbsolute(geo, pointa, pointb, bearingWidth, bearingSpacing, locWidth) {
 
     // measure distance between each two points
     let distance = ms.geometry.distanceBetween(pointa, pointb);
