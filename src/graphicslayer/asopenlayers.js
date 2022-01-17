@@ -65,35 +65,13 @@ function asOpenLayers(crs) {
         if (feature.graphic.isConverted() && olFeature.getGeometry().getType() == "Polygon") {
             if (feature.properties.fill == "dashes") {
 
-                // var cnv = document.createElement('canvas');
-                // var ctx = cnv.getContext('2d');
-                // var x0 = 36;
-                // var x1 = -4;
-                // var y0 = -2;
-                // var y1 = 18;
-                // var offset = 32;
-                // ctx.strokeStyle = "#FF0000";
-                // ctx.lineWidth = 2;
-                // ctx.beginPath();
-                // ctx.moveTo(x0, y0);
-                // ctx.lineTo(x1, y1);
-                // ctx.moveTo(x0 - offset, y0);
-                // ctx.lineTo(x1 - offset, y1);
-                // ctx.moveTo(x0 + offset, y0);
-                // ctx.lineTo(x1 + offset, y1);
+                var pattern = makePattern('#000', 'obliqueLeft', 15);
+                styles[0].setFill(
+                    new style.Fill({
+                        color: pattern
+                    })
+                );
 
-                // ctx.stroke();
-
-
-
-                // cnv.onload = function() {
-                    var pattern = makePattern('#000', 'obliqueLeft', 15);
-                    styles[0].setFill(
-                        new style.Fill({
-                            color: pattern
-                        })
-                    );
-                // };
 
             } else {
                 styles[0].setFill(

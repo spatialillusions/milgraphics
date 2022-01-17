@@ -1,24 +1,23 @@
 {
-  "type": "FeatureCollection",
-  "features": [
-      {
-          "type": "Feature",
-          "properties": {
-              "sidc": "G-G-GLF-------X"
-          },
-          "geometry": {
-              "type": "LineString",
-              "coordinates": [
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "properties": {
+            "sidc": "G-G-GLF-------X",
+            "bearingWidth": 400
+        },
+        "geometry": {
+            "type": "LineString",
+            "coordinates": [
                 [
-                  4.87,
-                  52.40
+                    4.87,
+                    52.40
                 ],
                 [
-                  6.89,
-                  52.39
+                    4.87,
+                    52.39
                 ]
-              ]
-          }
-      }
-  ]
+            ]
+        }
+    }]
 }
