@@ -1,0 +1,26 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "properties": {
+            "sidc": "G-G-ALC-------X",
+            "name": "AC",
+            "distance":500,
+            "administrator": "OAK",
+            "type": "1BTY"
+        },
+        "geometry": {
+            "type": "LineString",
+            "coordinates": [
+                [
+                    4.85,
+                    52.40
+                  ],
+                  [
+                    4.90,
+                    52.40
+                  ]
+            ]
+        }
+    }]
+}

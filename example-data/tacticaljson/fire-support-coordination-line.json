@@ -1,0 +1,27 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "properties": {
+            "sidc": "G-F-LCF-------X",
+            "name": "FSCL",
+            "administrator": "X CORPS",
+            "t1": "ALPHA",
+            "dtg": "10095900ZJAN92",
+            "dtg1": "10095900ZJAN92"
+        },
+        "geometry": {
+            "type": "LineString",
+            "coordinates": [
+                [
+                    8.705182647705078,
+                    50.197967765585604
+                ],
+                [
+                    8.719921081542969,
+                    50.197967765585604
+                ]
+            ]
+        }
+    }]
+}

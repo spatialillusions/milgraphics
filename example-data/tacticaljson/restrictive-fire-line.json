@@ -1,0 +1,27 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "properties": {
+            "sidc": "G-F-LCR-------X",
+            "name": "RFL",
+            "administrator": "XCORPS",
+            "t1":"DELTA",
+            "w": "NO WP SMOKE",
+            "w1": ""
+        },
+        "geometry": {
+            "type": "LineString",
+            "coordinates": [
+                [
+                    8.705182647705078,
+                    50.19997137199048
+                ],
+                [
+                    8.719921081542969,
+                    50.19997137199048
+                ]
+            ]
+        }
+    }]
+}
