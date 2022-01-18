@@ -15,7 +15,8 @@ const APP = () => {
         <select style={{ fontSize: 20 }}onChange={(e) => onSelect(e.target.value)}>
           {Object.keys(files).map(key =>
             <option key={`option_${key}`} value={key}>{key}</option>
-          )}</select>
+          )}
+        </select>
       </div>
       <OpenLayersMap data={files[selected]}/>
     </>   
@@ -25,4 +26,4 @@ const APP = () => {
 ReactDOM.render(
     <APP />,
   document.querySelector(".root")
-)
+);

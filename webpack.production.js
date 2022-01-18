@@ -6,7 +6,7 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     filename: "milgraphics.js",
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(path.resolve(), "dist"),
     library: "milgraphics",
     libraryTarget: "umd",
     umdNamedDefine: true

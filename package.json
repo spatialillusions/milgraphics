@@ -24,6 +24,7 @@
   "devDependencies": {
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.0",
+    "@babel/eslint-parser": "^7.16.5",
     "@babel/plugin-proposal-object-rest-spread": "^7.16.0",
     "@babel/plugin-transform-destructuring": "^7.16.0",
     "@babel/preset-env": "^7.16.4",

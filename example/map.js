@@ -16,7 +16,7 @@ var vectorLayer = new VectorLayer({
 
 export default class Map extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.map = new OLMap({
       interactions: olInteraction.defaults(),
       controls: olControl.defaults(),
@@ -47,14 +47,14 @@ export default class Map extends React.Component {
   }
 
   componentDidMount() {
-    this.map.setTarget(this.refs.target)
+    this.map.setTarget(this.refs.target);
     this.map.renderSync();
     this.focus();
     this.updateVector(this.props);
   }
 
   componentWillUnmount() {
-    this.map.setTarget(undefined)
+    this.map.setTarget(undefined);
   }
 
   render() {
@@ -67,16 +67,16 @@ export default class Map extends React.Component {
           {this.props.view}
         </div>
       </div>
-    )
+    );
   }
 
   focus() {
-    const viewport = this.map.getViewport()
-    viewport.tabIndex = 0
-    viewport.focus()
+    const viewport = this.map.getViewport();
+    viewport.tabIndex = 0;
+    viewport.focus();
   }
 
   getSize() {
-    return this.map.getSize()
+    return this.map.getSize();
   }
 }

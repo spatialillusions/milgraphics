@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ROOT = __dirname;
+const ROOT = path.resolve();
 const EXAMPLES_DIR = path.join(ROOT, 'example');
 const NODE_MODULES_DIR = path.join(ROOT, 'node_modules');
 
