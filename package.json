@@ -8,9 +8,8 @@
     "example": "examples"
   },
   "scripts": {
-    "build": "webpack -p",
-    "build-dev": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --config webpack.production.js --progress --profile",
+    "start": "webpack serve --config webpack.development.js"
   },
   "repository": {
     "type": "git",
@@ -23,9 +22,35 @@
   },
   "homepage": "https://github.com/spatialillusions/milgraphics",
   "devDependencies": {
-    "eslint": "^3.19.0",
-    "milsymbol": "^1.0.0",
-    "webpack": "^2.2.0",
-    "webpack-custom-var-library-name-plugin": "^1.0.2"
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/eslint-parser": "^7.16.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.16.0",
+    "@babel/plugin-transform-destructuring": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-react": "^7.16.0",
+    "babel-loader": "^8.2.3",
+    "eslint": "^8.3.0",
+    "html-webpack-plugin": "^5.5.0",
+    "milsymbol": "^2.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hot-loader": "4.13.0",
+    "source-map-loader": "^3.0.0",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.6.0"
+  },
+  "peerDependencies": {
+    "@types/react": "^17.0.37",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "dependencies": {
+    "file-loader": "^6.2.0",
+    "geodesy": "2.2.1",
+    "ol": "6.9.0",
+    "requirejs": "^2.3.6",
+    "webpack-custom-var-library-name-append-plugin": "^2.1.3"
   }
 }

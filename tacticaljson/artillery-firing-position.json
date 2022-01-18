@@ -1,0 +1,24 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "properties": {
+            "sidc": "T-S-T---------X",
+            "name": "ARTILLERY FIRING POSITION",
+            "firNum": "11"
+        },
+        "geometry": {
+            "type": "LineString",
+            "coordinates": [
+                [
+                    4.85,
+                    52.40
+                  ],
+                  [
+                    4.90,
+                    52.40
+                  ]
+            ]
+        }
+    }]
+}

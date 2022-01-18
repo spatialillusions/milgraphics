@@ -1,0 +1,81 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+            "type": "Feature",
+            "properties": {
+                "sidc": "G-G-ALC-------X",
+                "name": "AC",
+                "distance": 500,
+                "administrator": "CCP"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        4.87,
+                        52.40
+                    ],
+                    [
+                        4.92,
+                        52.40
+                    ],
+                    [
+                        4.95,
+                        52.42
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    4.95,
+                    52.42
+                ]
+            },
+            "properties": {
+                "sidc": "GFGPAPP-------X",
+                "name": "",
+                "size": 140,
+                "fullname": "",
+                "command": ""
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    4.92,
+                    52.40
+                ]
+            },
+            "properties": {
+                "sidc": "GFGPAPC-------X",
+                "name": "",
+                "size": 150,
+                "fullname": "",
+                "command": ""
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    4.87,
+                    52.40
+                ]
+            },
+            "properties": {
+                "sidc": "GFGPAPP-------X",
+                "name": "",
+                "size": 140,
+                "fullname": "",
+                "command": ""
+            }
+        }
+    ]
+}
